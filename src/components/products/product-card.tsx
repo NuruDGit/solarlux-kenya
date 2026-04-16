@@ -51,6 +51,11 @@ export function ProductCard({ product, index = 0 }: Props) {
             {product.name}
           </h3>
           <p className="mt-2 text-sm font-medium text-primary">
+            {product.originalPrice && (
+              <span className="mr-2 text-ink-muted line-through">
+                {product.originalPrice}
+              </span>
+            )}
             {product.price}
           </p>
         </div>

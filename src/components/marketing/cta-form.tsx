@@ -23,9 +23,9 @@ export function CtaForm() {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left — Text content */}
           <FadeIn>
-            <p className="text-overline text-primary mb-4">
+            <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">
               Get Started Today
-            </p>
+            </span>
             <h2 className="text-display-lg font-display font-medium">
               Request a free{" "}
               <span className="text-ink-muted">solar consultation</span>

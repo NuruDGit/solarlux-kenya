@@ -52,7 +52,7 @@ export function SolutionsOverview() {
     <section className="py-16 md:py-24 lg:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <p className="text-overline text-primary mb-4">Solutions</p>
+          <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">Solutions</span>
           <h2 className="text-display-lg font-display font-medium max-w-2xl">
             Solar solutions tailored{" "}
             <span className="text-ink-muted">to your needs</span>

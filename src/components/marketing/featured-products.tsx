@@ -13,7 +13,7 @@ const products = [
   {
     name: "JA Solar 600W Panel",
     category: "Solar Panels",
-    price: "From KES 27,800",
+    price: "KSh 11,500",
     image: "/products/JA_SOLAR_600W.png",
     href: "/products/solar-panels/ja-solar-600w",
     badge: "Best Seller",
@@ -21,26 +21,26 @@ const products = [
   {
     name: "Deye 5kWh Battery",
     category: "Batteries",
-    price: "From KES 84,500",
+    price: "KSh 120,000",
     image: "/products/5kWh_Deye_Lithium_Ion_Battery.png",
     href: "/products/batteries/deye-5kwh",
+    badge: "-8%",
+  },
+  {
+    name: "MUST 7.2KW Inverter",
+    category: "Inverters",
+    price: "KSh 90,000",
+    image: "/products/inverters.jpg",
+    href: "/products/inverters/must-7-2kw",
     badge: null,
   },
   {
-    name: "SRNE Hybrid Inverter 5kW",
-    category: "Inverters",
-    price: "From KES 44,200",
-    image: "/products/inverters.jpg",
-    href: "/products/inverters/srne-5kw",
-    badge: "Popular",
-  },
-  {
-    name: "Complete Home Solar Kit",
-    category: "Solar Kits",
-    price: "From KES 149,900",
-    image: "/products/Full_20Kits.jpg",
-    href: "/products/solar-kits/family-home-kit-5kw",
-    badge: "Best Value",
+    name: "Renergy iPower 10.24kWh",
+    category: "Batteries",
+    price: "KSh 230,000",
+    image: "/products/10.24kwh-200ah-renergy.jpg",
+    href: "/products/batteries/renergy-10kwh",
+    badge: "-8%",
   },
 ];
 
@@ -50,7 +50,7 @@ export function FeaturedProducts() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <FadeIn>
-            <p className="text-overline text-primary mb-4">Products</p>
+            <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">Products</span>
             <h2 className="text-display-lg font-display font-medium max-w-xl">
               Premium solar equipment{" "}
               <span className="text-ink-muted">for every need</span>

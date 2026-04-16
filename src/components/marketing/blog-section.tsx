@@ -45,7 +45,7 @@ export function BlogSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <FadeIn>
-            <p className="text-overline text-primary mb-4">Resources</p>
+            <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">Resources</span>
             <h2 className="text-display-lg font-display font-medium max-w-xl">
               Solar insights{" "}
               <span className="text-ink-muted">& guides</span>

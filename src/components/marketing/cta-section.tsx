@@ -18,9 +18,9 @@ export function CtaSection() {
             <div className="absolute bottom-0 left-0 h-40 w-40 -translate-x-1/4 translate-y-1/4 rounded-full bg-linear-to-tl from-white/10 to-white/0 blur-3xl" />
 
             <div className="relative z-10 max-w-2xl">
-              <p className="text-overline text-brand-yellow-200 mb-4">
+              <span className="inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-brand-yellow-200 tracking-wide mb-4">
                 Ready to Go Solar?
-              </p>
+              </span>
               <h2 className="text-display-lg font-display font-medium text-white">
                 Get a free quote in under 24 hours
               </h2>
