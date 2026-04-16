@@ -1,0 +1,302 @@
+/* ============================================================
+   Solarlux Kenya — Design Tokens
+   Drop into src/app/globals.css
+   ============================================================ */
+
+@import "tailwindcss";
+
+/* ----------------------------------------------------------
+   1. CSS Custom Properties — Design Tokens
+   ---------------------------------------------------------- */
+
+@layer base {
+  :root {
+    /* Brand — Blue scale */
+    --brand-blue-900: #0f2f58;
+    --brand-blue-700: #154878;
+    --brand-blue-500: #1d5aa6;
+    --brand-blue-300: #5ba4e6;
+    --brand-blue-100: #dceaf7;
+    --brand-blue-50: #f0f6fc;
+
+    /* Brand — Yellow scale */
+    --brand-yellow-600: #c89410;
+    --brand-yellow-500: #fdb813;
+    --brand-yellow-200: #fee8a8;
+
+    /* Neutrals */
+    --ink-950: #0a0a0a;
+    --ink-900: #171717;
+    --ink-700: #404040;
+    --ink-500: #737373;
+    --ink-300: #d4d4d4;
+    --ink-200: #e5e5e5;
+    --ink-100: #f5f5f5;
+    --ink-50: #fafafa;
+    --paper: #ffffff;
+
+    /* Semantic — Light mode */
+    --background: var(--paper);
+    --surface: var(--ink-50);
+    --card: var(--paper);
+    --muted: var(--ink-100);
+    --border: var(--ink-200);
+    --border-strong: var(--ink-300);
+    --ink: var(--ink-900);
+    --ink-muted: var(--ink-500);
+    --primary: var(--brand-blue-500);
+    --primary-hover: var(--brand-blue-700);
+    --primary-foreground: var(--paper);
+    --accent: var(--brand-yellow-500);
+    --accent-hover: var(--brand-yellow-600);
+    --accent-foreground: var(--ink-950);
+    --success: #10b981;
+    --danger: #ef4444;
+    --focus-ring: var(--brand-blue-500);
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, #1d5aa6 0%, #5ba4e6 100%);
+    --gradient-hero-overlay: linear-gradient(
+      180deg,
+      rgba(10, 10, 10, 0) 0%,
+      rgba(10, 10, 10, 0.5) 100%
+    );
+
+    /* Spacing scale (4px base) */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+    --space-40: 10rem;
+
+    /* Radii */
+    --radius-none: 0;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 0.875rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.75rem;
+    --radius-full: 9999px;
+
+    /* Shadows — blue-tinted */
+    --shadow-xs: 0 1px 2px 0 rgba(29, 90, 166, 0.05);
+    --shadow-sm: 0 2px 4px -1px rgba(29, 90, 166, 0.06),
+      0 1px 2px -1px rgba(29, 90, 166, 0.04);
+    --shadow-md: 0 4px 8px -2px rgba(29, 90, 166, 0.08),
+      0 2px 4px -2px rgba(29, 90, 166, 0.05);
+    --shadow-lg: 0 10px 20px -4px rgba(29, 90, 166, 0.1),
+      0 4px 8px -4px rgba(29, 90, 166, 0.06);
+    --shadow-xl: 0 20px 32px -8px rgba(29, 90, 166, 0.12),
+      0 8px 16px -8px rgba(29, 90, 166, 0.08);
+
+    /* Motion */
+    --duration-instant: 100ms;
+    --duration-fast: 200ms;
+    --duration-normal: 300ms;
+    --duration-slow: 600ms;
+    --duration-slower: 900ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* Z-index */
+    --z-base: 0;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-overlay: 30;
+    --z-modal-backdrop: 40;
+    --z-modal: 50;
+    --z-nav: 60;
+    --z-toast: 70;
+    --z-floating: 80;
+
+    /* Fonts (set via next/font CSS variables in layout.tsx) */
+    --font-display: var(--font-fraunces), Georgia, serif;
+    --font-body: var(--font-geist), "Inter Tight", system-ui, sans-serif;
+  }
+
+  /* Dark mode */
+  .dark {
+    --background: var(--ink-950);
+    --surface: var(--ink-900);
+    --card: #1f1f1f;
+    --muted: #262626;
+    --border: #2e2e2e;
+    --border-strong: #404040;
+    --ink: var(--ink-50);
+    --ink-muted: #a3a3a3;
+    --primary: var(--brand-blue-300);
+    --primary-hover: var(--brand-blue-500);
+    --primary-foreground: var(--brand-blue-900);
+    --focus-ring: var(--brand-blue-300);
+  }
+}
+
+/* ----------------------------------------------------------
+   2. Base Element Styles
+   ---------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  a:hover {
+    color: var(--primary-hover);
+  }
+
+  /* Always-visible focus ring */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--brand-blue-100);
+    color: var(--brand-blue-900);
+  }
+
+  /* Images don't overflow by default */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ----------------------------------------------------------
+   3. Utility Classes
+   ---------------------------------------------------------- */
+
+@layer utilities {
+  /* Fluid typography — display headings */
+  .text-display-2xl {
+    font-size: clamp(2.5rem, 5vw + 1rem, 5rem); /* 40px → 80px */
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+  }
+  .text-display-xl {
+    font-size: clamp(2rem, 4vw + 1rem, 4rem); /* 32px → 64px */
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+  }
+  .text-display-lg {
+    font-size: clamp(1.75rem, 3vw + 1rem, 3rem); /* 28px → 48px */
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+  }
+  .text-display-md {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem); /* 24px → 36px */
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+  }
+
+  .text-overline {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Container shortcut */
+  .container-page {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    max-width: 80rem; /* 1280px */
+  }
+
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Section padding tokens */
+  .section-padding {
+    padding-block: 4rem;
+  }
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-block: 6rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-block: 8rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
