@@ -4,88 +4,101 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
-import { Stagger, staggerChildVariants } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
 
-const projects = [
-  {
-    title: "Residential Installation — Kamakis",
-    description:
-      "Complete 10kW solar system for a family home — panels, battery storage, and grid-tie inverter.",
-    image: "/projects/project-11.03.20.jpg",
-    tag: "Residential",
-  },
-  {
-    title: "Hotel Solar System — Watamu",
-    description:
-      "40kW commercial installation powering a boutique hotel with significant energy savings.",
-    image: "/projects/project-11.03.29.jpg",
-    tag: "Hospitality",
-  },
-  {
-    title: "Commercial Office — Nairobi",
-    description:
-      "20kW hybrid solar system for a commercial office building with battery backup.",
-    image: "/projects/project-11.03.36.jpg",
-    tag: "Commercial",
-  },
+// Row 1 — scrolls left
+const row1 = [
+  "/projects/project-11.03.02.jpg",
+  "/projects/project-11.03.17.jpg",
+  "/projects/project-11.03.19.jpg",
+  "/projects/project-11.03.22.jpg",
+  "/projects/project-11.03.24.jpg",
+  "/projects/project-11.03.26.jpg",
 ];
+
+// Row 2 — scrolls right
+const row2 = [
+  "/projects/project-11.03.27.jpg",
+  "/projects/project-11.03.28.jpg",
+  "/projects/project-11.03.30.jpg",
+  "/projects/project-11.03.31.jpg",
+  "/projects/project-11.03.35.jpg",
+  "/projects/project-11.03.37.jpg",
+];
+
+function MarqueeRow({
+  images,
+  reverse = false,
+}: {
+  images: string[];
+  reverse?: boolean;
+}) {
+  // Duplicate for seamless loop
+  const doubled = [...images, ...images];
+
+  return (
+    <div className="relative overflow-hidden group/row">
+      {/* Fade edges */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-24 bg-gradient-to-r from-surface to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-24 bg-gradient-to-l from-surface to-transparent" />
+
+      <div
+        className={`flex gap-4 w-max ${
+          reverse ? "animate-marquee-reverse" : "animate-marquee-gallery"
+        } group-hover/row:[animation-play-state:paused]`}
+        style={{ "--marquee-duration": "40s" } as React.CSSProperties}
+      >
+        {doubled.map((src, i) => (
+          <div
+            key={`${src}-${i}`}
+            className="relative h-48 w-72 md:h-56 md:w-80 lg:h-64 lg:w-96 shrink-0 overflow-hidden rounded-2xl"
+          >
+            <Image
+              src={src}
+              alt={`Solarlux installation project ${(i % images.length) + 1}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 288px, (max-width: 1024px) 320px, 384px"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function ProjectShowcase() {
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-surface">
+    <section className="py-16 md:py-24 lg:py-32 bg-surface overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <FadeIn>
-            <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">Our Work</span>
-            <h2 className="text-display-lg font-display font-medium max-w-xl">
-              Real installations,{" "}
-              <span className="text-ink-muted">real results</span>
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <Button variant="secondary" asChild>
-              <Link href="/projects">
-                View All Projects
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </FadeIn>
-        </div>
+        {/* Centered header */}
+        <FadeIn className="text-center">
+          <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">
+            Our Work
+          </span>
+          <h2 className="text-display-lg font-display font-medium mx-auto max-w-xl">
+            Real installations,{" "}
+            <span className="text-ink-muted">real results</span>
+          </h2>
+        </FadeIn>
+      </div>
 
-        <Stagger className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <motion.div
-              key={project.title}
-              variants={staggerChildVariants}
-              className="group relative rounded-2xl overflow-hidden bg-ink-900"
-            >
-              <div className="relative aspect-[3/2] min-h-50">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-ink-950/20 to-transparent" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <span className="inline-block rounded-sm bg-accent/90 px-2 py-0.5 text-xs font-semibold text-accent-foreground mb-2">
-                  {project.tag}
-                </span>
-                <h3 className="text-lg font-semibold text-white font-body">
-                  {project.title}
-                </h3>
-                <p className="mt-1 text-sm text-white/70 line-clamp-2">
-                  {project.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </Stagger>
+      {/* Full-bleed carousel — 2 rows */}
+      <div className="mt-12 md:mt-16 flex flex-col gap-4">
+        <MarqueeRow images={row1} />
+        <MarqueeRow images={row2} reverse />
+      </div>
+
+      {/* Button below carousel */}
+      <div className="mt-10 md:mt-14 text-center">
+        <FadeIn delay={0.1}>
+          <Button variant="secondary" asChild>
+            <Link href="/projects">
+              View All Projects
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </FadeIn>
       </div>
     </section>
   );
