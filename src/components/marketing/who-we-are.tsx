@@ -19,19 +19,18 @@ export function WhoWeAre() {
 
           <FadeIn delay={0.05} className="lg:col-span-6">
             <h2 className="text-display-lg font-display font-medium leading-tight">
-              Creating Impact Through{" "}
+              Kenya&apos;s trusted solar{" "}
               <br className="hidden lg:block" />
-              Clean Innovation
+              <span className="text-ink-muted">energy partner</span>
             </h2>
           </FadeIn>
 
           <FadeIn delay={0.1} className="lg:col-span-4">
             <p className="text-sm text-ink-muted leading-relaxed">
-              <strong className="text-ink">Solarlux Kenya</strong> is a
-              renewable energy company committed to driving sustainability
-              through smart solar technology, empowering homes, businesses,
-              and communities to transition to a cleaner, more efficient
-              and future-proof energy ecosystem.
+              For over 8 years, <strong className="text-ink">Solarlux Kenya</strong> has
+              been designing, supplying, and installing premium solar systems
+              for homes, businesses and hotels across the country. We believe
+              in clean energy that&apos;s accessible, reliable and affordable.
             </p>
             <Link
               href="/about"
@@ -68,9 +67,11 @@ export function WhoWeAre() {
                   Our Vision
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
-                  A world where green energy transforms lives, brings people
-                  together, fosters innovation, and promotes sustainable
-                  exploration across Kenya.
+                  To be Kenya&apos;s most trusted solar energy provider, leading
+                  the transformation towards sustainable energy solutions. We
+                  envision a future where every home and business in Kenya
+                  harnesses the power of the sun for clean, reliable, and
+                  affordable electricity.
                 </p>
               </div>
 
@@ -80,9 +81,11 @@ export function WhoWeAre() {
                   Our Mission
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-accent-foreground/70">
-                  To deliver customized, end-to-end solar solutions that empower
-                  customers to dream big and embrace a greener, more sustainable
-                  future.
+                  To provide high-quality, affordable solar energy solutions
+                  that empower Kenyan homes and businesses to transition to
+                  clean, renewable energy. We strive to make solar power
+                  accessible to everyone while maintaining the highest standards
+                  of quality and customer service.
                 </p>
               </div>
             </div>
