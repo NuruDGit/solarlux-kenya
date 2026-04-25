@@ -98,7 +98,7 @@ export function HeroBento() {
             <div className="mt-8 space-y-6">
               <div>
                 <p className="text-4xl font-semibold text-primary font-display tracking-tight">
-                  500+
+                  1,000+
                 </p>
                 <p className="text-sm text-ink-muted mt-1 font-medium">
                   Solar Systems Installed

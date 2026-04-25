@@ -45,7 +45,7 @@ const solutions = [
 ];
 
 const stats = [
-  { value: "500+", label: "Installations completed" },
+  { value: "1,000+", label: "Installations completed" },
   { value: "47", label: "Counties served across Kenya" },
   { value: "8+", label: "Years of experience" },
   { value: "25yr", label: "Panel performance warranty" },

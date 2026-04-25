@@ -26,7 +26,7 @@ export const SOCIAL_LINKS = [
 
 export const STATS = [
   { value: "8+", label: "Years of Experience" },
-  { value: "500+", label: "Installations Done" },
+  { value: "1,000+", label: "Installations Done" },
   { value: "47", label: "Counties Served" },
   { value: "25yr", label: "Panel Warranty" },
 ] as const;

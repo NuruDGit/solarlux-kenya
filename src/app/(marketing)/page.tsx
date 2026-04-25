@@ -7,6 +7,7 @@ import { SolutionsOverview } from "@/components/marketing/solutions-overview";
 import { FeaturedProducts } from "@/components/marketing/featured-products";
 import { ProjectShowcase } from "@/components/marketing/project-showcase";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
+import { FAQSection } from "@/components/marketing/faq-section";
 import { BlogSection } from "@/components/marketing/blog-section";
 import { CtaForm } from "@/components/marketing/cta-form";
 
@@ -22,8 +23,9 @@ export default function HomePage() {
       <FeaturedProducts />
       <ProjectShowcase />
       <TestimonialSlider />
-      <BlogSection />
+      <FAQSection />
       <CtaForm />
+      <BlogSection />
     </>
   );
 }
