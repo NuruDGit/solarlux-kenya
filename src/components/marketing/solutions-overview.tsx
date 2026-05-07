@@ -11,7 +11,7 @@ const solutions = [
     title: "Residential Solar",
     description:
       "Power your home with clean, affordable solar energy. Reduce your electricity bills by up to 80% with a system designed for your household.",
-    image: "/solutions/residential-solar.jpg",
+    image: "/projects/Eco-friendly wooden house in rural landscape.png",
     href: "/solutions/residential",
     stat: "80%",
     statLabel: "avg. bill reduction",

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -13,18 +14,15 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Video Background */}
+      {/* Background Image */}
       <div className="absolute inset-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/projects/project-11.03.34.jpg"
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/videos/hero-video.mp4" type="video/mp4" />
-        </video>
+        <Image
+          src="/projects/Rooftop solar installation team in action.png"
+          alt="Solar installation team"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-ink-950/65" />
         <div className="absolute inset-0 bg-linear-to-t from-ink-950/50 via-transparent to-ink-950/30" />
       </div>
@@ -62,8 +60,8 @@ export function Hero() {
             transition={{ duration, delay: 0.35, ease }}
             className="mt-5 text-lg leading-relaxed text-white/75 max-w-xl"
           >
-            End-to-end solar solutions for homes, businesses, and hotels —
-            from design to installation to maintenance.
+            End-to-end solar solutions for homes, businesses, and hotels.
+            From design and installation to long-term maintenance.
           </motion.p>
 
           {/* CTAs */}
