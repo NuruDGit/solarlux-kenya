@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -168,6 +168,7 @@ export function CtaForm() {
                         className="w-full"
                       >
                         Free Consultation
+                        <ArrowRight className="h-5 w-5" />
                       </Button>
                       <p className="text-center text-xs text-ink-muted">
                         By submitting, you agree to be contacted about your solar quote.
