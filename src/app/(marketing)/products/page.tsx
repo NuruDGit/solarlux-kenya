@@ -74,7 +74,7 @@ export default function ProductsPage() {
                   <p className="mt-1 text-sm text-ink-muted line-clamp-2">
                     {cat.description}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-[opacity] duration-200">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-opacity duration-200">
                     Browse <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </Link>
@@ -92,7 +92,7 @@ export default function ProductsPage() {
               All Products
             </h2>
             <p className="mt-3 text-ink-muted max-w-lg">
-              Filter by category and sort by price to find what you need.
+              Filter by category and sort alphabetically to find what you need.
             </p>
           </FadeIn>
 

@@ -13,7 +13,7 @@ interface Props {
 
 export function ProductGrid({ products, showFilters = true }: Props) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<"default" | "price-asc" | "price-desc">(
+  const [sortBy, setSortBy] = useState<"default" | "name-asc" | "name-desc">(
     "default"
   );
 
@@ -23,8 +23,8 @@ export function ProductGrid({ products, showFilters = true }: Props) {
       : products.filter((p) => p.categorySlug === activeCategory);
 
   const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "price-asc") return a.priceNumeric - b.priceNumeric;
-    if (sortBy === "price-desc") return b.priceNumeric - a.priceNumeric;
+    if (sortBy === "name-asc") return a.name.localeCompare(b.name);
+    if (sortBy === "name-desc") return b.name.localeCompare(a.name);
     return 0;
   });
 
@@ -73,14 +73,14 @@ export function ProductGrid({ products, showFilters = true }: Props) {
           <select
             value={sortBy}
             onChange={(e) =>
-              setSortBy(e.target.value as "default" | "price-asc" | "price-desc")
+              setSortBy(e.target.value as "default" | "name-asc" | "name-desc")
             }
             className="h-10 rounded-lg border border-border bg-card px-3 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Sort products"
           >
             <option value="default">Sort by: Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
           </select>
         </div>
       )}
