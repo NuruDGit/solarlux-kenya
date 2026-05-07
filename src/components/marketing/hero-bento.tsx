@@ -124,7 +124,7 @@ export function HeroBento() {
                   Discover Next-Gen Solar Solutions
                 </h3>
                 <p className="mt-2 text-sm text-accent-foreground/70 leading-relaxed">
-                  Residential, commercial, and hospitality — tailored for you.
+                  Residential, commercial, and hospitality. Tailored for you.
                 </p>
               </div>
               <div className="mt-6">

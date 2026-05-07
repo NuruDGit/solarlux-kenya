@@ -57,7 +57,7 @@ export function CtaForm() {
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-white/65">
                   Share a few details about your project and our team will come back with
-                  a clear recommendation, pricing, and the right next steps — usually within 24 hours.
+                  a clear recommendation, pricing, and the right next steps. Usually within 24 hours.
                 </p>
 
                 <ul className="mt-8 space-y-3">

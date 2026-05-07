@@ -58,7 +58,7 @@ export function FAQSection() {
                 <span className="text-ink-muted">make the move</span>
               </h2>
               <p className="mt-5 max-w-sm text-base leading-relaxed text-ink-muted">
-                The questions we hear most — from cost and timelines to backup
+                The questions we hear most, from cost and timelines to backup
                 power and warranties.
               </p>
 

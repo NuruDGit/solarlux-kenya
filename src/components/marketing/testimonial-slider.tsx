@@ -18,7 +18,7 @@ const testimonials = [
     company: "Hotel Manager, Watamu",
     avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=120&h=120&fit=crop&crop=face",
     quote:
-      "We switched to solar for our boutique hotel and the savings have been incredible. Solarlux handled everything from design to installation — couldn't be happier.",
+      "We switched to solar for our boutique hotel and the savings have been incredible. Solarlux handled everything from design to installation. Couldn't be happier.",
   },
   {
     name: "David Kimani",

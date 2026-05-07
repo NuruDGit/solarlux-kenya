@@ -30,7 +30,7 @@ const posts = [
   {
     title: "5 Signs Your Business Should Switch to Solar Energy",
     excerpt:
-      "From rising electricity bills to unreliable grid power — here's why Kenyan businesses are going solar.",
+      "Rising electricity bills and unreliable grid power are pushing Kenyan businesses to go solar. Here's what you need to know.",
     image: "/projects/project-11.03.36.jpg",
     category: "Business",
     date: "January 15, 2026",

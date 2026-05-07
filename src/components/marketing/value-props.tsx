@@ -20,7 +20,7 @@ const services = [
     icon: Ruler,
     title: "Project Design",
     description:
-      "Custom solar system design tailored to your energy needs, roof space, and budget — residential or commercial.",
+      "Custom solar system design tailored to your energy needs, roof space, and budget, for residential and commercial properties.",
     href: "/services/design",
     variant: "dark" as const,
   },
@@ -36,7 +36,7 @@ const services = [
     icon: Compass,
     title: "Installation Guidance",
     description:
-      "Expert consultation for DIY installers and contractors — we guide you every step of the way.",
+      "Expert consultation for DIY installers and contractors. We guide you every step of the way.",
     href: "/services/consulting",
     variant: "light" as const,
   },

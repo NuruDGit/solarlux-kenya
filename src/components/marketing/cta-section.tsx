@@ -26,7 +26,7 @@ export function CtaSection() {
               </h2>
               <p className="mt-4 text-lg text-white/80 leading-relaxed">
                 Tell us about your energy needs and our team will design a
-                custom solar solution with transparent pricing — no obligations.
+                custom solar solution with transparent pricing and no obligations.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">

@@ -67,11 +67,9 @@ export function WhoWeAre() {
                   Our Vision
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
-                  To be Kenya&apos;s most trusted solar energy provider, leading
-                  the transformation towards sustainable energy solutions. We
-                  envision a future where every home and business in Kenya
-                  harnesses the power of the sun for clean, reliable, and
-                  affordable electricity.
+                  To be Kenya&apos;s most trusted solar energy provider,
+                  making clean, reliable power accessible to every home
+                  and business across the country.
                 </p>
               </div>
 
@@ -81,11 +79,9 @@ export function WhoWeAre() {
                   Our Mission
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-accent-foreground/70">
-                  To provide high-quality, affordable solar energy solutions
-                  that empower Kenyan homes and businesses to transition to
-                  clean, renewable energy. We strive to make solar power
-                  accessible to everyone while maintaining the highest standards
-                  of quality and customer service.
+                  To deliver high-quality, affordable solar solutions that
+                  empower Kenyan homes and businesses, upholding the highest
+                  standards of quality and customer service.
                 </p>
               </div>
             </div>
