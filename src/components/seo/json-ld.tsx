@@ -69,7 +69,6 @@ interface ProductJsonLdProps {
   name: string;
   description: string;
   image: string;
-  price: string;
   category: string;
   inStock: boolean;
   slug: string;
@@ -80,14 +79,11 @@ export function ProductJsonLd({
   name,
   description,
   image,
-  price,
   category,
   inStock,
   slug,
   categorySlug,
 }: ProductJsonLdProps) {
-  const numericPrice = price.replace(/[^0-9]/g, "");
-
   const data = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -102,8 +98,6 @@ export function ProductJsonLd({
     },
     offers: {
       "@type": "Offer",
-      price: numericPrice,
-      priceCurrency: "KES",
       availability: inStock
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",

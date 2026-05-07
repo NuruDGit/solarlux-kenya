@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {};
 
   return {
-    title: `${product.name} — ${product.price} | Solarlux Kenya`,
+    title: `${product.name} | Solarlux Kenya`,
     description: product.description,
     openGraph: {
       title: `${product.name} | Solarlux Kenya`,
@@ -64,7 +64,7 @@ export default async function ProductDetailPage({ params }: Props) {
     .slice(0, 4);
 
   const whatsappMessage = encodeURIComponent(
-    `Hello! I'm interested in the ${product.name} (${product.price}). Can you tell me more?`
+    `Hello! I'm interested in the ${product.name}. Can you send me more details and the current price?`
   );
 
   return (
@@ -73,7 +73,6 @@ export default async function ProductDetailPage({ params }: Props) {
         name={product.name}
         description={product.description}
         image={product.image}
-        price={product.price}
         category={product.category}
         inStock={product.inStock}
         slug={product.slug}
@@ -155,9 +154,6 @@ export default async function ProductDetailPage({ params }: Props) {
                 <h1 className="text-display-lg font-display font-medium">
                   {product.name}
                 </h1>
-                <p className="mt-4 text-2xl font-semibold text-primary">
-                  {product.price}
-                </p>
                 <p className="mt-4 text-ink-muted leading-relaxed">
                   {product.description}
                 </p>
@@ -177,16 +173,13 @@ export default async function ProductDetailPage({ params }: Props) {
                 {/* CTA Buttons */}
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <Button variant="accent" size="lg" asChild>
-                    <Link href="/quote">Get a Quote</Link>
-                  </Button>
-                  <Button variant="primary" size="lg" asChild>
                     <a
                       href={`https://wa.me/${CONTACT.whatsapp}?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <MessageCircle className="h-4 w-4" />
-                      WhatsApp Us
+                      Enquire on WhatsApp
                     </a>
                   </Button>
                   <Button variant="secondary" size="lg" asChild>

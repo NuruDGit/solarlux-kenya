@@ -13,8 +13,6 @@ const products = [
   {
     name: "JA Solar 600W Panel",
     category: "Solar Panels",
-    price: "KSh 11,500",
-    originalPrice: "KSh 12,500",
     image: "/products/JA_SOLAR_600W.png",
     href: "/products/solar-panels/ja-solar-600w",
     badge: "Best Seller",
@@ -23,18 +21,14 @@ const products = [
   {
     name: "Deye 5kWh Battery",
     category: "Batteries",
-    price: "KSh 120,000",
-    originalPrice: "KSh 130,000",
     image: "/products/5kWh_Deye_Lithium_Ion_Battery.png",
     href: "/products/batteries/deye-5kwh",
-    badge: "-8%",
-    badgeType: "discount" as const,
+    badge: null,
+    badgeType: null,
   },
   {
     name: "MUST 7.2KW Inverter",
     category: "Inverters",
-    price: "KSh 90,000",
-    originalPrice: null,
     image: "/products/inverters.jpg",
     href: "/products/inverters/must-7-2kw",
     badge: null,
@@ -43,12 +37,10 @@ const products = [
   {
     name: "Renergy iPower 10.24kWh",
     category: "Batteries",
-    price: "KSh 230,000",
-    originalPrice: "KSh 250,000",
     image: "/products/10.24kwh-200ah-renergy.jpg",
     href: "/products/batteries/renergy-10kwh",
-    badge: "-8%",
-    badgeType: "discount" as const,
+    badge: null,
+    badgeType: null,
   },
 ];
 
@@ -108,14 +100,7 @@ export function FeaturedProducts() {
 
                       {/* Badge */}
                       {product.badge && (
-                        <span
-                          className={cn(
-                            "absolute top-4 left-4 inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide",
-                            product.badgeType === "discount"
-                              ? "bg-accent text-accent-foreground"
-                              : "bg-primary text-primary-foreground"
-                          )}
-                        >
+                        <span className="absolute top-4 left-4 inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide bg-primary text-primary-foreground">
                           {product.badge}
                         </span>
                       )}
@@ -134,16 +119,6 @@ export function FeaturedProducts() {
                       <h3 className="mt-2 text-base font-semibold font-body leading-snug text-ink transition-colors duration-300 group-hover:text-primary">
                         {product.name}
                       </h3>
-                      <div className="mt-auto pt-4 flex items-baseline gap-2.5">
-                        <span className="text-lg font-semibold font-body text-primary tabular-nums">
-                          {product.price}
-                        </span>
-                        {product.originalPrice && (
-                          <span className="text-sm text-ink-muted line-through tabular-nums">
-                            {product.originalPrice}
-                          </span>
-                        )}
-                      </div>
                     </div>
                   </div>
                 </div>

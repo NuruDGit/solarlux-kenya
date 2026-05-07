@@ -50,14 +50,6 @@ export function ProductCard({ product, index = 0 }: Props) {
           <h3 className="mt-1 text-base font-semibold font-body group-hover:text-primary transition-colors duration-200">
             {product.name}
           </h3>
-          <p className="mt-2 text-sm font-medium text-primary">
-            {product.originalPrice && (
-              <span className="mr-2 text-ink-muted line-through">
-                {product.originalPrice}
-              </span>
-            )}
-            {product.price}
-          </p>
         </div>
       </Link>
     </motion.div>

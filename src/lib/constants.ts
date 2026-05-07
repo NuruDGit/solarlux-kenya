@@ -8,7 +8,7 @@ export const SITE = {
 
 export const CONTACT = {
   phone1: "+254 794 919 224",
-  phone2: "0712 960 830",
+  phone2: "+254 703 271 515",
   email: "info@solarluxkenya.co.ke",
   emailAlt: "solarluxkenya@gmail.com",
   whatsapp: "+254794919224",
