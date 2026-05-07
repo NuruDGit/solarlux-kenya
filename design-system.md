@@ -420,7 +420,37 @@ Alternating section backgrounds create rhythm: `bg-background` → `bg-surface` 
 
 ---
 
-## 14. Updating This Document
+## 14. Copy & Voice Guidelines
+
+### Tone
+- Direct, confident, and warm. Not corporate, not salesy.
+- Write for a Kenyan homeowner or business owner, not a technical audience.
+- Lead with benefit, follow with feature.
+
+### Punctuation Rules
+- **No em dashes (`—`).** They read as AI-generated filler. Use a period, comma, or rewrite the sentence instead.
+  - ❌ `Solar solutions for homes and businesses — from design to installation.`
+  - ✅ `Solar solutions for homes and businesses. From design to installation.`
+  - ✅ `Solar solutions for homes and businesses, from design to installation.`
+- **No en dashes as connectors** in prose. Use "to" for ranges (e.g., "8 to 25 years", not "8–25 years") in body copy.
+- Prefer short sentences. If a sentence needs an em dash to hold it together, split it in two.
+
+### Common Fixes
+| Instead of | Use |
+|---|---|
+| `X — Y` (em dash joining clauses) | `X. Y` or `X, Y` |
+| `from A to B — here's why` | Rewrite: "A and B are why…" |
+| `with pricing — no obligations` | `with pricing and no obligations` |
+| `built on the highest standards — quality and service` | `upholding the highest standards of quality and service` |
+
+### Other Copy Rules
+- Avoid "solutions" as a standalone noun — pair it with context ("solar solutions for homes").
+- Always use `tel:` links for phone numbers so mobile users can tap-to-call.
+- CTAs: action verb first. "Get a Free Quote", "Call Now", "Enquire on WhatsApp" — not "Free Quote" or "WhatsApp".
+
+---
+
+## 15. Updating This Document
 
 - New color? Add to the token tables before using it.
 - New component pattern? Add a Component Specification section.
