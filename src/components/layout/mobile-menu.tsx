@@ -72,7 +72,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             <div className="flex h-full flex-col">
               {/* Header */}
               <div className="flex h-16 items-center justify-between border-b border-border px-4">
-                <Logo width={120} height={36} />
+                <Logo width={120} height={36} background="light" />
                 <button
                   type="button"
                   className="flex items-center justify-center h-11 w-11 rounded-lg text-ink hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

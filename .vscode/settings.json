@@ -1,8 +1,2 @@
 {
-    "chat.tools.terminal.autoApprove": {
-        "/^cd \"/Users/kelvinwambugu/Downloads/Solarlux website redesign\" && node -e \"\nconst puppeteer = require\\('puppeteer'\\);\n\\(async \\(\\) => \\{\n  const browser = await puppeteer\\.launch\\(\\{ headless: true \\}\\);\n  const page = await browser\\.newPage\\(\\);\n  await page\\.setViewport\\(\\{ width: 1440, height: 900 \\}\\);\n  await page\\.goto\\('http://localhost:3000', \\{ waitUntil: 'networkidle2', timeout: 15000 \\}\\);\n  await new Promise\\(r => setTimeout\\(r, 1500\\)\\);\n  await page\\.evaluate\\(\\(\\) => \\{\n    const sections = document\\.querySelectorAll\\('section'\\);\n    for \\(const s of sections\\) \\{\n      if \\(s\\.textContent\\.includes\\('Premium solar equipment'\\)\\) \\{\n        s\\.scrollIntoView\\(\\{ block: 'start' \\}\\);\n        break;\n      \\}\n    \\}\n  \\}\\);\n  await new Promise\\(r => setTimeout\\(r, 1000\\)\\);\n  await page\\.screenshot\\(\\{ path: '\\./temporary screenshots/screenshot-42-products-v2\\.png', fullPage: false \\}\\);\n  console\\.log\\('Done'\\);\n  await browser\\.close\\(\\);\n\\}\\)\\(\\);\n\"$/": {
-            "approve": true,
-            "matchCommandLine": true
-        }
-    }
 }

@@ -158,6 +158,7 @@ export function CtaForm() {
                           placeholder="Tell us about your energy needs..."
                           rows={4}
                           className="mt-1.5"
+                          required
                         />
                       </div>
                       <Button

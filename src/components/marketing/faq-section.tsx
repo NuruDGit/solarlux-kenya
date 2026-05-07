@@ -79,7 +79,7 @@ export function FAQSection() {
               {faqItems.map((item, index) => (
                 <Accordion.Item key={item.question} value={`faq-${index}`}>
                   <Accordion.Header>
-                    <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none">
+<Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                       <span className="text-base font-medium leading-snug text-ink sm:text-lg">
                         {item.question}
                       </span>

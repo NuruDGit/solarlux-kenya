@@ -1,36 +1,31 @@
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-import horizontalLogo from "@/../brand-assets/Solarlux_Kenya_horizontal_logo.png";
-import verticalLogo from "@/../brand-assets/solarlux_kenya_vertical_logo.png";
-
-const logos: Record<string, StaticImageData> = {
-  horizontal: horizontalLogo,
-  vertical: verticalLogo,
-};
 
 interface LogoProps {
-  variant?: "horizontal" | "vertical";
   className?: string;
   width?: number;
   height?: number;
+  /** Use "dark" for dark backgrounds (footer), "light" for light backgrounds (header, mobile menu) */
+  background?: "light" | "dark";
 }
 
 export function Logo({
-  variant = "horizontal",
   className,
-  width,
-  height,
+  width = 160,
+  height = 48,
+  background = "light",
 }: LogoProps) {
-  const isHorizontal = variant === "horizontal";
-  const w = width ?? (isHorizontal ? 160 : 48);
-  const h = height ?? (isHorizontal ? 48 : 80);
+  const src =
+    background === "dark"
+      ? "/solarlux-logo-dark.png"
+      : "/solarlux-logo-light.png";
 
   return (
     <Image
-      src={logos[variant]}
+      src={src}
       alt="Solarlux Kenya"
-      width={w}
-      height={h}
+      width={width}
+      height={height}
       className={cn("h-auto", className)}
       priority
     />
