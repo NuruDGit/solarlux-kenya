@@ -2,7 +2,7 @@
 
 import * as Accordion from "@radix-ui/react-accordion";
 import Link from "next/link";
-import { Minus, Plus, ArrowRight } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { FAQJsonLd } from "@/components/seo/json-ld";
@@ -66,10 +66,7 @@ export function FAQSection() {
                 <p className="text-sm text-ink-muted">Still have questions?</p>
                 <div className="mt-3">
                   <Button variant="secondary" asChild>
-                    <Link href="/quote">
-                      Get a Free Quote
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    <Link href="/quote">Get a Free Quote</Link>
                   </Button>
                 </div>
               </div>
