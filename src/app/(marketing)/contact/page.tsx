@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
+import { Button } from "@/components/ui/button";
 import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
 import { CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
 
@@ -207,12 +208,9 @@ export default function ContactPage() {
               Fill in our quick quote form and we&apos;ll have a tailored
               proposal back to you within 24 hours.
             </p>
-            <Link
-              href="/quote"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-            >
-              Get a Free Quote
-            </Link>
+            <Button variant="accent" size="lg" className="mt-8" asChild>
+              <Link href="/quote">Get a Free Quote</Link>
+            </Button>
           </FadeIn>
         </div>
       </section>

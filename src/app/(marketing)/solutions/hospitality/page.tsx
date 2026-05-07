@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle, Coffee, Droplets, Flame, Leaf, Star, Zap } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Solar Solutions for Hotels & Hospitality",
@@ -89,19 +90,12 @@ export default function HospitalityPage() {
               Kenya&apos;s hospitality sector has high energy costs and an increasingly eco-conscious guest base. Solar lets you cut operating costs dramatically while marketing your property as sustainable. We&apos;ve installed systems at hotels across the coast, Nairobi, and the Rift Valley.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Hotel Solar Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-paper/20 px-8 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Talk to Our Team
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Hotel Solar Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Talk to Our Team</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -160,7 +154,7 @@ export default function HospitalityPage() {
               <ul className="mt-8 space-y-3">
                 {hotelBenefits.map((benefit) => (
                   <li key={benefit} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{benefit}</span>
                   </li>
                 ))}
@@ -186,7 +180,7 @@ export default function HospitalityPage() {
                
                 className="rounded-2xl overflow-hidden border border-border bg-card"
               >
-                <div className="relative aspect-[4/3] bg-ink-100">
+                <div className="relative aspect-4/3 bg-ink-100">
                   <Image
                     src={`https://placehold.co/600x400/0F2F58/FFFFFF?text=${encodeURIComponent(project.tag)}`}
                     alt={project.title}
@@ -239,19 +233,12 @@ export default function HospitalityPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-4">
-                <Link
-                  href="/quote"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-                >
-                  Get a Hotel Quote
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-8 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-                >
-                  Speak to a Hospitality Specialist
-                </Link>
+                <Button variant="accent" size="lg" asChild>
+                  <Link href="/quote">Get a Hotel Quote</Link>
+                </Button>
+                <Button variant="outline-light" size="lg" asChild>
+                  <Link href="/contact">Speak to a Hospitality Specialist</Link>
+                </Button>
               </div>
             </div>
           </FadeIn>

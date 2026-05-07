@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
 import { CATEGORIES, type Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
@@ -33,30 +34,38 @@ export function ProductGrid({ products, showFilters = true }: Props) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           {/* Category filters */}
           <div className="flex flex-wrap gap-2">
-            <button
+            <Button
+              type="button"
+              variant={activeCategory === "all" ? "primary" : "secondary"}
+              size="sm"
+              sunrise={false}
               onClick={() => setActiveCategory("all")}
               className={cn(
-                "px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200",
+                "min-w-fit",
                 activeCategory === "all"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-surface text-ink-muted hover:bg-muted hover:text-ink"
+                  ? ""
+                  : "border-transparent bg-surface text-ink-muted hover:bg-muted hover:text-ink"
               )}
             >
               All Products
-            </button>
+            </Button>
             {CATEGORIES.map((cat) => (
-              <button
+              <Button
                 key={cat.slug}
+                type="button"
+                variant={activeCategory === cat.slug ? "primary" : "secondary"}
+                size="sm"
+                sunrise={false}
                 onClick={() => setActiveCategory(cat.slug)}
                 className={cn(
-                  "px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200",
+                  "min-w-fit",
                   activeCategory === cat.slug
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-surface text-ink-muted hover:bg-muted hover:text-ink"
+                    ? ""
+                    : "border-transparent bg-surface text-ink-muted hover:bg-muted hover:text-ink"
                 )}
               >
                 {cat.name}
-              </button>
+              </Button>
             ))}
           </div>
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle, Home, TrendingDown, ShieldCheck, Sun } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Residential Solar Solutions",
@@ -89,19 +90,12 @@ export default function ResidentialPage() {
               Cut your electricity bills by up to 80%, protect your family from grid outages, and invest in an asset that pays back over 25 years. Solarlux designs and installs home solar systems across Kenya.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Free Home Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-paper/20 px-8 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Ask a Question
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Free Home Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Ask a Question</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -266,13 +260,9 @@ export default function ResidentialPage() {
             <p className="mt-4 text-body-lg text-paper/70 max-w-xl mx-auto">
               Fill in our 2-minute quote form and we&apos;ll design a system tailored to your home.
             </p>
-            <Link
-              href="/quote"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-            >
-              Get My Free Home Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <Button variant="accent" size="lg" className="mt-8" asChild>
+              <Link href="/quote">Get My Free Home Quote</Link>
+            </Button>
           </FadeIn>
         </div>
       </section>

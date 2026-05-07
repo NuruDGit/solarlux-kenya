@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Home, Building2, Hotel } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
+import { AnimatedLayerButton } from "@/components/ui/button";
 
 const solutions = [
   {
@@ -60,13 +61,9 @@ export function SolutionsOverview() {
             </h2>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <Link
-              href="/solutions"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-[transform,box-shadow] duration-300 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
-            >
-              Explore All Solutions
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <AnimatedLayerButton variant="accent" size="md" asChild>
+              <Link href="/solutions">Explore All Solutions</Link>
+            </AnimatedLayerButton>
           </FadeIn>
         </div>
 

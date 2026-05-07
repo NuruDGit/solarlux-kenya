@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle, MessageCircle, Search, FileCheck, ShieldAlert } from "lucide-react";
+import { CheckCircle, MessageCircle, Search, FileCheck, ShieldAlert } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 import { formatWhatsAppHref } from "@/lib/utils";
 import { CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
 
@@ -79,21 +80,18 @@ export default function ConsultingPage() {
               Not every customer wants us to do the installation — and that&apos;s fine. Our advisory service gives you the technical knowledge to make confident decisions, review quotes critically, and verify that your system was installed correctly.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <a
-                href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90"
-              >
-                Chat on WhatsApp
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-border px-8 py-4 text-body font-medium text-ink transition-colors duration-fast hover:bg-muted"
-              >
-                Contact Us
-              </Link>
+              <Button variant="primary" size="lg" asChild>
+                <a
+                  href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Chat on WhatsApp
+                </a>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/contact">Contact Us</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -143,7 +141,7 @@ export default function ConsultingPage() {
               <ul className="mt-8 space-y-4">
                 {whoNeedsThis.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{item}</span>
                   </li>
                 ))}
@@ -158,7 +156,7 @@ export default function ConsultingPage() {
                 <ul className="space-y-4">
                   {commonIssues.map((issue) => (
                     <li key={issue} className="flex items-start gap-3">
-                      <ShieldAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" aria-hidden="true" />
+                      <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" aria-hidden="true" />
                       <span className="text-body text-ink">{issue}</span>
                     </li>
                   ))}
@@ -182,21 +180,18 @@ export default function ConsultingPage() {
                 Send us your current quotes, system designs, or photos of your installation. We&apos;ll review and respond with our assessment — usually within 24 hours.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-                <a
-                  href={formatWhatsAppHref(CONTACT.whatsapp, "Hello! I'd like some expert guidance on my solar project.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-                >
-                  WhatsApp Us Your Documents
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-10 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-                >
-                  Email or Call Us
-                </Link>
+                <Button variant="accent" size="lg" asChild>
+                  <a
+                    href={formatWhatsAppHref(CONTACT.whatsapp, "Hello! I'd like some expert guidance on my solar project.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp Us Your Documents
+                  </a>
+                </Button>
+                <Button variant="outline-light" size="lg" asChild>
+                  <Link href="/contact">Email or Call Us</Link>
+                </Button>
               </div>
             </div>
           </FadeIn>

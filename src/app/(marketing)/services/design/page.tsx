@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle, ClipboardList, ScanLine, BarChart3, FileText } from "lucide-react";
+import { CheckCircle, ClipboardList, ScanLine, BarChart3, FileText } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Solar Project Design",
@@ -75,19 +76,12 @@ export default function DesignPage() {
               A poorly sized solar system wastes money — either you overbuy or your system falls short on cloudy days. Our engineers get the sizing right the first time, using real data from your site and energy bills.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90"
-              >
-                Start With a Free Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-border px-8 py-4 text-body font-medium text-ink transition-colors duration-fast hover:bg-muted"
-              >
-                Talk to an Engineer
-              </Link>
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/quote">Start With a Free Quote</Link>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/contact">Talk to an Engineer</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -140,7 +134,7 @@ export default function DesignPage() {
               <ul className="mt-8 space-y-4">
                 {designIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{item}</span>
                   </li>
                 ))}
@@ -175,13 +169,9 @@ export default function DesignPage() {
             <p className="mt-4 text-body-lg text-paper/70 max-w-xl mx-auto">
               Fill in our quick quote form and we&apos;ll arrange a site visit within 48 hours.
             </p>
-            <Link
-              href="/quote"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-            >
-              Get Your Free Design Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <Button variant="accent" size="lg" className="mt-8" asChild>
+              <Link href="/quote">Get Your Free Design Quote</Link>
+            </Button>
           </FadeIn>
         </div>
       </section>

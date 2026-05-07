@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Zap } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
+import { AnimatedLayerButton } from "@/components/ui/button";
 
 export function WhoWeAre() {
   return (
@@ -32,13 +32,9 @@ export function WhoWeAre() {
               for homes, businesses and hotels across the country. We believe
               in clean energy that&apos;s accessible, reliable and affordable.
             </p>
-            <Link
-              href="/about"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-[transform,box-shadow] duration-300 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
-            >
-              Get to Know Us
-              <Zap className="h-4 w-4" strokeWidth={2} />
-            </Link>
+            <AnimatedLayerButton variant="accent" size="md" className="mt-6" asChild>
+              <Link href="/about">Get to Know Us</Link>
+            </AnimatedLayerButton>
           </FadeIn>
         </div>
 

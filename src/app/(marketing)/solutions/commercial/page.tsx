@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle, TrendingDown, Zap, BarChart3, Leaf } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Commercial Solar Solutions",
@@ -89,19 +90,12 @@ export default function CommercialPage() {
               Reduce your largest operating expense, protect against grid unreliability, and achieve payback in as little as 2–4 years. We design and install commercial solar systems from 5kW to 500kW+.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Commercial Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-paper/20 px-8 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Talk to Our Team
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Commercial Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Talk to Our Team</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -151,7 +145,7 @@ export default function CommercialPage() {
               <ul className="mt-8 space-y-3">
                 {commercialTypes.map((type) => (
                   <li key={type} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{type}</span>
                   </li>
                 ))}
@@ -231,13 +225,9 @@ export default function CommercialPage() {
             <p className="mt-4 text-body-lg text-paper/70 max-w-xl mx-auto">
               Tell us your monthly bill and property type — we&apos;ll run the numbers and show you the ROI.
             </p>
-            <Link
-              href="/quote"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-            >
-              Get a Commercial Solar Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <Button variant="accent" size="lg" className="mt-8" asChild>
+              <Link href="/quote">Get a Commercial Solar Quote</Link>
+            </Button>
           </FadeIn>
         </div>
       </section>

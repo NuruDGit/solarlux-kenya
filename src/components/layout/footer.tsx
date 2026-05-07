@@ -6,6 +6,7 @@ import { Logo } from "@/components/icons/logo";
 import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
 import { FacebookIcon, InstagramIcon, XIcon } from "@/components/icons/social";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { Button } from "@/components/ui/button";
 import {
   CONTACT,
   PRODUCT_CATEGORIES,
@@ -86,27 +87,43 @@ export function Footer() {
                 const Icon = socialIconMap[label];
                 if (!Icon) return null;
                 return (
-                  <a
+                  <Button
                     key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors duration-fast hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950"
+                    variant="outline-light"
+                    size="icon"
+                    layered={false}
+                    sunrise={false}
+                    className="h-10 w-10 text-white/80 hover:border-accent hover:text-accent focus-visible:ring-accent/60 focus-visible:ring-offset-ink-950"
+                    asChild
                   >
-                    <Icon className="h-4 w-4" />
-                  </a>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  </Button>
                 );
               })}
-              <a
-                href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Chat on WhatsApp"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform duration-fast hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950"
+              <Button
+                variant="ghost"
+                size="icon"
+                layered={false}
+                sunrise={false}
+                className="h-10 w-10 rounded-full bg-[#25D366] text-white hover:-translate-y-0.5 hover:bg-[#1ebe5b] focus-visible:ring-accent/60 focus-visible:ring-offset-ink-950"
+                asChild
               >
-                <WhatsAppIcon className="h-4 w-4" />
-              </a>
+                <a
+                  href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Chat on WhatsApp"
+                >
+                  <WhatsAppIcon className="h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
 

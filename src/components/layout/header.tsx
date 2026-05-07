@@ -154,19 +154,19 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             className={cn(
-              "lg:hidden flex items-center justify-center h-11 w-11 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-              scrolled
-                ? "text-ink hover:bg-muted"
-                : "text-white hover:bg-white/10"
+              "lg:hidden h-11 w-11",
+              scrolled ? "text-ink hover:bg-muted" : "text-white hover:bg-white/10"
             )}
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
             <Menu className="h-6 w-6" />
-          </button>
+          </Button>
         </div>
       </header>
 

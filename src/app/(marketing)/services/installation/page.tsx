@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle, HardHat, ShieldCheck, Wrench, Clock } from "lucide-react";
+import { CheckCircle, HardHat, ShieldCheck, Wrench, Clock } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Solar Installation & Maintenance",
@@ -80,19 +81,12 @@ export default function InstallationPage() {
               A quality installation determines whether your solar system performs as designed. Our certified technicians follow rigorous standards from mounting to commissioning — and we stay available for the long haul with maintenance plans.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90"
-              >
-                Get an Installation Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-border px-8 py-4 text-body font-medium text-ink transition-colors duration-fast hover:bg-muted"
-              >
-                Speak to Our Team
-              </Link>
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/quote">Get an Installation Quote</Link>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/contact">Speak to Our Team</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -136,7 +130,7 @@ export default function InstallationPage() {
               <ul className="mt-8 space-y-4">
                 {installationScope.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{item}</span>
                   </li>
                 ))}
@@ -179,7 +173,7 @@ export default function InstallationPage() {
               <ul className="mt-8 space-y-4">
                 {maintenanceItems.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{item}</span>
                   </li>
                 ))}
@@ -211,13 +205,9 @@ export default function InstallationPage() {
             <p className="mt-4 text-body-lg text-paper/70 max-w-xl mx-auto">
               Tell us about your project and we&apos;ll provide a full installation quote within 24 hours.
             </p>
-            <Link
-              href="/quote"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-            >
-              Get a Free Installation Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <Button variant="accent" size="lg" className="mt-8" asChild>
+              <Link href="/quote">Get a Free Installation Quote</Link>
+            </Button>
           </FadeIn>
         </div>
       </section>

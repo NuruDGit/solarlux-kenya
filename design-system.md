@@ -253,36 +253,70 @@ Default Tailwind breakpoints — do not customize without reason.
 
 ### Button
 
-Three variants × three sizes.
+The shared button primitive in `src/components/ui/button.tsx` is the single source of truth for all button-like actions. Do not hand-roll CTA links with local utility strings when an action should look or behave like a button.
+
+Variants in active use: `primary`, `secondary`, `accent`, `outline-light`, `dark`, `ghost`, `link`.
 
 #### Variants
 
-**Primary** — `bg-primary text-primary-foreground`
-- Default: `#1D5AA6` background, white text
-- Hover: `#154878` background + `translateY(-2px)` + `shadow-md`
-- Active: `#154878` + `translateY(0)`
+**Primary** — brand CTA on light surfaces
+- Shape: `rounded-full`
+- Surface: layered blue gradient (`brand-blue-900 → primary → brand-blue-300`)
+- Motion: Solarlux icon travels through the button on hover
+- Hover: `translateY(-2px)` feel with reduced shadow offset
+- Active: pushed state via `translateY(3px)` and tighter shadow
 - Focus: `ring-2 ring-offset-2 ring-primary`
 - Disabled: 40% opacity, no transform
 
-**Secondary** — `bg-transparent border border-border-strong text-ink`
-- Hover: `bg-muted`
-- Active: `bg-muted` + slightly darker border
+**Secondary** — outline action on light surfaces
+- Shape: `rounded-full`
+- Surface: transparent with `border-border-strong`
+- Hover: sunrise effect rises from the bottom edge across the full width
+- Hover text: stays dark enough to read over the sunrise fill
+- Active: subtle pressed scale
 - Focus: `ring-2 ring-offset-2 ring-primary`
 
-**Accent (urgency)** — `bg-accent text-accent-foreground`
-- For "Get Free Quote" in high-conversion moments only
-- Default: `#FDB813` background, ink text
-- Hover: `#C89410` background + `translateY(-2px)`
+**Accent** — high-conversion CTA
+- Use for quote and high-intent conversion moments only
+- Shape: `rounded-full`
+- Surface: layered yellow gradient (`brand-yellow-600 → accent → brand-yellow-200`)
+- Motion: Solarlux icon travels through the button on hover
+- Hover: slightly darker yellow with reduced shadow offset
+- Active: pushed state via `translateY(3px)` and tighter shadow
+
+**Outline-light** — outline action on dark/image surfaces
+- Shape: `rounded-full`
+- Surface: transparent with `border-white/20`
+- Hover: sunrise effect rises across the full width of the button
+- Hover text: transitions from white to dark ink for readability over the sunrise glow
+- Focus: `ring-2 ring-offset-2 ring-white`
+
+**Dark** — dark filled CTA on light surfaces
+- Shape: `rounded-full`
+- Surface: dark gradient (`ink-950 → ink-900 → brand-blue-700`)
+- Motion: Solarlux icon travels subtly through the button on hover
+
+**Ghost / Link**
+- Use for tertiary actions only
+- Do not use these for primary conversion CTAs
 
 #### Sizes
 
 | Size | Padding | Text | Height | Radius |
 |---|---|---|---|---|
 | `sm` | `px-4 py-2` | `14px` / 500 | 36px | `rounded-lg` |
-| `md` (default) | `px-6 py-3` | `16px` / 600 | 48px | `rounded-lg` for secondary, `rounded-full` for primary |
-| `lg` | `px-8 py-4` | `18px` / 600 | 56px | `rounded-full` for primary CTAs |
+| `md` (default) | `px-6 py-3` | `16px` / 600 | 48px | `rounded-full` |
+| `lg` | `px-8 py-4` | `18px` / 600 | 56px | `rounded-full` |
 
 **Touch target minimum:** 44px on mobile. `md` and `lg` are always safe; `sm` is desktop-only.
+
+#### Usage rules
+
+- Use `<Button asChild><Link /></Button>` for internal navigational CTAs.
+- Use `<Button asChild><a /></Button>` for external actions such as WhatsApp.
+- Button labels are text-only. Do not add `ArrowRight`, `Phone`, or other trailing icons to button content.
+- Do not recreate button styles inline on route pages or marketing sections. If a new button look is needed, add it to the shared primitive first.
+- Reserve `outline-light` for dark, image, or high-contrast surfaces. Use `secondary` for light backgrounds.
 
 ---
 

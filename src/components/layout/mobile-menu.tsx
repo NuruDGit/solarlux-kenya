@@ -73,14 +73,16 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
               {/* Header */}
               <div className="flex h-16 items-center justify-between border-b border-border px-4">
                 <Logo width={120} height={36} background="light" />
-                <button
+                <Button
                   type="button"
-                  className="flex items-center justify-center h-11 w-11 rounded-lg text-ink hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  variant="ghost"
+                  size="icon"
+                  className="h-11 w-11 text-ink hover:bg-muted"
                   onClick={onClose}
                   aria-label="Close menu"
                 >
                   <X className="h-6 w-6" />
-                </button>
+                </Button>
               </div>
 
               {/* Nav */}
@@ -90,9 +92,10 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                     <li key={link.href}>
                       {"children" in link && link.children ? (
                         <div>
-                          <button
+                          <Button
                             type="button"
-                            className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-base font-medium text-ink hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                            variant="ghost"
+                            className="h-auto w-full justify-between px-4 py-3 text-base font-medium text-ink"
                             onClick={() =>
                               setExpandedItem(
                                 expandedItem === link.href ? null : link.href
@@ -106,7 +109,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                                 expandedItem === link.href ? "rotate-180" : ""
                               }`}
                             />
-                          </button>
+                          </Button>
                           {expandedItem === link.href && (
                             <ul className="ml-4 space-y-1 border-l border-border pl-4 mt-1">
                               <li>

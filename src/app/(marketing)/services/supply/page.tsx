@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle, Package, Sun, Battery, Zap, Droplets, Lightbulb } from "lucide-react";
+import { CheckCircle, Package, Sun, Battery, Zap, Droplets, Lightbulb } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Solar Equipment Supply",
@@ -80,19 +81,12 @@ export default function SupplyPage() {
               We stock a comprehensive range of solar panels, batteries, inverters, water heaters, and accessories from globally recognised brands. Every product we sell comes with manufacturer-backed warranties and our full technical support.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90"
-              >
-                Browse Products
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/quote"
-                className="inline-flex items-center gap-2 rounded-lg border border-border px-8 py-4 text-body font-medium text-ink transition-colors duration-fast hover:bg-muted"
-              >
-                Request a Quote
-              </Link>
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/products">Browse Products</Link>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/quote">Request a Quote</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
@@ -152,7 +146,7 @@ export default function SupplyPage() {
               <ul className="mt-8 space-y-4">
                 {whyBuyFromUs.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <span className="text-body text-ink">{item}</span>
                   </li>
                 ))}
@@ -182,19 +176,12 @@ export default function SupplyPage() {
               Our technical team can help you select the right products for your system size, budget, and goals.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/products"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Browse All Products
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-10 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Speak to an Expert
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/products">Browse All Products</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Speak to an Expert</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>

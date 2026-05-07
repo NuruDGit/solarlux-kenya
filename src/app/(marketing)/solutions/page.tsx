@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Solar Solutions",
@@ -121,13 +121,9 @@ export default function SolutionsPage() {
                         </span>
                       ))}
                     </div>
-                    <Link
-                      href={solution.href}
-                      className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90 self-start"
-                    >
-                      Explore {solution.title}
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </Link>
+                    <Button variant="primary" size="md" className="mt-8 self-start" asChild>
+                      <Link href={solution.href}>Explore {solution.title}</Link>
+                    </Button>
                   </div>
                 </div>
               </FadeIn>
@@ -148,19 +144,12 @@ export default function SolutionsPage() {
               Our free quote form takes 2 minutes. We&apos;ll review your submission and come back with a system recommendation tailored to your needs.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Free Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-10 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Talk to Us First
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Free Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Talk to Us First</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>

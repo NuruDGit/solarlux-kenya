@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { Button } from "@/components/ui/button";
 import { STATS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -194,7 +195,7 @@ export default function AboutPage() {
                 {whyChooseUs.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle
-                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary"
+                      className="mt-0.5 h-5 w-5 shrink-0 text-primary"
                       aria-hidden="true"
                     />
                     <span className="text-body text-ink">{item}</span>
@@ -221,19 +222,12 @@ export default function AboutPage() {
               through years of reliable operation.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Free Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/projects"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-8 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                See Our Projects
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Free Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/projects">See Our Projects</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>

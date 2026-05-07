@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Package, PenTool, Wrench, MessageCircle, ArrowRight, CheckCircle } from "lucide-react";
+import { Package, PenTool, Wrench, MessageCircle, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 
@@ -150,20 +151,16 @@ export default function ServicesPage() {
                       <p className="mt-4 text-body-lg text-ink-muted leading-relaxed">
                         {service.description}
                       </p>
-                      <Link
-                        href={service.href}
-                        className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-body font-semibold text-paper transition-colors duration-fast hover:bg-primary/90"
-                      >
-                        Learn More
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </Link>
+                      <Button variant="primary" size="md" className="mt-8 self-start" asChild>
+                        <Link href={service.href}>Learn More</Link>
+                      </Button>
                     </div>
                     <div className="border-t lg:border-t-0 lg:border-l border-border p-8 md:p-12 bg-surface">
                       <p className="text-overline text-ink-muted mb-6">What&apos;s included</p>
                       <ul className="space-y-3">
                         {service.features.map((feature) => (
                           <li key={feature} className="flex items-start gap-3">
-                            <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                            <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                             <span className="text-body text-ink">{feature}</span>
                           </li>
                         ))}
@@ -221,19 +218,12 @@ export default function ServicesPage() {
               Tell us about your property and we&apos;ll put together a free, no-obligation solar proposal for you.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/quote"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-10 py-4 text-body font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
-              >
-                Get a Free Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-paper/20 px-10 py-4 text-body font-medium text-paper transition-colors duration-fast hover:bg-paper/10"
-              >
-                Talk to Us First
-              </Link>
+              <Button variant="accent" size="lg" asChild>
+                <Link href="/quote">Get a Free Quote</Link>
+              </Button>
+              <Button variant="outline-light" size="lg" asChild>
+                <Link href="/contact">Talk to Us First</Link>
+              </Button>
             </div>
           </FadeIn>
         </div>
