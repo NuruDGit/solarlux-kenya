@@ -27,7 +27,7 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-60 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-60 transition-[background-color,border-color,box-shadow] duration-300",
           scrolled
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-xs"
             : "bg-transparent"
@@ -36,7 +36,7 @@ export function Header() {
         {/* Top bar — contact info (desktop only) */}
         <div
           className={cn(
-            "hidden lg:block transition-all duration-300 border-b",
+            "hidden lg:block transition-[border-color] duration-300 border-b",
             scrolled
               ? "border-border/50"
               : "border-white/10"
@@ -130,7 +130,7 @@ export function Header() {
                   href={link.href}
                   className={cn(
                     "text-sm font-medium transition-colors duration-200 relative py-1",
-                    "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300",
+                    "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-primary after:transition-[width] after:duration-300",
                     scrolled
                       ? isActive
                         ? "text-primary after:w-full"

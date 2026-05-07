@@ -89,7 +89,7 @@ export function ValueProps() {
               <Link
                 href={service.href}
                 className={cn(
-                  "group relative flex flex-col rounded-2xl p-6 md:p-8 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+                  "group relative flex flex-col rounded-2xl p-6 md:p-8 h-full transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg",
                   service.variant === "dark"
                     ? "bg-primary text-white"
                     : "bg-accent text-accent-foreground"
@@ -131,7 +131,7 @@ export function ValueProps() {
 
                 {/* Arrow */}
                 <div className={cn(
-                  "mt-6 flex items-center gap-1.5 text-xs font-medium transition-all duration-300 group-hover:gap-2.5",
+                  "mt-6 flex items-center gap-1.5 text-xs font-medium",
                   service.variant === "dark"
                     ? "text-white/80"
                     : "text-accent-foreground/60"

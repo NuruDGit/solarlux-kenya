@@ -84,8 +84,8 @@ export function FAQSection() {
                         {item.question}
                       </span>
                       <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted ring-1 ring-border/60 transition-colors duration-300 group-data-[state=open]:bg-primary group-data-[state=open]:text-primary-foreground">
-                        <Plus className="h-4 w-4 transition-all duration-300 group-data-[state=open]:scale-0 group-data-[state=open]:opacity-0" />
-                        <Minus className="absolute h-4 w-4 scale-0 opacity-0 transition-all duration-300 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100" />
+                        <Plus className="h-4 w-4 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-0 group-data-[state=open]:opacity-0" />
+                        <Minus className="absolute h-4 w-4 scale-0 opacity-0 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100" />
                       </span>
                     </Accordion.Trigger>
                   </Accordion.Header>

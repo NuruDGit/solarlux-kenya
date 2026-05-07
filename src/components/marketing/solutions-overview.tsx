@@ -62,7 +62,7 @@ export function SolutionsOverview() {
           <FadeIn delay={0.1}>
             <Link
               href="/solutions"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:shadow-md hover:brightness-105"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-[transform,box-shadow] duration-300 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
             >
               Explore All Solutions
               <ArrowRight className="h-4 w-4" />
@@ -74,7 +74,7 @@ export function SolutionsOverview() {
         <FadeIn delay={0.1} className="mt-10 md:mt-14">
           <Link
             href={featured.href}
-            className="group relative grid overflow-hidden rounded-2xl bg-primary lg:grid-cols-2 transition-all duration-300 hover:shadow-xl"
+            className="group relative grid overflow-hidden rounded-2xl bg-primary lg:grid-cols-2 transition-shadow duration-300 hover:shadow-xl"
           >
             {/* Image half */}
             <div className="relative aspect-4/3 lg:aspect-auto lg:min-h-96 overflow-hidden">
@@ -107,7 +107,7 @@ export function SolutionsOverview() {
                     {featured.statLabel}
                   </p>
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-[background-color,color] duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -121,7 +121,7 @@ export function SolutionsOverview() {
             <FadeIn key={solution.title} delay={0.15 + i * 0.05}>
               <Link
                 href={solution.href}
-                className="group flex flex-col overflow-hidden rounded-2xl bg-card border border-border/60 transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 h-full"
+                className="group flex flex-col overflow-hidden rounded-2xl bg-card border border-border/60 transition-[transform,box-shadow,border-color] duration-300 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 h-full"
               >
                 {/* Image */}
                 <div className="relative aspect-3/2 overflow-hidden">
@@ -156,7 +156,7 @@ export function SolutionsOverview() {
                   <p className="mt-3 text-sm text-ink-muted leading-relaxed flex-1">
                     {solution.description}
                   </p>
-                  <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
+                  <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-primary opacity-0 transition-[transform,opacity] duration-300 group-hover:opacity-100 group-hover:translate-x-1">
                     Learn more <ArrowRight className="h-3.5 w-3.5" />
                   </div>
                 </div>

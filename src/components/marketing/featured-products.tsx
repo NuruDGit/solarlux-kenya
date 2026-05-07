@@ -82,7 +82,7 @@ export function FeaturedProducts() {
                 <div
                   className={cn(
                     "h-full rounded-2xl bg-background p-1.5 ring-1 ring-border/60",
-                    "transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+                    "transition-[transform,box-shadow,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
                     "hover:ring-primary/20 hover:shadow-lg hover:-translate-y-1"
                   )}
                 >
@@ -106,7 +106,7 @@ export function FeaturedProducts() {
                       )}
 
                       {/* Hover arrow reveal */}
-                      <div className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 shadow-sm opacity-0 translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:opacity-100 group-hover:translate-y-0">
+                      <div className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 shadow-sm opacity-0 translate-y-2 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:opacity-100 group-hover:translate-y-0">
                         <ArrowUpRight className="h-4 w-4 text-primary" />
                       </div>
                     </div>

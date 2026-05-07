@@ -9,15 +9,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-primary text-primary-foreground hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 rounded-full",
+          "bg-primary text-primary-foreground hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] active:translate-y-0 rounded-full",
         secondary:
-          "border border-border-strong bg-transparent text-ink hover:bg-muted active:bg-muted rounded-full",
+          "border border-border-strong bg-transparent text-ink hover:bg-muted active:scale-[0.98] rounded-full",
         accent:
-          "bg-accent text-accent-foreground hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 rounded-full",
+          "bg-accent text-accent-foreground hover:bg-accent-hover hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] active:translate-y-0 rounded-full",
         "outline-light":
-          "border border-white/20 bg-transparent text-white hover:bg-white/10 active:bg-white/15 rounded-full focus-visible:ring-white",
+          "border border-white/20 bg-transparent text-white hover:bg-white/10 active:scale-[0.98] rounded-full focus-visible:ring-white",
         dark:
-          "bg-ink-900 text-white hover:bg-ink-800 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 rounded-full",
+          "bg-ink-900 text-white hover:bg-ink-800 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] active:translate-y-0 rounded-full",
         ghost:
           "text-ink hover:bg-muted rounded-lg",
         link:
