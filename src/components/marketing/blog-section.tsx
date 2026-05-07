@@ -61,7 +61,6 @@ export function BlogSection() {
             <Button variant="secondary" asChild>
               <Link href="/resources">
                 View All Articles
-                <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </FadeIn>

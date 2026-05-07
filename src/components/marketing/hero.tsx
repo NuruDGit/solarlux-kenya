@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { STATS } from "@/lib/constants";
@@ -74,7 +73,6 @@ export function Hero() {
             <Button variant="accent" size="lg" asChild>
               <Link href="/quote">
                 Get Free Quote
-                <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
             <Button variant="outline-light" size="lg" asChild>

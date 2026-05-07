@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 
@@ -95,7 +94,6 @@ export function ProjectShowcase() {
           <Button variant="secondary" asChild>
             <Link href="/projects">
               View All Projects
-              <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </FadeIn>

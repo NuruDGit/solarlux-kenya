@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { formatPhoneHref } from "@/lib/utils";
@@ -37,7 +37,6 @@ export function CtaSection() {
                 >
                   <Link href="/quote">
                     Get Free Quote
-                    <ArrowRight className="h-5 w-5" />
                   </Link>
                 </Button>
                 <Button
@@ -47,7 +46,6 @@ export function CtaSection() {
                   asChild
                 >
                   <a href={formatPhoneHref(CONTACT.phone1)}>
-                    <Phone className="h-5 w-5" />
                     Call {CONTACT.phone1}
                   </a>
                 </Button>

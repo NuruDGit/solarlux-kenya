@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Play, ShieldCheck } from "lucide-react";
+import { Play, ShieldCheck } from "lucide-react";
 import { Stagger, staggerChildVariants } from "@/components/motion/stagger";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -131,7 +131,6 @@ export function HeroBento() {
                 <Button variant="dark" size="md" asChild>
                   <Link href="/solutions">
                     Explore Solutions
-                    <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
               </div>

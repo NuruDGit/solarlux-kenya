@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, staggerChildVariants } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
@@ -61,7 +61,6 @@ export function FeaturedProducts() {
             <Button variant="secondary" asChild>
               <Link href="/products">
                 View All Products
-                <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </FadeIn>
