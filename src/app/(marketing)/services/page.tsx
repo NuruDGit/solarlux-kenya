@@ -197,7 +197,7 @@ export default function ServicesPage() {
                 <li aria-hidden="true">
                   <ChevronRight className="h-3.5 w-3.5" />
                 </li>
-                <li className="text-ink">Services &amp; Solutions</li>
+                <li className="text-ink">Solutions</li>
               </ol>
             </nav>
             <p className="text-overline text-primary mb-4">What We Do &amp; Who We Serve</p>
@@ -262,6 +262,7 @@ export default function ServicesPage() {
               return (
                 <FadeIn key={solution.slug} delay={index * 0.05}>
                   <div
+                    id={solution.slug}
                     className={`rounded-2xl overflow-hidden border border-border bg-card grid lg:grid-cols-2 ${
                       index % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
                     }`}

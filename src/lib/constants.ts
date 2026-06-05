@@ -35,27 +35,21 @@ export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   {
-    label: "Services",
+    label: "Solutions",
     href: "/services",
     children: [
+      { label: "For Homes", href: "/services#residential" },
+      { label: "For Businesses", href: "/services#commercial" },
+      { label: "For Hotels & Lodges", href: "/services#hospitality" },
       { label: "Solar Equipment Supply", href: "/services/supply" },
       { label: "Project Design", href: "/services/design" },
       { label: "Installation & Maintenance", href: "/services/installation" },
       { label: "Installation Guidance", href: "/services/consulting" },
     ],
   },
-  {
-    label: "Solutions",
-    href: "/solutions",
-    children: [
-      { label: "Residential", href: "/solutions/residential" },
-      { label: "Commercial", href: "/solutions/commercial" },
-      { label: "Hospitality", href: "/solutions/hospitality" },
-    ],
-  },
   { label: "Products", href: "/products" },
   { label: "Projects", href: "/projects" },
-  { label: "Resources", href: "/resources" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

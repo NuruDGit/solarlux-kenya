@@ -83,33 +83,47 @@ const remainingPosts = posts.slice(1);
 export default function BlogPage() {
   return (
     <main>
-      {/* Hero */}
-      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
-        <div className="container-page">
+      {/* Hero — dark editorial masthead */}
+      <section className="relative bg-ink-950 page-hero-spacing pb-20 md:pb-28 overflow-hidden">
+        {/* Subtle background image with heavy overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-20"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-ink-950/60 via-ink-950/80 to-ink-950" />
+        </div>
+
+        <div className="relative container-page">
           <FadeIn>
-            <nav className="mb-8" aria-label="Breadcrumb">
-              <ol className="flex items-center gap-2 text-sm text-ink-muted">
+            <nav className="mb-10" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2 text-sm text-white/40">
                 <li>
-                  <Link href="/" className="hover:text-primary transition-colors">
+                  <Link href="/" className="hover:text-white/70 transition-colors">
                     Home
                   </Link>
                 </li>
                 <li aria-hidden="true">
                   <ChevronRight className="h-3.5 w-3.5" />
                 </li>
-                <li className="text-ink">Blog</li>
+                <li className="text-white/70">Blog</li>
               </ol>
             </nav>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <BookOpen className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <p className="text-overline text-primary">Solar Insights &amp; Guides</p>
+
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px w-10 bg-accent" aria-hidden="true" />
+              <p className="text-overline text-accent tracking-widest">Solar Insights &amp; Guides</p>
             </div>
-            <h1 className="text-display-xl font-display font-medium max-w-3xl">
-              Practical solar knowledge — built for Kenya
+
+            <h1 className="text-display-xl font-display font-medium text-white max-w-3xl leading-tight">
+              Practical solar knowledge —{" "}
+              <span className="text-brand-yellow-400">built for Kenya</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-body-lg text-ink-muted leading-relaxed">
+            <p className="mt-6 max-w-2xl text-body-lg text-white/60 leading-relaxed">
               Expert advice on choosing, sizing, installing, and maintaining solar systems. From
               first-time buyers to large commercial operators.
             </p>
@@ -125,7 +139,7 @@ export default function BlogPage() {
               href={featuredPost.href}
               className="group grid lg:grid-cols-[1.1fr_0.9fr] gap-8 rounded-3xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
             >
-              <div className="relative aspect-[16/9] lg:aspect-auto lg:min-h-96 overflow-hidden">
+              <div className="relative aspect-video lg:aspect-auto lg:min-h-96 overflow-hidden">
                 <Image
                   src={featuredPost.image}
                   alt={featuredPost.title}
@@ -195,7 +209,7 @@ export default function BlogPage() {
                   href={post.href}
                   className="group flex flex-col h-full overflow-hidden rounded-2xl border border-border bg-card hover:shadow-md transition-shadow duration-300"
                 >
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={post.image}
                       alt={post.title}
