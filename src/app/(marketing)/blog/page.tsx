@@ -5,7 +5,7 @@ import { ArrowRight, ChevronRight, BookOpen, Tag } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import type { BlogPostCardData } from "@/lib/cms";
+import { BLOG_POSTS } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Solar Blog & Insights | Solarlux Kenya",
@@ -18,62 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-const posts: BlogPostCardData[] = [
-  {
-    title: "How to Choose the Right Solar Panel Size for Your Home",
-    excerpt:
-      "A practical guide to calculating your energy needs and selecting the perfect panel wattage for Kenyan households.",
-    image: "/projects/project-11.03.21.jpg",
-    category: "Guides",
-    date: "March 12, 2026",
-    href: "/blog/choose-right-solar-panel-size",
-  },
-  {
-    title: "Understanding Solar Battery Storage: LiFePO4 vs Lead Acid",
-    excerpt:
-      "Compare battery technologies, lifespans, and costs to find the best energy storage for your solar system.",
-    image: "/projects/project-11.03.20.jpg",
-    category: "Technology",
-    date: "February 28, 2026",
-    href: "/blog/lifepo4-vs-lead-acid-batteries",
-  },
-  {
-    title: "5 Signs Your Business Should Switch to Solar Energy",
-    excerpt:
-      "Rising electricity bills and unreliable grid power are pushing Kenyan businesses to go solar. Here's what you need to know.",
-    image: "/projects/project-11.03.36.jpg",
-    category: "Business",
-    date: "January 15, 2026",
-    href: "/blog/5-signs-your-business-should-switch-to-solar",
-  },
-  {
-    title: "What Is a Hybrid Inverter and Do You Need One?",
-    excerpt:
-      "Hybrid inverters are becoming the default choice for new installations. We break down exactly what they do and when they make sense for your budget.",
-    image: "/projects/project-11.03.21.jpg",
-    category: "Technology",
-    date: "December 20, 2025",
-    href: "/blog/what-is-a-hybrid-inverter",
-  },
-  {
-    title: "Solar for Hotels & Lodges: The Complete Kenya Guide",
-    excerpt:
-      "Hospitality operators across Kenya are cutting operating costs with solar. This guide covers system sizing, ROI, and real-world examples.",
-    image: "/projects/project-11.03.36.jpg",
-    category: "Industry",
-    date: "November 8, 2025",
-    href: "/blog/solar-for-hotels-lodges-kenya",
-  },
-  {
-    title: "Understanding the 25-Year Solar Panel Warranty",
-    excerpt:
-      "Most manufacturers offer 25-year performance warranties — but what exactly do they cover? What's the difference between product and performance guarantees?",
-    image: "/projects/project-11.03.20.jpg",
-    category: "Guides",
-    date: "October 3, 2025",
-    href: "/blog/understanding-25-year-solar-warranty",
-  },
-];
+const posts = BLOG_POSTS.map((p) => ({
+  title: p.title,
+  excerpt: p.excerpt,
+  image: p.image,
+  category: p.category,
+  date: p.date,
+  href: `/blog/${p.slug}`,
+}));
 
 const categories = ["All", "Guides", "Technology", "Business", "Industry"];
 
