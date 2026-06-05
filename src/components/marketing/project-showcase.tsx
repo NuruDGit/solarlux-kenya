@@ -38,8 +38,8 @@ function MarqueeRow({
   return (
     <div className="relative overflow-hidden group/row">
       {/* Fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-24 bg-gradient-to-r from-surface to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-24 bg-gradient-to-l from-surface to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-24 bg-linear-to-r from-surface to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-24 bg-linear-to-l from-surface to-transparent" />
 
       <div
         className={`flex gap-4 w-max ${
@@ -68,7 +68,7 @@ function MarqueeRow({
 
 export function ProjectShowcase() {
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-surface overflow-hidden">
+    <section className="py-16 md:py-24 lg:py-32 bg-surface overflow-hidden" aria-label="Project gallery">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered header */}
         <FadeIn className="text-center">

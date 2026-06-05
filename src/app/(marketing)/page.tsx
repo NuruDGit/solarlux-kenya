@@ -1,3 +1,4 @@
+import { getHomePageData, getMarketingLayoutData } from "@/lib/cms";
 import { Hero } from "@/components/marketing/hero";
 import { HeroBento } from "@/components/marketing/hero-bento";
 import { ValueProps } from "@/components/marketing/value-props";
@@ -11,10 +12,15 @@ import { FAQSection } from "@/components/marketing/faq-section";
 import { BlogSection } from "@/components/marketing/blog-section";
 import { CtaForm } from "@/components/marketing/cta-form";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homePageData, marketingLayoutData] = await Promise.all([
+    getHomePageData(),
+    getMarketingLayoutData(),
+  ]);
+
   return (
     <>
-      <Hero />
+      <Hero hero={homePageData.hero} stats={marketingLayoutData.siteSettings.stats} />
       <LogoCloud />
       <HeroBento />
       <ValueProps />
@@ -22,10 +28,10 @@ export default function HomePage() {
       <SolutionsOverview />
       <FeaturedProducts />
       <ProjectShowcase />
-      <TestimonialSlider />
+      <TestimonialSlider testimonials={homePageData.testimonials} />
       <FAQSection />
       <CtaForm />
-      <BlogSection />
+      <BlogSection posts={homePageData.blogPosts} />
     </>
   );
 }

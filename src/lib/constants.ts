@@ -128,4 +128,4 @@ export const PRODUCT_CATEGORIES = [
 ] as const;
 
 export const WHATSAPP_DEFAULT_MESSAGE =
-  "Hello! I'd like to get a free solar quote for my property.";
+  "Hi Solarlux! I'm reaching out from your website (solarluxkenya.co.ke) and I'd like to get a free solar quote for my property.";

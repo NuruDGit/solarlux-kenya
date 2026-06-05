@@ -26,6 +26,7 @@
     /* Neutrals */
     --ink-950: #0a0a0a;
     --ink-900: #171717;
+    --ink-800: #1f1f1f;
     --ink-700: #404040;
     --ink-500: #737373;
     --ink-300: #d4d4d4;
@@ -116,6 +117,7 @@
   --color-ink-300: var(--ink-300);
   --color-ink-500: var(--ink-500);
   --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
   --color-ink-900: var(--ink-900);
   --color-ink-950: var(--ink-950);
 }
@@ -136,6 +138,8 @@
   --radius-lg: 0.875rem;   /* 14px */
   --radius-xl: 1.25rem;    /* 20px */
   --radius-2xl: 1.75rem;   /* 28px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-4xl: 2.5rem;    /* 40px */
   --radius-full: 9999px;
 
   /* Shadows — blue-tinted, three-tier depth system */
@@ -144,6 +148,20 @@
   --shadow-md: 0 4px 8px -2px rgba(29, 90, 166, 0.08), 0 2px 4px -2px rgba(29, 90, 166, 0.05);
   --shadow-lg: 0 10px 20px -4px rgba(29, 90, 166, 0.1), 0 4px 8px -4px rgba(29, 90, 166, 0.06);
   --shadow-xl: 0 20px 32px -8px rgba(29, 90, 166, 0.12), 0 8px 16px -8px rgba(29, 90, 166, 0.08);
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-10: 10;
+  --z-20: 20;
+  --z-30: 30;
+  --z-40: 40;
+  --z-50: 50;
+  --z-60: 60;
+  --z-70: 70;
+  --z-80: 80;
+  --z-nav: 60;
+  --z-toast: 70;
+  --z-floating: 80;
 
   /* Background images / gradients */
   --background-image-gradient-brand: linear-gradient(135deg, #1d5aa6 0%, #5ba4e6 100%);
@@ -264,6 +282,38 @@
     font-weight: 600;
   }
 
+  /* Body & heading text scale */
+  .text-body-lg {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+    line-height: 1.65;
+  }
+  .text-body {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .text-body-sm {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .text-heading-xl {
+    font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-family: var(--font-display);
+  }
+  .text-heading-lg {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    font-family: var(--font-display);
+  }
+  .text-heading-md {
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    font-family: var(--font-display);
+  }
+
   /* Page container */
   .container-page {
     margin-inline: auto;
@@ -286,6 +336,23 @@
   }
   @media (min-width: 1024px) {
     .section-padding { padding-block: 8rem; }
+  }
+
+  .page-hero-spacing {
+    padding-top: 9rem;
+  }
+  @media (min-width: 768px) {
+    .page-hero-spacing { padding-top: 11rem; }
+  }
+  @media (min-width: 1024px) {
+    .page-hero-spacing { padding-top: 12rem; }
+  }
+
+  .page-top-offset {
+    padding-top: 5rem;
+  }
+  @media (min-width: 1024px) {
+    .page-top-offset { padding-top: 7.5rem; }
   }
 
   /* Reduced motion */
@@ -327,6 +394,12 @@
   to { height: 0; }
 }
 
+@keyframes whatsapp-pulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  60%  { transform: scale(1.85); opacity: 0; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
 @utility animate-marquee {
   animation: marquee var(--marquee-duration, 30s) linear infinite;
   will-change: transform;
@@ -351,4 +424,9 @@
 
 @utility animate-accordion-up {
   animation: accordion-up 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@utility animate-whatsapp-pulse {
+  animation: whatsapp-pulse 2s ease-out infinite;
+  will-change: transform, opacity;
 }

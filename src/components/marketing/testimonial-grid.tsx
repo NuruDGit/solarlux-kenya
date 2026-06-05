@@ -32,7 +32,7 @@ const testimonials = [
 
 export function TestimonialGrid() {
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-background">
+    <section className="py-16 md:py-24 lg:py-32 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium text-ink tracking-wide mb-4">Testimonials</span>
@@ -47,7 +47,7 @@ export function TestimonialGrid() {
             <motion.div
               key={testimonial.name}
               variants={staggerChildVariants}
-              className="rounded-2xl bg-surface p-6 md:p-8"
+              className="rounded-2xl bg-card border border-border p-6 md:p-8 transition-shadow duration-300 hover:shadow-md"
             >
               {/* Stars */}
               <div className="flex gap-1" aria-label={`${testimonial.rating} out of 5 stars`}>
@@ -64,7 +64,7 @@ export function TestimonialGrid() {
               </blockquote>
 
               <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue-50 text-primary text-sm font-semibold">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-blue-100 text-primary text-sm font-semibold ring-2 ring-primary/10">
                   {testimonial.name
                     .split(" ")
                     .map((n) => n[0])

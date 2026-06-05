@@ -91,7 +91,7 @@ export default async function ProductDetailPage({ params }: Props) {
       />
 
       {/* Breadcrumb */}
-      <section className="bg-surface border-b border-border">
+      <section className="bg-surface border-b border-border page-top-offset">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-ink-muted">

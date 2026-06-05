@@ -19,7 +19,7 @@ function LogoSet({ ariaHidden = false }: { ariaHidden?: boolean }) {
         <div
           key={brand.name}
           aria-hidden={ariaHidden || undefined}
-          className="shrink-0 grayscale opacity-50 transition-[filter,opacity] duration-500 hover:grayscale-0 hover:opacity-100"
+          className="shrink-0 opacity-90 transition-[filter,opacity] duration-500 md:grayscale md:opacity-50 md:hover:grayscale-0 md:hover:opacity-100"
         >
           <Image
             src={brand.src}

@@ -9,7 +9,7 @@ import { CONTACT } from "@/lib/constants";
 
 export function CtaSection() {
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-background">
+    <section className="py-16 md:py-24 lg:py-32 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="relative rounded-2xl bg-gradient-brand px-6 py-16 sm:px-12 md:py-20 lg:px-20 overflow-hidden">
@@ -40,9 +40,8 @@ export function CtaSection() {
                   </Link>
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="outline-light"
                   size="lg"
-                  className="border-white/20 text-white hover:bg-white/10"
                   asChild
                 >
                   <a href={formatPhoneHref(CONTACT.phone1)}>

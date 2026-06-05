@@ -72,7 +72,7 @@ export default function ResidentialPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-ink-950 overflow-hidden">
+      <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
         <div className="container-page relative z-10">
           <FadeIn>
@@ -213,15 +213,27 @@ export default function ResidentialPage() {
           </FadeIn>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { label: "10kW Hybrid — Kamakis", detail: "Family home, full backup, 80% bill reduction" },
-              { label: "5kW On-Grid — Kilimani", detail: "Apartment owner, bill from KES 18k to KES 3k/mo" },
-              { label: "8kW Off-Grid — Machakos", detail: "Rural homestead, fully grid-independent" },
+              {
+                label: "10kW Hybrid — Kamakis",
+                detail: "Family home, full backup, 80% bill reduction",
+                image: "/projects/project-11.03.28.jpg",
+              },
+              {
+                label: "5kW On-Grid — Kilimani",
+                detail: "Apartment owner, bill from KES 18k to KES 3k/mo",
+                image: "/projects/project-11.03.21.jpg",
+              },
+              {
+                label: "8kW Off-Grid — Machakos",
+                detail: "Rural homestead, fully grid-independent",
+                image: "/projects/project-11.03.24.jpg",
+              },
             ].map((project) => (
               <FadeIn key={project.label}>
                 <div className="rounded-2xl overflow-hidden border border-border bg-card">
                   <div className="relative aspect-[4/3] bg-ink-100">
                     <Image
-                      src={`https://placehold.co/600x400/1D5AA6/FFFFFF?text=${encodeURIComponent(project.label)}`}
+                      src={project.image}
                       alt={project.label}
                       fill
                       className="object-cover"

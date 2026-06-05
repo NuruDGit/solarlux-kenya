@@ -7,14 +7,16 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/icons/logo";
 import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
-import { NAV_LINKS, CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
+import type { HeaderData, SiteSettingsData } from "@/lib/cms";
 
 interface MobileMenuProps {
+  header: HeaderData;
   open: boolean;
   onClose: () => void;
+  siteSettings: SiteSettingsData;
 }
 
-export function MobileMenu({ open, onClose }: MobileMenuProps) {
+export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuProps) {
   const shouldReduceMotion = useReducedMotion();
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
@@ -88,9 +90,9 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
               {/* Nav */}
               <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="Mobile navigation">
                 <ul className="space-y-1">
-                  {NAV_LINKS.map((link) => (
+                  {header.navItems.map((link) => (
                     <li key={link.href}>
-                      {"children" in link && link.children ? (
+                      {link.children?.length ? (
                         <div>
                           <Button
                             type="button"
@@ -152,21 +154,24 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
               {/* Footer actions */}
               <div className="border-t border-border p-4 space-y-3">
                 <Button variant="primary" size="lg" className="w-full" asChild>
-                  <Link href="/quote" onClick={onClose}>
-                    Get Free Quote
+                  <Link href={header.primaryCtaHref} onClick={onClose}>
+                    {header.primaryCtaLabel}
                   </Link>
                 </Button>
 
                 <div className="flex gap-3">
                   <Button variant="secondary" size="md" className="flex-1" asChild>
-                    <a href={formatPhoneHref(CONTACT.phone1)}>
+                    <a href={formatPhoneHref(siteSettings.primaryPhone)}>
                       <Phone className="h-4 w-4" />
                       Call Us
                     </a>
                   </Button>
                   <Button variant="secondary" size="md" className="flex-1" asChild>
                     <a
-                      href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
+                      href={formatWhatsAppHref(
+                        siteSettings.whatsAppNumber,
+                        siteSettings.defaultWhatsAppMessage,
+                      )}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -177,9 +182,9 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                 </div>
 
                 <p className="text-xs text-ink-muted text-center pt-2">
-                  <a href={`mailto:${CONTACT.email}`} className="hover:text-primary">
+                  <a href={`mailto:${siteSettings.primaryEmail}`} className="hover:text-primary">
                     <Mail className="inline h-3 w-3 mr-1" />
-                    {CONTACT.email}
+                    {siteSettings.primaryEmail}
                   </a>
                 </p>
               </div>

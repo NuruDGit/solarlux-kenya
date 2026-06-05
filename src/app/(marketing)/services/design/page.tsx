@@ -59,7 +59,7 @@ export default function DesignPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <Link
@@ -142,7 +142,7 @@ export default function DesignPage() {
             </FadeIn>
             <FadeIn delay={0.15}>
               <Image
-                src="https://placehold.co/600x520/1D5AA6/FFFFFF?text=System+Design"
+                src="/projects/project-11.03.31.jpg"
                 alt="Solar system design and energy audit"
                 width={600}
                 height={520}

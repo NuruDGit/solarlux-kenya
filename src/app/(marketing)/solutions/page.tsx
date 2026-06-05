@@ -18,7 +18,7 @@ const solutions = [
     tagline: "Energy independence for your family",
     description:
       "Cut electricity bills, protect against KPLC outages, and invest in a 25-year asset. We design home solar systems for every budget — from starter kits to full off-grid setups.",
-    image: "https://placehold.co/800x500/1D5AA6/FFFFFF?text=Residential+Solar",
+    image: "/solutions/residential-solar.jpg",
     href: "/solutions/residential",
     benefits: ["Reduce bills by up to 80%", "Backup during blackouts", "25-year panel warranty"],
   },
@@ -28,7 +28,7 @@ const solutions = [
     tagline: "Lower operating costs at scale",
     description:
       "Solar is now Kenya's lowest-cost electricity source. Protect your margins, reduce your dependence on grid power, and demonstrate your sustainability credentials to customers.",
-    image: "https://placehold.co/800x500/154878/FFFFFF?text=Commercial+Solar",
+    image: "/solutions/commercial-solar.png",
     href: "/solutions/commercial",
     benefits: ["Sub-3-year payback for many sites", "Protect against KPLC tariff increases", "Off-grid capability for remote sites"],
   },
@@ -38,7 +38,7 @@ const solutions = [
     tagline: "Sustainable hospitality operations",
     description:
       "Solar is transforming Kenya's hospitality sector. Power your kitchen, pool, laundry, and rooms with clean energy — and market your sustainability to a growing eco-conscious guest base.",
-    image: "https://placehold.co/800x500/0F2F58/FFFFFF?text=Hotel+Solar",
+    image: "/solutions/hospitality-solar.png",
     href: "/solutions/hospitality",
     benefits: ["Power water heating, kitchen & rooms", "Attract eco-conscious guests", "Deployed at hotels across Kenya"],
   },
@@ -55,7 +55,7 @@ export default function SolutionsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <p className="text-overline text-primary mb-4">Solar Solutions</p>

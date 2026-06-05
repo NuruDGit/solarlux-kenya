@@ -14,7 +14,7 @@ const services = [
     description:
       "Premium panels, batteries, inverters, and accessories from top global brands like JA Solar, Longi, and Deye.",
     href: "/services/supply",
-    variant: "light" as const,
+    variant: "neutral" as const,
   },
   {
     icon: Ruler,
@@ -30,7 +30,7 @@ const services = [
     description:
       "Professional installation by certified technicians with ongoing maintenance and 24/7 support.",
     href: "/services/installation",
-    variant: "light" as const,
+    variant: "neutral" as const,
   },
   {
     icon: Compass,
@@ -38,7 +38,7 @@ const services = [
     description:
       "Expert consultation for DIY installers and contractors. We guide you every step of the way.",
     href: "/services/consulting",
-    variant: "light" as const,
+    variant: "accent" as const,
   },
 ];
 
@@ -92,7 +92,9 @@ export function ValueProps() {
                   "group relative flex flex-col rounded-2xl p-6 md:p-8 h-full transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg",
                   service.variant === "dark"
                     ? "bg-primary text-white"
-                    : "bg-accent text-accent-foreground"
+                    : service.variant === "accent"
+                    ? "bg-accent text-accent-foreground"
+                    : "bg-card border border-border text-ink hover:border-primary/20"
                 )}
               >
                 {/* Top accent bar */}
@@ -100,7 +102,9 @@ export function ValueProps() {
                   "absolute top-0 left-6 right-6 h-px",
                   service.variant === "dark"
                     ? "bg-white/20"
-                    : "bg-accent-foreground/10"
+                    : service.variant === "accent"
+                    ? "bg-accent-foreground/10"
+                    : "bg-border"
                 )} />
 
                 {/* Icon */}
@@ -108,7 +112,9 @@ export function ValueProps() {
                   "flex h-11 w-11 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-110",
                   service.variant === "dark"
                     ? "bg-white/15 text-accent"
-                    : "bg-accent-foreground/8 text-accent-foreground"
+                    : service.variant === "accent"
+                    ? "bg-accent-foreground/8 text-accent-foreground"
+                    : "bg-primary/10 text-primary"
                 )}>
                   <service.icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
@@ -116,7 +122,7 @@ export function ValueProps() {
                 {/* Content */}
                 <h3 className={cn(
                   "mt-5 text-lg font-semibold font-body tracking-tight leading-snug",
-                  service.variant === "dark" && "text-white"
+                  service.variant === "dark" ? "text-white" : service.variant === "accent" ? "text-accent-foreground" : "text-ink"
                 )}>
                   {service.title}
                 </h3>
@@ -124,7 +130,9 @@ export function ValueProps() {
                   "mt-2 text-sm leading-relaxed flex-1",
                   service.variant === "dark"
                     ? "text-white/70"
-                    : "text-accent-foreground/70"
+                    : service.variant === "accent"
+                    ? "text-accent-foreground/70"
+                    : "text-ink-muted"
                 )}>
                   {service.description}
                 </p>
@@ -134,7 +142,9 @@ export function ValueProps() {
                   "mt-6 flex items-center gap-1.5 text-xs font-medium",
                   service.variant === "dark"
                     ? "text-white/80"
-                    : "text-accent-foreground/60"
+                    : service.variant === "accent"
+                    ? "text-accent-foreground/60"
+                    : "text-primary/80"
                 )}>
                   Learn more <ArrowRight className="h-3.5 w-3.5" />
                 </div>

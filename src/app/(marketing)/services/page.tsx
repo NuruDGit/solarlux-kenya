@@ -118,7 +118,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <p className="text-overline text-primary mb-4">What We Do</p>

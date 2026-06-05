@@ -3,92 +3,79 @@ import React from "react";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Logo } from "@/components/icons/logo";
-import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
+import { formatPhoneHref } from "@/lib/utils";
 import { FacebookIcon, InstagramIcon, XIcon } from "@/components/icons/social";
-import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { Button } from "@/components/ui/button";
-import {
-  CONTACT,
-  PRODUCT_CATEGORIES,
-  SOCIAL_LINKS,
-  WHATSAPP_DEFAULT_MESSAGE,
-} from "@/lib/constants";
+import type { FooterData, ProductCategoryLink, SiteSettingsData } from "@/lib/cms";
 
 const socialIconMap: Record<string, (props: SVGProps<SVGSVGElement>) => React.ReactElement> = {
-  Facebook: FacebookIcon,
-  X: XIcon,
-  Instagram: InstagramIcon,
+  facebook: FacebookIcon,
+  x: XIcon,
+  instagram: InstagramIcon,
 };
 
-const serviceLinks = [
-  { label: "Solar Equipment Supply", href: "/services/supply" },
-  { label: "Project Design", href: "/services/design" },
-  { label: "Installation & Maintenance", href: "/services/installation" },
-  { label: "Installation Guidance", href: "/services/consulting" },
-];
+interface FooterProps {
+  footer: FooterData;
+  productCategories: ProductCategoryLink[];
+  siteSettings: SiteSettingsData;
+}
 
-const companyLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Resources", href: "/resources" },
-  { label: "Contact", href: "/contact" },
-  { label: "Get a Free Quote", href: "/quote" },
-];
+export function Footer({ footer, productCategories, siteSettings }: FooterProps) {
+  const [companyColumn, servicesColumn] = footer.footerColumns;
 
-export function Footer() {
   return (
     <footer className="bg-ink-950 text-paper border-t border-white/10" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         {/* Main columns */}
-        <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <Logo width={180} height={54} background="dark" />
 
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
-              Powering a sustainable future for Kenyan homes, businesses, and
-              hotels with premium solar energy solutions.
+              {siteSettings.defaultMetaDescription}
             </p>
 
             <div className="mt-6 space-y-3">
               <a
-                href={formatPhoneHref(CONTACT.phone1)}
+                href={formatPhoneHref(siteSettings.primaryPhone)}
                 className="flex items-center gap-2 text-sm text-white/70 transition-colors duration-fast hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
               >
                 <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {CONTACT.phone1}
+                {siteSettings.primaryPhone}
               </a>
+              {siteSettings.secondaryPhone ? (
+                <a
+                  href={formatPhoneHref(siteSettings.secondaryPhone)}
+                  className="flex items-center gap-2 text-sm text-white/70 transition-colors duration-fast hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
+                >
+                  <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  {siteSettings.secondaryPhone}
+                </a>
+              ) : null}
               <a
-                href={formatPhoneHref(CONTACT.phone2)}
-                className="flex items-center gap-2 text-sm text-white/70 transition-colors duration-fast hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
-              >
-                <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {CONTACT.phone2}
-              </a>
-              <a
-                href={`mailto:${CONTACT.email}`}
+                href={`mailto:${siteSettings.primaryEmail}`}
                 className="flex items-center gap-2 text-sm text-white/70 transition-colors duration-fast hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
               >
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {CONTACT.email}
+                {siteSettings.primaryEmail}
               </a>
               <div className="flex items-center gap-2 text-sm text-white/70">
                 <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {CONTACT.address}, Nairobi
+                {siteSettings.addressLine1}, {siteSettings.city}
               </div>
               <div className="flex items-center gap-2 text-sm text-white/70">
                 <Clock className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {CONTACT.hours}
+                {siteSettings.openingHours}
               </div>
             </div>
 
             <div className="mt-6 flex items-center gap-3">
-              {SOCIAL_LINKS.map(({ label, href }) => {
-                const Icon = socialIconMap[label];
+              {siteSettings.socialLinks.map(({ platform, url }) => {
+                const Icon = socialIconMap[platform];
                 if (!Icon) return null;
                 return (
                   <Button
-                    key={label}
+                    key={`${platform}-${url}`}
                     variant="outline-light"
                     size="icon"
                     layered={false}
@@ -97,40 +84,23 @@ export function Footer() {
                     asChild
                   >
                     <a
-                      href={href}
+                      href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={label}
+                      aria-label={platform}
                     >
                       <Icon className="h-4 w-4" />
                     </a>
                   </Button>
                 );
               })}
-              <Button
-                variant="ghost"
-                size="icon"
-                layered={false}
-                sunrise={false}
-                className="h-10 w-10 rounded-full bg-[#25D366] text-white hover:-translate-y-0.5 hover:bg-[#1ebe5b] focus-visible:ring-accent/60 focus-visible:ring-offset-ink-950"
-                asChild
-              >
-                <a
-                  href={formatWhatsAppHref(CONTACT.whatsapp, WHATSAPP_DEFAULT_MESSAGE)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Chat on WhatsApp"
-                >
-                  <WhatsAppIcon className="h-4 w-4" />
-                </a>
-              </Button>
             </div>
           </div>
 
           <div>
             <h4 className="text-base font-display font-medium text-white">Company</h4>
             <ul className="mt-4 space-y-2.5">
-              {companyLinks.map((link) => (
+              {(companyColumn?.links ?? []).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -146,7 +116,7 @@ export function Footer() {
           <div>
             <h4 className="text-base font-display font-medium text-white">Services</h4>
             <ul className="mt-4 space-y-2.5">
-              {serviceLinks.map((link) => (
+              {(servicesColumn?.links ?? []).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -162,7 +132,7 @@ export function Footer() {
           <div>
             <h4 className="text-base font-display font-medium text-white">Products</h4>
             <ul className="mt-4 space-y-2.5">
-              {PRODUCT_CATEGORIES.slice(0, 6).map((cat) => (
+              {productCategories.slice(0, 6).map((cat) => (
                 <li key={cat.slug}>
                   <Link
                     href={`/products/${cat.slug}`}
@@ -188,7 +158,7 @@ export function Footer() {
         <div className="mt-12 border-t border-white/10 pt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
             <p className="text-xs text-white/50">
-              © {new Date().getFullYear()} Solarlux Kenya. All rights reserved.
+              {footer.copyrightText}
             </p>
             <p className="text-xs text-white/50">
               Website designed and developed by{" "}
@@ -201,18 +171,15 @@ export function Footer() {
             </p>
           </div>
           <div className="flex items-center gap-6">
-            <Link
-              href="/privacy"
-              className="text-xs text-white/50 transition-colors duration-fast hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="text-xs text-white/50 transition-colors duration-fast hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
-            >
-              Terms of Service
-            </Link>
+            {footer.legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs text-white/50 transition-colors duration-fast hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-md"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

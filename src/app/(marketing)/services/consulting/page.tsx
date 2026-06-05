@@ -63,7 +63,7 @@ export default function ConsultingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <Link

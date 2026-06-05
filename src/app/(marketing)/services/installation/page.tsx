@@ -64,7 +64,7 @@ export default function InstallationPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <Link
@@ -138,7 +138,7 @@ export default function InstallationPage() {
             </FadeIn>
             <FadeIn delay={0.15}>
               <Image
-                src="https://placehold.co/600x480/1D5AA6/FFFFFF?text=Installation+Team"
+                src="/projects/project-11.03.27.jpg"
                 alt="Solarlux Kenya installation team at work"
                 width={600}
                 height={480}
@@ -155,7 +155,7 @@ export default function InstallationPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-start">
             <FadeIn>
               <Image
-                src="https://placehold.co/600x420/154878/FFFFFF?text=Maintenance"
+                src="/projects/project-11.03.35.jpg"
                 alt="Solar system maintenance and inspection"
                 width={600}
                 height={420}

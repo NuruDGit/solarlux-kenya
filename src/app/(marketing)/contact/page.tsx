@@ -48,7 +48,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <p className="text-overline text-primary mb-4">Get In Touch</p>
@@ -109,7 +109,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Location + Map placeholder */}
+      {/* Location + Map */}
       <section className="section-padding bg-surface">
         <div className="container-page">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-start">
@@ -120,7 +120,7 @@ export default function ContactPage() {
               </h2>
               <div className="mt-8 space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
                     <MapPin className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
                     <Clock className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue-50 text-primary">
                     <Phone className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
@@ -169,29 +169,28 @@ export default function ContactPage() {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              {/* Map placeholder */}
-              <div className="rounded-2xl bg-ink-100 overflow-hidden aspect-[4/3] flex items-center justify-center">
-                <div className="text-center p-8">
-                  <MapPin className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                  <p className="text-heading-xl font-semibold text-ink">
-                    Duruma Thiha Plaza
-                  </p>
-                  <p className="mt-2 text-body text-ink-muted">
-                    1st Floor, Shop No. 7
-                  </p>
-                  <p className="text-body text-ink-muted">
-                    Opposite Simba Coach, Nairobi
-                  </p>
-                  <a
-                    href="https://maps.google.com/?q=Duruma+Thiha+Plaza+Nairobi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-body-sm font-medium text-ink hover:bg-muted transition-colors duration-fast"
-                  >
-                    Open in Google Maps
-                  </a>
-                </div>
+              <div className="rounded-2xl overflow-hidden aspect-4/3 shadow-md">
+                <iframe
+                  src="https://maps.google.com/maps?q=Duruma+Thiha+Plaza+Nairobi+Kenya&t=m&z=16&ie=UTF8&iwloc=B&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: "block", minHeight: "360px" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Solarlux Kenya showroom location — Duruma Thiha Plaza, Nairobi"
+                  className="w-full h-full"
+                />
               </div>
+              <a
+                href="https://maps.google.com/?q=Duruma+Thiha+Plaza+Nairobi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-2 text-body-sm font-medium text-primary hover:underline transition-colors duration-fast"
+              >
+                <MapPin className="h-4 w-4" aria-hidden="true" />
+                Open in Google Maps
+              </a>
             </FadeIn>
           </div>
         </div>

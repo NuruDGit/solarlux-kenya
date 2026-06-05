@@ -16,16 +16,46 @@ const trustPoints = [
 ];
 
 export function CtaForm() {
+  const [error, setError] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const response = await fetch("/api/forms/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: String(formData.get("email") ?? ""),
+        message: String(formData.get("message") ?? ""),
+        name: String(formData.get("name") ?? ""),
+        phone: String(formData.get("phone") ?? ""),
+      }),
+    });
+
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setError(payload?.error ?? "Unable to send your request right now.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    form.reset();
+    setIsSubmitting(false);
     setSubmitted(true);
   }
 
   return (
     <section className="py-16 md:py-24 lg:py-32 bg-background">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         {/* Outer container: image + overlay */}
         <div className="relative overflow-hidden rounded-4xl">
           {/* Background image */}
@@ -43,7 +73,7 @@ export function CtaForm() {
           <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-ink-950/60 to-transparent" />
 
           {/* Content */}
-          <div className="relative z-10 grid items-center gap-10 p-8 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14 xl:p-16">
+          <div className="relative z-10 grid items-center gap-8 p-5 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14 xl:p-16">
 
             {/* Left — text */}
             <FadeIn>
@@ -88,7 +118,7 @@ export function CtaForm() {
 
             {/* Right — floating white form card */}
             <FadeIn delay={0.15}>
-              <div className="rounded-3xl bg-white/98 p-7 shadow-[0_32px_80px_-20px_rgba(0,0,0,0.5)] ring-1 ring-white/20 sm:p-8 lg:p-9">
+              <div className="rounded-3xl bg-white/98 p-5 shadow-[0_32px_80px_-20px_rgba(0,0,0,0.5)] ring-1 ring-white/20 sm:p-8 lg:p-9">
                 {submitted ? (
                   <div className="flex flex-col items-center py-10 text-center">
                     <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 mb-4">
@@ -108,6 +138,12 @@ export function CtaForm() {
                     </h3>
 
                     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                      {error ? (
+                        <div className="rounded-lg border border-danger/20 bg-danger/5 px-4 py-3 text-sm text-danger">
+                          {error}
+                        </div>
+                      ) : null}
+
                       <div>
                         <Label htmlFor="cta-name" className="text-sm font-medium text-ink">
                           Your Name <span className="text-primary">*</span>
@@ -166,8 +202,9 @@ export function CtaForm() {
                         variant="primary"
                         size="lg"
                         className="w-full"
+                        disabled={isSubmitting}
                       >
-                        Free Consultation
+                        {isSubmitting ? "Sending..." : "Free Consultation"}
                       </Button>
                       <p className="text-center text-xs text-ink-muted">
                         By submitting, you agree to be contacted about your solar quote.

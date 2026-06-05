@@ -42,27 +42,24 @@ const faqItems = [
 
 export function FAQSection() {
   return (
-    <section className="bg-background py-16 md:py-24 lg:py-32">
+    <section className="bg-surface py-16 md:py-24 lg:py-32">
       <FAQJsonLd items={[...faqItems]} />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-
-          {/* Left — sticky header column */}
           <FadeIn>
             <div className="lg:sticky lg:top-32">
               <span className="inline-flex items-center rounded-full border border-border px-4 py-1.5 text-xs font-medium tracking-wide text-ink">
                 FAQs
               </span>
               <h2 className="mt-5 max-w-[15ch] text-display-lg font-display font-medium leading-tight">
-                Answers before you{" "}
-                <span className="text-ink-muted">make the move</span>
+                Answers before you <span className="text-ink-muted">make the move</span>
               </h2>
               <p className="mt-5 max-w-sm text-base leading-relaxed text-ink-muted">
                 The questions we hear most, from cost and timelines to backup
                 power and warranties.
               </p>
 
-              <div className="mt-10 border-t border-border pt-8">
+              <div className="mt-10 hidden border-t border-border pt-8 lg:block">
                 <p className="text-sm text-ink-muted">Still have questions?</p>
                 <div className="mt-3">
                   <Button variant="secondary" asChild>
@@ -73,32 +70,41 @@ export function FAQSection() {
             </div>
           </FadeIn>
 
-          {/* Right — bare accordion */}
           <FadeIn delay={0.12}>
-            <Accordion.Root type="single" collapsible className="divide-y divide-border">
-              {faqItems.map((item, index) => (
-                <Accordion.Item key={item.question} value={`faq-${index}`}>
-                  <Accordion.Header>
-<Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-                      <span className="text-base font-medium leading-snug text-ink sm:text-lg">
-                        {item.question}
-                      </span>
-                      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted ring-1 ring-border/60 transition-colors duration-300 group-data-[state=open]:bg-primary group-data-[state=open]:text-primary-foreground">
-                        <Plus className="h-4 w-4 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-0 group-data-[state=open]:opacity-0" />
-                        <Minus className="absolute h-4 w-4 scale-0 opacity-0 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100" />
-                      </span>
-                    </Accordion.Trigger>
-                  </Accordion.Header>
-                  <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                    <p className="pb-6 pr-14 text-sm leading-relaxed text-ink-muted sm:text-base">
-                      {item.answer}
-                    </p>
-                  </Accordion.Content>
-                </Accordion.Item>
-              ))}
-            </Accordion.Root>
-          </FadeIn>
+            <div>
+              <Accordion.Root type="single" collapsible className="divide-y divide-border">
+                {faqItems.map((item, index) => (
+                  <Accordion.Item key={item.question} value={`faq-${index}`}>
+                    <Accordion.Header>
+                      <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+                        <span className="text-base font-medium leading-snug text-ink sm:text-lg">
+                          {item.question}
+                        </span>
+                        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted ring-1 ring-border/60 transition-colors duration-300 group-data-[state=open]:bg-primary group-data-[state=open]:text-primary-foreground">
+                          <Plus className="h-4 w-4 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-0 group-data-[state=open]:opacity-0" />
+                          <Minus className="absolute h-4 w-4 scale-0 opacity-0 transition-[transform,opacity] duration-300 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100" />
+                        </span>
+                      </Accordion.Trigger>
+                    </Accordion.Header>
+                    <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                      <p className="pb-6 pr-14 text-sm leading-relaxed text-ink-muted sm:text-base">
+                        {item.answer}
+                      </p>
+                    </Accordion.Content>
+                  </Accordion.Item>
+                ))}
+              </Accordion.Root>
 
+              <div className="mt-10 border-t border-border pt-8 lg:hidden">
+                <p className="text-sm text-ink-muted">Still have questions?</p>
+                <div className="mt-3">
+                  <Button variant="secondary" asChild>
+                    <Link href="/quote">Get a Free Quote</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>

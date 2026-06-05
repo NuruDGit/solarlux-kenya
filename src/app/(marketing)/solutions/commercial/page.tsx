@@ -55,16 +55,19 @@ const caseStudies = [
     title: "20kW Office Building — Nairobi CBD",
     description: "Hybrid system with 30kWh battery bank. Cut monthly electricity bill from KES 220,000 to KES 38,000.",
     tag: "Office",
+    image: "/projects/project-11.03.30.jpg",
   },
   {
     title: "50kW Warehouse — Athi River",
     description: "On-grid system with KPLC net-metering. Pays back within 3.2 years at current tariffs.",
     tag: "Industrial",
+    image: "/projects/project-11.03.34.jpg",
   },
   {
     title: "15kW School — Kiambu",
     description: "Off-grid system for a rural school with unreliable grid access. Now runs labs, library, and admin 24/7.",
     tag: "Institution",
+    image: "/projects/project-11.03.36.jpg",
   },
 ];
 
@@ -72,7 +75,7 @@ export default function CommercialPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-ink-950 overflow-hidden">
+      <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
         <div className="container-page relative z-10">
           <FadeIn>
@@ -153,7 +156,7 @@ export default function CommercialPage() {
             </FadeIn>
             <FadeIn delay={0.15}>
               <Image
-                src="https://placehold.co/600x500/154878/FFFFFF?text=Commercial+Installation"
+                src="/solutions/commercial-solar.png"
                 alt="Commercial solar installation in Kenya"
                 width={600}
                 height={500}
@@ -182,7 +185,7 @@ export default function CommercialPage() {
               >
                 <div className="relative aspect-[4/3] bg-ink-100">
                   <Image
-                    src={`https://placehold.co/600x400/154878/FFFFFF?text=${encodeURIComponent(cs.tag)}`}
+                    src={cs.image}
                     alt={cs.title}
                     fill
                     className="object-cover"

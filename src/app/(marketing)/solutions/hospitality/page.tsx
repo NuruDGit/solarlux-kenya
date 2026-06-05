@@ -55,16 +55,19 @@ const projects = [
     title: "40kW Hotel — Watamu Coast",
     description: "Boutique beachfront hotel. Full off-grid system with 80kWh battery bank. Reduced diesel spend from KES 180,000 to near zero per month.",
     tag: "Coastal Hotel",
+    image: "/projects/project-11.03.37.jpg",
   },
   {
     title: "Solar Water Heating — Naivasha Lodge",
     description: "80-room lodge. Evacuated tube solar water heating system serving all guest rooms and the pool area.",
     tag: "Lodge",
+    image: "/projects/project-11.03.35.jpg",
   },
   {
     title: "25kW Hybrid — Mombasa Business Hotel",
     description: "Urban hotel with grid connection. Hybrid system prioritises solar, uses grid as backup, exports surplus.",
     tag: "Business Hotel",
+    image: "/projects/project-11.03.38.jpg",
   },
 ];
 
@@ -72,7 +75,7 @@ export default function HospitalityPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-ink-950 overflow-hidden">
+      <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
         <div className="container-page relative z-10">
           <FadeIn>
@@ -136,7 +139,7 @@ export default function HospitalityPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-start">
             <FadeIn>
               <Image
-                src="https://placehold.co/600x500/0F2F58/FFFFFF?text=Hotel+Solar+Kenya"
+                src="/solutions/hospitality-solar.png"
                 alt="Solar installation at a Kenyan hotel"
                 width={600}
                 height={500}
@@ -182,7 +185,7 @@ export default function HospitalityPage() {
               >
                 <div className="relative aspect-4/3 bg-ink-100">
                   <Image
-                    src={`https://placehold.co/600x400/0F2F58/FFFFFF?text=${encodeURIComponent(project.tag)}`}
+                    src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover"

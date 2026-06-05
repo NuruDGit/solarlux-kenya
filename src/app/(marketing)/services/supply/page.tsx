@@ -64,7 +64,7 @@ export default function SupplyPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface">
+      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
           <FadeIn>
             <Link
@@ -154,7 +154,7 @@ export default function SupplyPage() {
             </FadeIn>
             <FadeIn delay={0.15}>
               <Image
-                src="https://placehold.co/600x480/1D5AA6/FFFFFF?text=Solar+Products"
+                src="/products/solar_20installation.png"
                 alt="Solarlux Kenya solar product range"
                 width={600}
                 height={480}

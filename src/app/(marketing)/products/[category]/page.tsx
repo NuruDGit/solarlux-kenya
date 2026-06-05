@@ -45,7 +45,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <main>
       {/* Hero */}
-      <section className="relative bg-brand-blue-900 py-16 md:py-24 overflow-hidden">
+      <section className="relative bg-brand-blue-900 page-hero-spacing pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-linear-to-br from-brand-blue-900 via-brand-blue-700 to-brand-blue-900 opacity-90" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeIn>

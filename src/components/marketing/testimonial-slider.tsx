@@ -4,44 +4,29 @@ import * as React from "react";
 import Image from "next/image";
 import { FadeIn } from "@/components/motion/fade-in";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import type { TestimonialCardData } from "@/lib/cms";
 
-const testimonials = [
-  {
-    name: "James Mwangi",
-    company: "Homeowner, Kamakis",
-    avatar: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=120&h=120&fit=crop&crop=face",
-    quote:
-      "Solarlux designed and installed our home solar system in just 3 days. Our electricity bill dropped by 80%. The team was professional and the system works flawlessly.",
-  },
-  {
-    name: "Sarah Wanjiru",
-    company: "Hotel Manager, Watamu",
-    avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=120&h=120&fit=crop&crop=face",
-    quote:
-      "We switched to solar for our boutique hotel and the savings have been incredible. Solarlux handled everything from design to installation. Couldn't be happier.",
-  },
-  {
-    name: "David Kimani",
-    company: "Business Owner, Nairobi",
-    avatar: "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=120&h=120&fit=crop&crop=face",
-    quote:
-      "The team at Solarlux are true experts. They assessed our energy needs, recommended the right system, and delivered on time. Highly recommended for any business.",
-  },
-];
+interface TestimonialSliderProps {
+  testimonials: TestimonialCardData[];
+}
 
-export function TestimonialSlider() {
+export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
   const [current, setCurrent] = React.useState(0);
   const [direction, setDirection] = React.useState(1);
   const shouldReduceMotion = useReducedMotion();
 
   // Auto-advance every 5 seconds
   React.useEffect(() => {
+    if (testimonials.length <= 1) {
+      return;
+    }
+
     const timer = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev + 1) % testimonials.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [testimonials.length]);
 
   const testimonial = testimonials[current];
 
@@ -100,7 +85,7 @@ export function TestimonialSlider() {
             <div className="mt-8 md:mt-10 relative flex-1">
               {/* Quote icon — overlaps top-left of card */}
               <div className="absolute -top-7 left-5 z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-accent ring-4 ring-white shadow-lg overflow-hidden">
-                <span className="text-accent-foreground text-[72px] font-bold leading-[0] translate-y-4">&ldquo;</span>
+                <span className="text-accent-foreground text-[72px] font-bold leading-none translate-y-4">&ldquo;</span>
               </div>
 
               {/* Dark card */}

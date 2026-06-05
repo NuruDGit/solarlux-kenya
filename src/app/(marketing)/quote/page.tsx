@@ -5,28 +5,11 @@ import Link from "next/link";
 import { CheckCircle, Phone, MessageCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { formatPhoneHref, formatWhatsAppHref, cn } from "@/lib/utils";
+import { quoteSchema, type QuoteFormData } from "@/lib/form-schemas";
 import { CONTACT, STATS } from "@/lib/constants";
-
-const quoteSchema = z.object({
-  name: z.string().min(2, "Please enter your full name"),
-  phone: z.string().min(9, "Please enter a valid phone number"),
-  email: z.string().email("Please enter a valid email address"),
-  location: z.string().min(2, "Please enter your location"),
-  propertyType: z.enum(["home", "business", "hotel", "other"], {
-    required_error: "Please select a property type",
-  }),
-  monthlyBill: z.enum(["under5k", "5k-15k", "15k-30k", "over30k", "unsure"], {
-    required_error: "Please select your monthly bill range",
-  }),
-  interest: z.array(z.string()).min(1, "Please select at least one option"),
-  message: z.string().optional(),
-});
-
-type QuoteFormData = z.infer<typeof quoteSchema>;
 
 const propertyTypes = [
   { value: "home", label: "Home / Residential" },
@@ -55,10 +38,12 @@ const interests = [
 
 export default function QuotePage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     setValue,
     formState: { errors, isSubmitting },
@@ -78,9 +63,32 @@ export default function QuotePage() {
   };
 
   const onSubmit = async (data: QuoteFormData) => {
-    // In production this would POST to /api/quote
-    await new Promise((r) => setTimeout(r, 800));
-    console.log("Quote submitted:", data);
+    setSubmitError(null);
+
+    const response = await fetch("/api/forms/quote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setSubmitError(payload?.error ?? "Unable to submit your request right now.");
+      return;
+    }
+
+    reset({
+      email: "",
+      interest: [],
+      location: "",
+      message: "",
+      name: "",
+      phone: "",
+      propertyType: undefined,
+      monthlyBill: undefined,
+    });
     setSubmitted(true);
   };
 
@@ -128,7 +136,7 @@ export default function QuotePage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-12 md:pt-40 bg-ink-950">
+      <section className="page-hero-spacing pb-12 bg-ink-950">
         <div className="container-page">
           <FadeIn>
             <p className="text-overline text-accent mb-4">Free, No Obligation</p>
@@ -169,6 +177,12 @@ export default function QuotePage() {
 
                   <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="space-y-6">
+                      {submitError ? (
+                        <div className="rounded-lg border border-danger/20 bg-danger/5 px-4 py-3 text-body-sm text-danger">
+                          {submitError}
+                        </div>
+                      ) : null}
+
                       {/* Name + Phone */}
                       <div className="grid gap-6 sm:grid-cols-2">
                         <div>

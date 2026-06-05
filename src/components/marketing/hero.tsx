@@ -4,20 +4,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { STATS } from "@/lib/constants";
+import type { HeroData, SiteSettingsData } from "@/lib/cms";
 
-export function Hero() {
+interface HeroProps {
+  hero: HeroData;
+  stats: SiteSettingsData["stats"];
+}
+
+export function Hero({ hero, stats }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
   const duration = shouldReduceMotion ? 0.05 : 0.7;
   const ease = [0.22, 1, 0.36, 1] as const;
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
+    <section className="relative min-h-dvh flex items-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/projects/Rooftop solar installation team in action.png"
-          alt="Solar installation team"
+          src={hero.imageSrc}
+          alt={hero.imageAlt}
           fill
           className="object-cover"
           priority
@@ -37,7 +42,7 @@ export function Hero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-white/90">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Kenya&apos;s Trusted Solar Partner
+              {hero.eyebrow}
             </span>
           </motion.div>
 
@@ -48,8 +53,7 @@ export function Hero() {
             transition={{ duration, delay: 0.2, ease }}
             className="mt-6 text-display-2xl font-display font-medium text-white text-balance leading-tight"
           >
-            Powering a Sustainable{" "}
-            <span className="text-accent">Future for Kenya</span>
+            {hero.headline}
           </motion.h1>
 
           {/* Subhead */}
@@ -59,8 +63,7 @@ export function Hero() {
             transition={{ duration, delay: 0.35, ease }}
             className="mt-5 text-lg leading-relaxed text-white/75 max-w-xl"
           >
-            End-to-end solar solutions for homes, businesses, and hotels.
-            From design and installation to long-term maintenance.
+            {hero.subheadline}
           </motion.p>
 
           {/* CTAs */}
@@ -71,12 +74,10 @@ export function Hero() {
             className="mt-8 flex flex-col sm:flex-row gap-4"
           >
             <Button variant="accent" size="lg" asChild>
-              <Link href="/quote">
-                Get Free Quote
-              </Link>
+              <Link href={hero.primaryCtaHref}>{hero.primaryCtaLabel}</Link>
             </Button>
             <Button variant="outline-light" size="lg" asChild>
-              <Link href="/solutions">Our Solutions</Link>
+              <Link href={hero.secondaryCtaHref}>{hero.secondaryCtaLabel}</Link>
             </Button>
           </motion.div>
         </div>
@@ -88,7 +89,7 @@ export function Hero() {
           transition={{ duration, delay: 0.65, ease }}
           className="mt-16 lg:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 border-t border-white/15 pt-8"
         >
-          {STATS.map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label}>
               <p className="text-3xl lg:text-4xl font-semibold text-white font-display tracking-tight">
                 {stat.value}
