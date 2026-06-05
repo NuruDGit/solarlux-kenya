@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   Check,
+  ChevronRight,
   ShieldCheck,
   Truck,
   Phone,
@@ -92,27 +92,21 @@ export default async function ProductDetailPage({ params }: Props) {
 
       {/* Breadcrumb */}
       <section className="bg-surface border-b border-border page-top-offset">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+        <div className="container-page py-4">
           <nav aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center gap-2 text-sm text-ink-muted">
+            <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-muted">
               <li>
-                <Link
-                  href="/products"
-                  className="hover:text-primary transition-colors duration-200"
-                >
+                <Link href="/products" className="hover:text-primary transition-colors duration-200">
                   Products
                 </Link>
               </li>
-              <li aria-hidden="true">/</li>
+              <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
               <li>
-                <Link
-                  href={`/products/${categorySlug}`}
-                  className="hover:text-primary transition-colors duration-200"
-                >
+                <Link href={`/products/${categorySlug}`} className="hover:text-primary transition-colors duration-200">
                   {category?.name}
                 </Link>
               </li>
-              <li aria-hidden="true">/</li>
+              <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
               <li className="text-ink font-medium">{product.name}</li>
             </ol>
           </nav>
@@ -121,7 +115,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
       {/* Product Detail */}
       <section className="py-12 md:py-16 lg:py-20 bg-background">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="container-page">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             {/* Image */}
             <FadeIn>
@@ -158,6 +152,20 @@ export default async function ProductDetailPage({ params }: Props) {
                   {product.description}
                 </p>
 
+                {/* Price */}
+                {product.priceFrom && (
+                  <div className="mt-6 rounded-2xl border border-border bg-surface p-5">
+                    <p className="text-body-sm text-ink-muted">Starting from</p>
+                    <p className="mt-1 text-display-md font-display font-medium text-primary">
+                      {product.priceCurrency ?? "KES"}{" "}
+                      {product.priceFrom.toLocaleString("en-KE")}
+                    </p>
+                    <p className="mt-1 text-body-sm text-ink-muted">
+                      Contact us for bulk pricing and installation quotes.
+                    </p>
+                  </div>
+                )}
+
                 {/* Trust markers */}
                 <div className="mt-6 flex flex-wrap gap-4">
                   <div className="flex items-center gap-2 text-sm text-ink-muted">
@@ -192,23 +200,18 @@ export default async function ProductDetailPage({ params }: Props) {
 
                 {/* Specs Table */}
                 <div className="mt-10">
-                  <h2 className="text-lg font-semibold font-body mb-4">
+                  <h2 className="text-heading-xl font-semibold font-body mb-4 text-ink">
                     Specifications
                   </h2>
-                  <div className="rounded-xl border border-border overflow-hidden">
+                  <div className="overflow-hidden rounded-2xl border border-border">
                     <table className="w-full text-sm">
-                      <tbody>
-                        {product.specs.map((spec, i) => (
-                          <tr
-                            key={spec.label}
-                            className={
-                              i % 2 === 0 ? "bg-surface" : "bg-card"
-                            }
-                          >
-                            <td className="px-4 py-3 font-medium text-ink-muted w-1/3">
+                      <tbody className="divide-y divide-border">
+                        {product.specs.map((spec) => (
+                          <tr key={spec.label} className="group">
+                            <td className="bg-surface px-5 py-3.5 font-medium text-ink-muted w-2/5">
                               {spec.label}
                             </td>
-                            <td className="px-4 py-3 text-ink">
+                            <td className="bg-card px-5 py-3.5 font-medium text-ink">
                               {spec.value}
                             </td>
                           </tr>
@@ -220,14 +223,14 @@ export default async function ProductDetailPage({ params }: Props) {
 
                 {/* Features */}
                 <div className="mt-8">
-                  <h2 className="text-lg font-semibold font-body mb-4">
+                  <h2 className="text-heading-xl font-semibold font-body mb-4 text-ink">
                     Key Features
                   </h2>
-                  <ul className="space-y-3">
+                  <ul className="grid gap-2 sm:grid-cols-2">
                     {product.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-3 text-sm text-ink-muted"
+                        className="flex items-start gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-body-sm text-ink"
                       >
                         <Check className="h-4 w-4 mt-0.5 text-success shrink-0" />
                         {feature}
@@ -244,21 +247,21 @@ export default async function ProductDetailPage({ params }: Props) {
       {/* Related Products */}
       {related.length > 0 && (
         <section className="py-16 md:py-24 bg-surface">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-display-md font-display font-medium">
-              More in {category?.name}
-            </h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="container-page">
+            <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <h2 className="text-display-md font-display font-medium">
+                More in {category?.name}
+              </h2>
+              <Button variant="secondary" size="sm" asChild>
+                <Link href={`/products/${categorySlug}`}>
+                  View all {category?.name}
+                </Link>
+              </Button>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((p, i) => (
                 <ProductCard key={p.slug} product={p} index={i} />
               ))}
-            </div>
-            <div className="mt-10 text-center">
-              <Button variant="secondary" asChild>
-                <Link href={`/products/${categorySlug}`}>
-                  View All {category?.name}
-                </Link>
-              </Button>
             </div>
           </div>
         </section>

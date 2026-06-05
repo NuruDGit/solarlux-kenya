@@ -12,6 +12,8 @@ export interface Product {
   features: string[];
   warranty: string;
   inStock: boolean;
+  priceFrom?: number;
+  priceCurrency?: string;
 }
 
 export interface ProductCategory {
@@ -80,6 +82,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "25 years",
     inStock: true,
+    priceFrom: 38000,
+    priceCurrency: "KES",
   },
   {
     name: "Longi Weran 595W Solar Panel",
@@ -106,6 +110,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "25 years",
     inStock: true,
+    priceFrom: 36000,
+    priceCurrency: "KES",
   },
   {
     name: "Jinko 575W Solar Panel",
@@ -132,6 +138,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "25 years",
     inStock: true,
+    priceFrom: 34000,
+    priceCurrency: "KES",
   },
   {
     name: "Longi Solar 420W Panel",
@@ -158,6 +166,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "25 years",
     inStock: true,
+    priceFrom: 28000,
+    priceCurrency: "KES",
   },
   {
     name: "JA Solar 590W Panel",
@@ -184,6 +194,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "25 years",
     inStock: true,
+    priceFrom: 36000,
+    priceCurrency: "KES",
   },
 
   // ── Batteries ──
@@ -212,6 +224,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "10 years",
     inStock: true,
+    priceFrom: 85000,
+    priceCurrency: "KES",
   },
   {
     name: "SRNE 5kWh Lithium Battery",
@@ -238,6 +252,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "10 years",
     inStock: true,
+    priceFrom: 80000,
+    priceCurrency: "KES",
   },
   {
     name: "Renergy iPower 10.24kWh Battery",
@@ -264,6 +280,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "10 years",
     inStock: true,
+    priceFrom: 155000,
+    priceCurrency: "KES",
   },
   {
     name: "Renergy 5.12kWh Lithium Battery",
@@ -290,6 +308,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "10 years",
     inStock: true,
+    priceFrom: 78000,
+    priceCurrency: "KES",
   },
 
   // ── Inverters ──
@@ -318,6 +338,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "5 years",
     inStock: true,
+    priceFrom: 95000,
+    priceCurrency: "KES",
   },
   {
     name: "MUST 5KW Solar Inverter",
@@ -344,6 +366,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "5 years",
     inStock: true,
+    priceFrom: 72000,
+    priceCurrency: "KES",
   },
   {
     name: "MUST 3KW Solar Inverter",
@@ -370,6 +394,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "5 years",
     inStock: true,
+    priceFrom: 55000,
+    priceCurrency: "KES",
   },
   {
     name: "SRNE 3KW Solar Inverter",
@@ -396,6 +422,8 @@ export const PRODUCTS: Product[] = [
     ],
     warranty: "5 years",
     inStock: true,
+    priceFrom: 58000,
+    priceCurrency: "KES",
   },
 ];
 
