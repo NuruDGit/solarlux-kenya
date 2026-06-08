@@ -13,7 +13,9 @@ export const Media: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "System",
     defaultColumns: ["filename", "alt", "mediaType", "updatedAt"],
+    description: "Upload images, PDFs, and logos used across the site.",
   },
   fields: [
     {

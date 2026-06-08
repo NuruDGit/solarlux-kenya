@@ -4,6 +4,11 @@ import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 
 export const AboutPage: GlobalConfig = {
   slug: "about-page",
+  label: "About Page",
+  admin: {
+    group: "Pages",
+    description: "Hero text, company story, mission, and values for the About Us page.",
+  },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,

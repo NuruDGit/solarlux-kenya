@@ -17,8 +17,10 @@ export const Products: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Products",
     defaultColumns: ["name", "category", "brand", "inStock", "featuredOnHome"],
     useAsTitle: "name",
+    description: "Add solar products. Set 'Featured on Home' to show on the homepage snippet.",
   },
   fields: [
     { name: "name", type: "text", required: true },

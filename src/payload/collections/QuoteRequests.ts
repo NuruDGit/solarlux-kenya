@@ -17,8 +17,10 @@ export const QuoteRequests: CollectionConfig = {
     update: isSalesOrAdmin,
   },
   admin: {
+    group: "CRM",
     defaultColumns: ["fullName", "phone", "propertyType", "status", "assignedTo"],
     useAsTitle: "fullName",
+    description: "Quote requests submitted through the /quote form.",
   },
   fields: [
     { name: "fullName", type: "text", required: true },

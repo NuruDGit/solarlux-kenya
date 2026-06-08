@@ -1,16 +1,16 @@
 "use client";
 
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import type { SiteSettingsData } from "@/lib/cms";
 import { formatWhatsAppHref } from "@/lib/utils";
-import { useReducedMotion } from "motion/react";
 
 interface WhatsAppFabProps {
   siteSettings: SiteSettingsData;
 }
 
 export function WhatsAppFab({ siteSettings }: WhatsAppFabProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <div className="fixed right-6 bottom-6 z-80 flex flex-col items-end gap-2">

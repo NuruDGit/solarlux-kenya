@@ -45,7 +45,7 @@ interface ButtonProps
   sunrise?: boolean;
 }
 
-interface AnimatedLayerButtonProps extends ButtonProps {}
+type AnimatedLayerButtonProps = ButtonProps;
 
 const layeredButtonVariants = new Set(["primary", "accent", "dark"]);
 const sunriseButtonVariants = new Set(["secondary", "outline-light"]);

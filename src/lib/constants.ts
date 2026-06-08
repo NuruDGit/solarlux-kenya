@@ -119,6 +119,11 @@ export const PRODUCT_CATEGORIES = [
   { name: "Solar Panels", slug: "solar-panels", icon: "Sun" },
   { name: "Batteries & Energy Storage", slug: "batteries", icon: "Battery" },
   { name: "Solar Inverters", slug: "inverters", icon: "Zap" },
+  { name: "Solar Water Heaters", slug: "water-heaters", icon: "Thermometer" },
+  { name: "Solar Water Pumps", slug: "solar-pumps", icon: "Waves" },
+  { name: "Full System Kits", slug: "full-kits", icon: "Package" },
+  { name: "Solar Lighting", slug: "solar-lighting", icon: "Lightbulb" },
+  { name: "Solar Accessories", slug: "solar-accessories", icon: "Wrench" },
 ] as const;
 
 export const WHATSAPP_DEFAULT_MESSAGE =

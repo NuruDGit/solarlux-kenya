@@ -9,7 +9,9 @@ import {
   Clock,
   ChevronRight,
 } from "lucide-react";
+
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
+import { getPayloadAllProducts } from "@/lib/cms";
 import { ProductGrid } from "@/components/products/product-grid";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
@@ -33,25 +35,23 @@ const trustItems = [
   { icon: Clock, label: "Fast turnaround & support" },
 ];
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const payloadProducts = await getPayloadAllProducts();
+  const allProducts = payloadProducts.length > 0 ? payloadProducts : PRODUCTS;
+
+  // Per-category counts derived from live data
+  const categoryCounts = new Map<string, number>();
+  for (const p of allProducts) {
+    categoryCounts.set(p.categorySlug, (categoryCounts.get(p.categorySlug) ?? 0) + 1);
+  }
+
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden page-hero-spacing pb-16 md:pb-24 lg:pb-28">
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.pexels.com/photos/6876537/pexels-photo-6876537.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Large solar panel array harnessing energy under a sunny sky"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-linear-to-r from-ink-950/90 via-ink-950/70 to-ink-950/30" />
-        </div>
+      <section className="relative overflow-hidden bg-ink-950 page-hero-spacing pb-16 md:pb-24 lg:pb-28">
+        <div className="absolute inset-0 bg-gradient-brand opacity-10" />
 
-        <div className="relative container-page">
+        <div className="container-page relative z-10">
           <FadeIn>
             {/* Breadcrumb */}
             <nav className="mb-8" aria-label="Breadcrumb">
@@ -73,10 +73,7 @@ export default function ProductsPage() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button variant="accent" size="lg" asChild>
-                <Link href="/quote">
-                  Get a Free Quote
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <Link href="/quote">Get a Free Quote</Link>
               </Button>
               <Button variant="outline-light" size="lg" asChild>
                 <Link href="/contact">Talk to our team</Link>
@@ -110,7 +107,7 @@ export default function ProductsPage() {
                 <h2 className="text-display-md font-display font-medium">Shop by category</h2>
               </div>
               <p className="max-w-sm text-body text-ink-muted">
-                {CATEGORIES.length} categories · {PRODUCTS.length} products
+                {CATEGORIES.length} categories · {allProducts.length} products
               </p>
             </div>
           </FadeIn>
@@ -171,7 +168,7 @@ export default function ProductsPage() {
           </FadeIn>
 
           <div className="mt-10">
-            <ProductGrid products={[...PRODUCTS]} />
+            <ProductGrid products={allProducts} />
           </div>
         </div>
       </section>

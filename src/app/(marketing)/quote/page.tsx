@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle, Phone, MessageCircle } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { CheckCircle, Phone, MessageCircle, ChevronRight } from "lucide-react";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export default function QuotePage() {
     register,
     handleSubmit,
     reset,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<QuoteFormData>({
@@ -52,7 +52,9 @@ export default function QuotePage() {
     defaultValues: { interest: [] },
   });
 
-  const selectedInterests = watch("interest") ?? [];
+  const selectedInterests = useWatch({ control, name: "interest" }) ?? [];
+  const propertyType = useWatch({ control, name: "propertyType" });
+  const monthlyBill = useWatch({ control, name: "monthlyBill" });
 
   const toggleInterest = (value: string) => {
     const current = selectedInterests;
@@ -134,11 +136,24 @@ export default function QuotePage() {
   }
 
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="page-hero-spacing pb-12 bg-ink-950">
         <div className="container-page">
           <FadeIn>
+            <nav className="mb-8" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2 text-sm text-white/50">
+                <li>
+                  <Link href="/" className="hover:text-white/80 transition-colors duration-200">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </li>
+                <li className="text-white/80">Get a Quote</li>
+              </ol>
+            </nav>
             <p className="text-overline text-accent mb-4">Free, No Obligation</p>
             <h1 className="text-display-xl font-display font-medium text-paper max-w-2xl">
               Get your free solar quote in under 24 hours
@@ -317,7 +332,7 @@ export default function QuotePage() {
                               key={type.value}
                               className={cn(
                                 "flex cursor-pointer items-center justify-center rounded-lg border px-4 py-3 text-body-sm font-medium text-center transition-colors duration-fast",
-                                watch("propertyType") === type.value
+                                propertyType === type.value
                                   ? "border-primary bg-brand-blue-50 text-primary"
                                   : "border-border text-ink hover:border-primary/50"
                               )}
@@ -351,7 +366,7 @@ export default function QuotePage() {
                               key={range.value}
                               className={cn(
                                 "flex cursor-pointer items-center justify-center rounded-lg border px-3 py-3 text-body-sm font-medium text-center transition-colors duration-fast",
-                                watch("monthlyBill") === range.value
+                                monthlyBill === range.value
                                   ? "border-primary bg-brand-blue-50 text-primary"
                                   : "border-border text-ink hover:border-primary/50"
                               )}
@@ -508,6 +523,6 @@ export default function QuotePage() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

@@ -3,9 +3,9 @@
 import * as React from "react";
 import {
   motion,
-  useReducedMotion,
   type HTMLMotionProps,
 } from "motion/react";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 interface ScrollRevealProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export function ScrollReveal({
   distance = 24,
   ...props
 }: ScrollRevealProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   const directionMap = {
     up: { y: distance },

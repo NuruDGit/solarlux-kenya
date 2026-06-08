@@ -1,15 +1,13 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
-import { Stagger, staggerChildVariants } from "@/components/motion/stagger";
+import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { getPayloadFeaturedProducts, type FeaturedProductCard } from "@/lib/cms";
 
-const products = [
+const STATIC_FEATURED: FeaturedProductCard[] = [
   {
     name: "JA Solar 600W Panel",
     category: "Solar Panels",
@@ -40,7 +38,11 @@ const products = [
   },
 ];
 
-export function FeaturedProducts() {
+export async function FeaturedProducts() {
+  const payloadProducts = await getPayloadFeaturedProducts();
+  const products =
+    payloadProducts.length >= STATIC_FEATURED.length ? payloadProducts : STATIC_FEATURED;
+
   return (
     <section className="bg-background py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,12 +65,12 @@ export function FeaturedProducts() {
 
         <Stagger className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
           {products.map((product) => (
-            <motion.div key={product.name} variants={staggerChildVariants}>
+            <StaggerItem key={product.href}>
               <Link href={product.href} className="group relative block h-full">
                 <div
                   className={cn(
                     "h-full rounded-2xl bg-background p-1.5 ring-1 ring-border/60",
-                    "transition-[transform,box-shadow,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+                    "transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
                     "hover:-translate-y-1 hover:ring-primary/20 hover:shadow-lg",
                   )}
                 >
@@ -104,7 +106,7 @@ export function FeaturedProducts() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </StaggerItem>
           ))}
         </Stagger>
 

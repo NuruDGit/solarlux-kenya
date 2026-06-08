@@ -7,8 +7,6 @@ import {
   ChevronRight,
   ShieldCheck,
   Truck,
-  Phone,
-  MessageCircle,
 } from "lucide-react";
 import {
   PRODUCTS,
@@ -16,6 +14,7 @@ import {
   getCategoryBySlug,
   getProductsByCategory,
 } from "@/lib/products";
+import { getPayloadProductBySlug, getPayloadProductsByCategory } from "@/lib/cms";
 import { CONTACT } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +38,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = (await getPayloadProductBySlug(slug)) ?? getProductBySlug(slug);
   if (!product) return {};
 
   return {
@@ -55,11 +54,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { category: categorySlug, slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = (await getPayloadProductBySlug(slug)) ?? getProductBySlug(slug);
   if (!product || product.categorySlug !== categorySlug) notFound();
 
   const category = getCategoryBySlug(categorySlug);
-  const related = getProductsByCategory(categorySlug)
+
+  const payloadRelated = await getPayloadProductsByCategory(categorySlug);
+  const related = (payloadRelated.length > 0 ? payloadRelated : getProductsByCategory(categorySlug))
     .filter((p) => p.slug !== slug)
     .slice(0, 4);
 
@@ -186,13 +187,11 @@ export default async function ProductDetailPage({ params }: Props) {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <MessageCircle className="h-4 w-4" />
                       Enquire on WhatsApp
                     </a>
                   </Button>
                   <Button variant="secondary" size="lg" asChild>
                     <a href={`tel:${CONTACT.phone1.replace(/\s/g, "")}`}>
-                      <Phone className="h-4 w-4" />
                       Call Now
                     </a>
                   </Button>

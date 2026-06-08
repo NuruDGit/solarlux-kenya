@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import {
@@ -8,6 +7,7 @@ import {
   getProductsByCategory,
   getCategoryBySlug,
 } from "@/lib/products";
+import { getPayloadProductsByCategory } from "@/lib/cms";
 import { ProductGrid } from "@/components/products/product-grid";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
@@ -16,11 +16,6 @@ interface Props {
   params: Promise<{ category: string }>;
 }
 
-const categoryHeroImages: Record<string, string> = {
-  "solar-panels": "https://images.pexels.com/photos/9875413/pexels-photo-9875413.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  "batteries": "https://images.pexels.com/photos/7102661/pexels-photo-7102661.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  "inverters": "https://images.pexels.com/photos/8783541/pexels-photo-8783541.jpeg?auto=compress&cs=tinysrgb&w=1600",
-};
 
 export async function generateStaticParams() {
   return CATEGORIES.map((cat) => ({ category: cat.slug }));
@@ -46,29 +41,17 @@ export default async function CategoryPage({ params }: Props) {
   const category = getCategoryBySlug(categorySlug);
   if (!category) notFound();
 
-  const products = getProductsByCategory(categorySlug);
+  const payloadProducts = await getPayloadProductsByCategory(categorySlug);
+  const products = payloadProducts.length > 0 ? payloadProducts : getProductsByCategory(categorySlug);
   const Icon = category.icon;
-  const heroImage = categoryHeroImages[categorySlug];
 
   return (
     <main>
       {/* Hero */}
-      <section className="relative overflow-hidden page-hero-spacing pb-16 md:pb-20">
-        <div className="absolute inset-0">
-          {heroImage && (
-            <Image
-              src={heroImage}
-              alt={`${category.name} installation`}
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
-          )}
-          <div className="absolute inset-0 bg-linear-to-r from-ink-950/90 via-ink-950/70 to-ink-950/30" />
-        </div>
+      <section className="relative overflow-hidden bg-ink-950 page-hero-spacing pb-16 md:pb-20">
+        <div className="absolute inset-0 bg-gradient-brand opacity-10" />
 
-        <div className="relative container-page">
+        <div className="container-page relative z-10">
           <FadeIn>
             {/* Breadcrumb */}
             <nav className="mb-8" aria-label="Breadcrumb">
@@ -120,21 +103,22 @@ export default async function CategoryPage({ params }: Props) {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 bg-surface">
+      <section className="py-16 md:py-24 bg-ink-950">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <h2 className="text-display-md font-display font-medium">
+            <p className="text-overline text-accent mb-4">Free consultation</p>
+            <h2 className="text-display-md font-display font-medium text-paper">
               Need help choosing?
             </h2>
-            <p className="mt-4 text-ink-muted max-w-lg mx-auto">
+            <p className="mt-4 text-paper/70 max-w-lg mx-auto">
               Our solar experts will recommend the best {category.name.toLowerCase()} for
               your specific needs and budget.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="primary" size="lg" asChild>
+              <Button variant="accent" size="lg" asChild>
                 <Link href="/quote">Get a Free Quote</Link>
               </Button>
-              <Button variant="secondary" size="lg" asChild>
+              <Button variant="outline-light" size="lg" asChild>
                 <Link href="/contact">Talk to an Expert</Link>
               </Button>
             </div>

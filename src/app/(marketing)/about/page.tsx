@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
@@ -52,7 +53,7 @@ const whyChooseUs = [
 
 export default function AboutPage() {
   return (
-    <>
+    <main>
       {/* ── Hero — Split layout: text left, double-bezel image right ── */}
       <section className="relative page-hero-spacing pb-20 md:pb-28 bg-ink-950 overflow-hidden">
         {/* Ambient glow — brand blue radial, right side */}
@@ -66,6 +67,21 @@ export default function AboutPage() {
         />
 
         <div className="container-page relative z-10">
+          {/* Breadcrumb */}
+          <nav className="mb-8" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-sm text-white/50">
+              <li>
+                <Link href="/" className="hover:text-white/80 transition-colors duration-200">
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true">
+                <ChevronRight className="h-3.5 w-3.5" />
+              </li>
+              <li className="text-white/80">About</li>
+            </ol>
+          </nav>
+
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             {/* Left: Story + inline stats */}
             <FadeIn>
@@ -348,6 +364,6 @@ export default function AboutPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

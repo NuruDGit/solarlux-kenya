@@ -13,8 +13,10 @@ export const BlogPosts: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Content",
     defaultColumns: ["title", "category", "status", "publishedAt", "featured"],
     useAsTitle: "title",
+    description: "Blog articles. Set status to 'Published' and fill 'Published At' to make them live on /blog.",
   },
   versions: {
     drafts: true,

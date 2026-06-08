@@ -11,8 +11,10 @@ export const Testimonials: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Content",
     defaultColumns: ["authorName", "authorRole", "rating", "featured"],
     useAsTitle: "authorName",
+    description: "Client testimonials shown in the homepage slider. Enable 'Featured' to include in the slider.",
   },
   fields: [
     { name: "quote", type: "textarea", required: true },

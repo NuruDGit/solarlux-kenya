@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/admin/"],
       },
     ],
-    sitemap: "https://solarluxkenya.com/sitemap.xml",
+    sitemap: "https://solarluxkenya.co.ke/sitemap.xml",
   };
 }

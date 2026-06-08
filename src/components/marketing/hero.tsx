@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { Button } from "@/components/ui/button";
 import type { HeroData, SiteSettingsData } from "@/lib/cms";
 
@@ -12,7 +13,7 @@ interface HeroProps {
 }
 
 export function Hero({ hero, stats }: HeroProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const duration = shouldReduceMotion ? 0.05 : 0.7;
   const ease = [0.22, 1, 0.36, 1] as const;
 

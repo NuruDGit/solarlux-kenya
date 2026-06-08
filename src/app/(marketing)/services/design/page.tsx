@@ -129,7 +129,7 @@ export default function DesignPage() {
                 A complete solar design package
               </h2>
               <p className="mt-4 text-body-lg text-ink-muted leading-relaxed">
-                Our design service goes far beyond a basic quote. You receive engineering-grade documentation to support your investment decision and your installer's work.
+                Our design service goes far beyond a basic quote. You receive engineering-grade documentation to support your investment decision and your installer&apos;s work.
               </p>
               <ul className="mt-8 space-y-4">
                 {designIncludes.map((item) => (

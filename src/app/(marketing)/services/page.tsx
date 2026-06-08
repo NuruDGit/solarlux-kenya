@@ -10,7 +10,6 @@ import {
   Home,
   Building2,
   Hotel,
-  ArrowRight,
   ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 export const metadata: Metadata = {
   title: "Solar Solutions & Services | Solarlux Kenya",
   description:
-    "Solarlux Kenya delivers end-to-end solar solutions for homes, businesses, and hotels — including equipment supply, system design, professional installation, and ongoing support.",
+    "Solarlux Kenya delivers end-to-end solar solutions for homes, businesses, and hotels, including equipment supply, system design, professional installation, and ongoing support.",
   openGraph: {
     title: "Solar Solutions & Services | Solarlux Kenya",
     description:
@@ -35,7 +34,7 @@ const solutions = [
     title: "For Homes",
     tagline: "Energy independence for your family",
     description:
-      "Cut electricity bills, protect against KPLC outages, and invest in a 25-year asset. We design home solar systems for every budget — from starter kits to full off-grid setups.",
+      "Cut electricity bills, protect against KPLC outages, and invest in a 25-year asset. We design home solar systems for every budget, from starter kits to full off-grid setups.",
     image: "/solutions/residential-solar.jpg",
     benefits: ["Reduce bills by up to 80%", "Backup during blackouts", "25-year panel warranty"],
   },
@@ -59,7 +58,7 @@ const solutions = [
     title: "For Hotels & Lodges",
     tagline: "Sustainable hospitality operations",
     description:
-      "Solar is transforming Kenya's hospitality sector. Power your kitchen, pool, laundry, and rooms with clean energy — and market your sustainability to a growing eco-conscious guest base.",
+      "Solar is transforming Kenya's hospitality sector. Power your kitchen, pool, laundry, and rooms with clean energy, and market your sustainability to a growing eco-conscious guest base.",
     image: "/solutions/hospitality-solar.png",
     benefits: [
       "Power water heating, kitchen & rooms",
@@ -93,7 +92,7 @@ const services = [
     title: "Project Design",
     tagline: "Custom-engineered for your needs",
     description:
-      "Our engineers conduct a full site assessment and energy audit before designing your system. We size correctly for your load, roof layout, and budget — so you never over- or under-invest.",
+      "Our engineers conduct a full site assessment and energy audit before designing your system. We size correctly for your load, roof layout, and budget so you never over- or under-invest.",
     features: [
       "On-site energy consumption analysis",
       "Roof & shading assessment",
@@ -110,7 +109,7 @@ const services = [
     title: "Installation & Maintenance",
     tagline: "Certified technicians, guaranteed workmanship",
     description:
-      "Our certified technicians handle every aspect of installation — from mounting structures to inverter commissioning. Post-installation, our maintenance plans keep your system performing at peak efficiency.",
+      "Our certified technicians handle every aspect of installation, from mounting structures to inverter commissioning. Post-installation, our maintenance plans keep your system performing at peak efficiency.",
     features: [
       "Structural mounting & panel installation",
       "Inverter commissioning & configuration",
@@ -119,7 +118,7 @@ const services = [
       "Preventive maintenance contracts",
       "24/7 fault monitoring & remote diagnostics",
     ],
-    accentColor: "bg-emerald-50 text-emerald-700",
+    accentColor: "bg-success/10 text-success",
   },
   {
     icon: MessageCircle,
@@ -127,7 +126,7 @@ const services = [
     title: "Installation Guidance",
     tagline: "Expert advice, confident decisions",
     description:
-      "Already have an installer? We'll guide you through every step — from choosing the right equipment to reviewing installation quality. Our advisory service ensures you don't pay for substandard work.",
+      "Already have an installer? We'll guide you through every step, from choosing the right equipment to reviewing installation quality. Our advisory service ensures you don't pay for substandard work.",
     features: [
       "Product selection & brand guidance",
       "Technical specification review",
@@ -152,7 +151,7 @@ const process = [
     step: "01",
     title: "Initial Consultation",
     description:
-      "Tell us about your property and energy needs — by phone, WhatsApp, or in our showroom.",
+      "Tell us about your property and energy needs, by phone, WhatsApp, or in our showroom.",
   },
   {
     step: "02",
@@ -184,41 +183,60 @@ export default function ServicesPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-ink-950 page-hero-spacing pb-16 md:pb-20">
+        <div className="absolute inset-0 bg-gradient-brand opacity-10" />
+
+        <div className="container-page relative z-10">
           <FadeIn>
             <nav className="mb-8" aria-label="Breadcrumb">
-              <ol className="flex items-center gap-2 text-sm text-ink-muted">
+              <ol className="flex items-center gap-2 text-sm text-white/50">
                 <li>
-                  <Link href="/" className="hover:text-primary transition-colors">
+                  <Link href="/" className="hover:text-white/80 transition-colors duration-200">
                     Home
                   </Link>
                 </li>
                 <li aria-hidden="true">
                   <ChevronRight className="h-3.5 w-3.5" />
                 </li>
-                <li className="text-ink">Solutions</li>
+                <li className="text-white/80">Solutions</li>
               </ol>
             </nav>
-            <p className="text-overline text-primary mb-4">What We Do &amp; Who We Serve</p>
-            <h1 className="text-display-xl font-display font-medium max-w-3xl">
-              End-to-end solar — from design to installation, for every Kenyan context
-            </h1>
-            <p className="mt-6 max-w-2xl text-body-lg text-ink-muted leading-relaxed">
-              Whether you&apos;re a homeowner looking to cut bills, a business protecting margins,
-              or a hotel going off-grid — we design, supply, and install solar systems built
-              specifically for your site, budget, and goals.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button variant="primary" size="lg" asChild>
-                <Link href="/quote">
-                  Get a Free Quote
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="secondary" size="lg" asChild>
-                <Link href="/products">Browse Products</Link>
-              </Button>
+            <p className="text-overline text-brand-yellow-500 mb-4">What We Do &amp; Who We Serve</p>
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+              <div>
+                <h1 className="text-display-lg font-display font-medium text-white max-w-2xl leading-tight">
+                  End-to-end solar, from design to installation, for every Kenyan context
+                </h1>
+                <p className="mt-6 max-w-xl text-body-lg text-white/70 leading-relaxed">
+                  Whether you&apos;re a homeowner looking to cut bills, a business protecting margins,
+                  or a hotel going off-grid, we design, supply, and install solar systems built
+                  specifically for your site, budget, and goals.
+                </p>
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  <Button variant="accent" size="lg" asChild>
+                    <Link href="/quote">Get a Free Quote</Link>
+                  </Button>
+                  <Button variant="outline-light" size="lg" asChild>
+                    <Link href="/products">Browse Products</Link>
+                  </Button>
+                </div>
+              </div>
+
+              <FadeIn delay={0.2}>
+                <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
+                  <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
+                    <Image
+                      src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
+                      alt="Solar panel array under a blue sky"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-ink-950/60 via-transparent pointer-events-none" />
+                  </div>
+                </div>
+              </FadeIn>
             </div>
           </FadeIn>
         </div>
@@ -267,7 +285,7 @@ export default function ServicesPage() {
                       index % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
                     }`}
                   >
-                    <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-80">
+                    <div className="relative aspect-4/3 lg:aspect-auto lg:min-h-80">
                       <Image
                         src={solution.image}
                         alt={solution.title}
@@ -374,7 +392,7 @@ export default function ServicesPage() {
           <FadeIn>
             <p className="text-overline text-primary mb-4">How It Works</p>
             <h2 className="text-display-lg font-display font-medium max-w-2xl">
-              Our process — simple, transparent, and thorough
+              Our process, simple, transparent, and thorough
             </h2>
           </FadeIn>
 
@@ -397,9 +415,10 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-primary">
+      <section className="section-padding bg-ink-950">
         <div className="container-page text-center">
           <FadeIn>
+            <p className="text-overline text-accent mb-4">Free consultation</p>
             <h2 className="text-display-lg font-display font-medium text-paper">
               Ready to get started?
             </h2>

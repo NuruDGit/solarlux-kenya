@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChevronRight, BookOpen, Tag } from "lucide-react";
+import { ArrowRight, ChevronRight, Tag } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 import { BLOG_POSTS } from "@/lib/blog";
+import { getPayloadBlogListing } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Solar Blog & Insights | Solarlux Kenya",
@@ -18,21 +19,24 @@ export const metadata: Metadata = {
   },
 };
 
-const posts = BLOG_POSTS.map((p) => ({
-  title: p.title,
-  excerpt: p.excerpt,
-  image: p.image,
-  category: p.category,
-  date: p.date,
-  href: `/blog/${p.slug}`,
-}));
-
 const categories = ["All", "Guides", "Technology", "Business", "Industry"];
 
-const featuredPost = posts[0];
-const remainingPosts = posts.slice(1);
+export default async function BlogPage() {
+  const payloadPosts = await getPayloadBlogListing();
+  const posts =
+    payloadPosts.length > 0
+      ? payloadPosts
+      : BLOG_POSTS.map((p) => ({
+          title: p.title,
+          excerpt: p.excerpt,
+          image: p.image,
+          category: p.category,
+          date: p.date,
+          href: `/blog/${p.slug}`,
+        }));
 
-export default function BlogPage() {
+  const featuredPost = posts[0];
+  const remainingPosts = posts.slice(1);
   return (
     <main>
       {/* Hero — dark editorial masthead */}

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Phone } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { formatPhoneHref } from "@/lib/utils";

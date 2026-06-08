@@ -5,6 +5,11 @@ import { socialPlatformOptions } from "../shared/options.ts";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
+  label: "Site Settings",
+  admin: {
+    group: "Settings",
+    description: "Global contact details, phone numbers, social links, and stats shown across the site.",
+  },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,

@@ -1,7 +1,12 @@
+import "server-only";
+
+import { existsSync } from "fs";
+import path from "path";
 import { getPayload } from "payload";
 
 import config from "@payload-config";
 
+import { PRODUCTS, type Product } from "@/lib/products";
 import {
   CONTACT,
   NAV_LINKS,
@@ -157,7 +162,7 @@ const fallbackFooter: FooterData = {
         { label: "Home", href: "/" },
         { label: "About Us", href: "/about" },
         { label: "Projects", href: "/projects" },
-        { label: "Resources", href: "/resources" },
+        { label: "Blog", href: "/blog" },
         { label: "Contact", href: "/contact" },
         { label: "Get a Free Quote", href: "/quote" },
       ],
@@ -203,28 +208,28 @@ const fallbackBlogPosts: BlogPostCardData[] = [
     title: "How to Choose the Right Solar Panel Size for Your Home",
     excerpt:
       "A practical guide to calculating your energy needs and selecting the perfect panel wattage for Kenyan households.",
-    image: "/projects/project-11.03.21.jpg",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
     category: "Guides",
     date: "March 12, 2026",
-    href: "/resources",
+    href: "/blog/choose-right-solar-panel-size",
   },
   {
     title: "Understanding Solar Battery Storage: LiFePO4 vs Lead Acid",
     excerpt:
       "Compare battery technologies, lifespans, and costs to find the best energy storage for your solar system.",
-    image: "/projects/project-11.03.20.jpg",
+    image: "https://images.unsplash.com/photo-1668097613572-40b7c11c8727?auto=format&fit=crop&w=1200&q=80",
     category: "Technology",
     date: "February 28, 2026",
-    href: "/resources",
+    href: "/blog/lifepo4-vs-lead-acid-batteries",
   },
   {
     title: "5 Signs Your Business Should Switch to Solar Energy",
     excerpt:
       "Rising electricity bills and unreliable grid power are pushing Kenyan businesses to go solar. Here's what you need to know.",
-    image: "/projects/project-11.03.36.jpg",
+    image: "https://images.unsplash.com/photo-1724041875334-0a6397111c7e?auto=format&fit=crop&w=1200&q=80",
     category: "Business",
     date: "January 15, 2026",
-    href: "/resources",
+    href: "/blog/5-signs-your-business-should-switch-to-solar",
   },
 ];
 
@@ -255,10 +260,14 @@ const fallbackTestimonials: TestimonialCardData[] = [
   },
 ];
 
+let payloadPromise: ReturnType<typeof getPayload> | null = null;
+
 async function tryGetPayload() {
   try {
-    return await getPayload({ config });
+    payloadPromise ??= getPayload({ config });
+    return await payloadPromise;
   } catch {
+    payloadPromise = null;
     return null;
   }
 }
@@ -269,10 +278,27 @@ function getMediaUrl(value: unknown): string | null {
   }
 
   if ("url" in value && typeof value.url === "string") {
-    return value.url;
+    return normalizeMediaUrl(value.url);
   }
 
   return null;
+}
+
+function normalizeMediaUrl(url: string): string {
+  const mediaPrefix = "/api/media/file/";
+
+  if (!url.startsWith(mediaPrefix)) {
+    return url;
+  }
+
+  const fileName = decodeURIComponent(url.slice(mediaPrefix.length));
+
+  if (fileName.includes("/") || fileName.includes("\\")) {
+    return url;
+  }
+
+  const publicMediaPath = path.join(process.cwd(), "public", "media", fileName);
+  return existsSync(publicMediaPath) ? `/media/${encodeURIComponent(fileName)}` : url;
 }
 
 function formatPublishDate(value: unknown): string {
@@ -301,11 +327,13 @@ function normalizeSiteSettings(data: Partial<SiteSettingsData> | null | undefine
         (item): item is { platform: string; url: string } =>
           Boolean(item?.platform) && Boolean(item?.url),
       ) ?? fallbackSiteSettings.socialLinks,
-    stats:
-      data?.stats?.filter(
+    stats: (() => {
+      const fromCms = data?.stats?.filter(
         (item): item is { label: string; value: string } =>
           Boolean(item?.label) && Boolean(item?.value),
-      ) ?? fallbackSiteSettings.stats,
+      );
+      return fromCms?.length ? fromCms : fallbackSiteSettings.stats;
+    })(),
   };
 }
 
@@ -525,7 +553,7 @@ export async function getHomePageData(): Promise<HomePageData> {
         category: category || "Resources",
         date: date || "",
         excerpt,
-        href: `/resources/${slug}`,
+        href: `/blog/${slug}`,
         image: image || fallbackBlogPosts[0]?.image || "",
         title,
       } satisfies BlogPostCardData;
@@ -563,4 +591,429 @@ export async function getHomePageData(): Promise<HomePageData> {
     hero: heroData,
     testimonials: testimonialCards.length ? testimonialCards : fallbackTestimonials,
   };
+}
+
+// ─── Standalone blog fetchers ────────────────────────────────────────────────
+
+export interface PayloadBlogPostFull {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  date: string;
+  readTime: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lexicalContent: any;
+  isPayload: true;
+}
+
+export async function getPayloadBlogListing(): Promise<BlogPostCardData[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+
+  const result = await payload
+    .find({
+      collection: "blog-posts",
+      depth: 1,
+      limit: 50,
+      pagination: false,
+      sort: "-publishedAt",
+      where: { status: { equals: "published" } },
+    })
+    .catch(() => ({ docs: [] }));
+
+  const cards = result.docs
+    .map((post) => {
+      if (typeof post !== "object" || !post) return null;
+      const title = "title" in post && typeof post.title === "string" ? post.title : "";
+      const excerpt = "excerpt" in post && typeof post.excerpt === "string" ? post.excerpt : "";
+      const slug = "slug" in post && typeof post.slug === "string" ? post.slug : "";
+      const category = "category" in post && typeof post.category === "string" ? post.category : "";
+      const date = "publishedAt" in post ? formatPublishDate(post.publishedAt) : "";
+      const image = "heroImage" in post ? getMediaUrl(post.heroImage) : null;
+      if (!title || !slug) return null;
+      return {
+        category: category || "General",
+        date: date || "",
+        excerpt,
+        href: `/blog/${slug}`,
+        image: image || fallbackBlogPosts[0]?.image || "",
+        title,
+      } satisfies BlogPostCardData;
+    })
+    .filter((p): p is BlogPostCardData => Boolean(p));
+
+  return cards;
+}
+
+export async function getPayloadBlogPostBySlug(slug: string): Promise<PayloadBlogPostFull | null> {
+  const payload = await tryGetPayload();
+  if (!payload) return null;
+
+  const result = await payload
+    .find({
+      collection: "blog-posts",
+      depth: 1,
+      limit: 1,
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          { status: { equals: "published" } },
+        ],
+      },
+    })
+    .catch(() => ({ docs: [] }));
+
+  const post = result.docs[0];
+  if (!post || typeof post !== "object") return null;
+
+  const title = "title" in post && typeof post.title === "string" ? post.title : "";
+  const excerpt = "excerpt" in post && typeof post.excerpt === "string" ? post.excerpt : "";
+  const category = "category" in post && typeof post.category === "string" ? post.category : "";
+  const date = "publishedAt" in post ? formatPublishDate(post.publishedAt) : "";
+  const readTime =
+    "readTimeMinutes" in post && typeof post.readTimeMinutes === "number"
+      ? `${post.readTimeMinutes} min read`
+      : "";
+  const image = "heroImage" in post ? getMediaUrl(post.heroImage) ?? "" : "";
+  const lexicalContent = "content" in post ? post.content : null;
+
+  if (!title || !slug) return null;
+
+  return {
+    slug,
+    title,
+    excerpt,
+    image,
+    category,
+    date,
+    readTime,
+    lexicalContent,
+    isPayload: true,
+  };
+}
+
+// ─── Shared helpers ──────────────────────────────────────────────────────────
+
+function getLexicalPlainText(content: unknown): string {
+  if (!content || typeof content !== "object") return "";
+  const doc = content as { root?: { children?: unknown[] } };
+  for (const node of doc.root?.children ?? []) {
+    if (!node || typeof node !== "object") continue;
+    const n = node as Record<string, unknown>;
+    if (n.type === "paragraph" && Array.isArray(n.children)) {
+      const text = n.children
+        .map((c) =>
+          typeof c === "object" && c && "text" in c && typeof (c as { text: unknown }).text === "string"
+            ? (c as { text: string }).text
+            : "",
+        )
+        .join("");
+      if (text.trim()) return text;
+    }
+  }
+  return "";
+}
+
+// ─── Products ────────────────────────────────────────────────────────────────
+
+export interface FeaturedProductCard {
+  name: string;
+  category: string;
+  image: string;
+  href: string;
+  badge: string | null;
+}
+
+function normalizePayloadProduct(doc: unknown): Product | null {
+  if (!doc || typeof doc !== "object") return null;
+  const d = doc as Record<string, unknown>;
+
+  const name = typeof d.name === "string" ? d.name : "";
+  const slug = typeof d.slug === "string" ? d.slug : "";
+  if (!name || !slug) return null;
+
+  const cat =
+    d.category && typeof d.category === "object" ? (d.category as Record<string, unknown>) : null;
+  const category = cat && typeof cat.title === "string" ? cat.title : "";
+  const categorySlug = cat && typeof cat.slug === "string" ? cat.slug : "";
+
+  const img =
+    d.primaryImage && typeof d.primaryImage === "object"
+      ? (d.primaryImage as Record<string, unknown>)
+      : null;
+  const fallbackProduct = PRODUCTS.find((product) => product.slug === slug);
+  const image =
+    img && typeof img.url === "string" ? normalizeMediaUrl(img.url) : fallbackProduct?.image ?? "";
+
+  const specs: { label: string; value: string }[] = Array.isArray(d.specifications)
+    ? (d.specifications as unknown[]).filter(
+        (s): s is { label: string; value: string } =>
+          typeof (s as Record<string, unknown>)?.label === "string" &&
+          typeof (s as Record<string, unknown>)?.value === "string",
+      )
+    : [];
+
+  const features: string[] = Array.isArray(d.keyFeatures)
+    ? (d.keyFeatures as { feature?: string }[])
+        .map((f) => f?.feature ?? "")
+        .filter(Boolean)
+    : [];
+
+  return {
+    name,
+    slug,
+    category,
+    categorySlug,
+    image,
+    badge: typeof d.badge === "string" ? d.badge : null,
+    description: typeof d.shortDescription === "string" ? d.shortDescription : "",
+    specs,
+    features,
+    warranty: typeof d.warranty === "string" ? d.warranty : "",
+    inStock: typeof d.inStock === "boolean" ? d.inStock : true,
+    priceFrom: typeof d.priceFrom === "number" ? d.priceFrom : undefined,
+    priceCurrency: typeof d.priceCurrency === "string" ? d.priceCurrency : undefined,
+  };
+}
+
+export async function getPayloadAllProducts(): Promise<Product[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  const result = await payload
+    .find({ collection: "products", depth: 1, limit: 500, pagination: false, sort: "name" })
+    .catch(() => ({ docs: [] }));
+  return result.docs.map(normalizePayloadProduct).filter((p): p is Product => p !== null);
+}
+
+export async function getPayloadProductsByCategory(categorySlug: string): Promise<Product[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+
+  const cats = await payload
+    .find({ collection: "product-categories", where: { slug: { equals: categorySlug } }, limit: 1 })
+    .catch(() => ({ docs: [] }));
+  const catId = (cats.docs[0] as Record<string, unknown>)?.id;
+  if (!catId) return [];
+
+  const result = await payload
+    .find({
+      collection: "products",
+      depth: 1,
+      limit: 500,
+      pagination: false,
+      sort: "name",
+      where: { category: { equals: catId } },
+    })
+    .catch(() => ({ docs: [] }));
+  return result.docs.map(normalizePayloadProduct).filter((p): p is Product => p !== null);
+}
+
+export async function getPayloadProductBySlug(slug: string): Promise<Product | null> {
+  const payload = await tryGetPayload();
+  if (!payload) return null;
+  const result = await payload
+    .find({ collection: "products", depth: 1, limit: 1, where: { slug: { equals: slug } } })
+    .catch(() => ({ docs: [] }));
+  return normalizePayloadProduct(result.docs[0] ?? null);
+}
+
+export async function getPayloadFeaturedProducts(): Promise<FeaturedProductCard[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  const result = await payload
+    .find({
+      collection: "products",
+      depth: 1,
+      limit: 4,
+      pagination: false,
+      sort: "featuredRank",
+      where: { featuredOnHome: { equals: true } },
+    })
+    .catch(() => ({ docs: [] }));
+  return result.docs
+    .map((doc) => {
+      const p = normalizePayloadProduct(doc);
+      if (!p || !p.image || !p.categorySlug) return null;
+      return {
+        name: p.name,
+        category: p.category,
+        image: p.image,
+        href: `/products/${p.categorySlug}/${p.slug}`,
+        badge: p.badge ?? null,
+      } satisfies FeaturedProductCard;
+    })
+    .filter((p): p is FeaturedProductCard => p !== null);
+}
+
+// ─── Projects ────────────────────────────────────────────────────────────────
+
+export interface PayloadProjectHighlight {
+  title: string;
+  location: string;
+  sector: string;
+  image: string;
+  summary: string;
+  system: string;
+  outcome: string;
+}
+
+export async function getPayloadProjects(): Promise<PayloadProjectHighlight[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  const result = await payload
+    .find({
+      collection: "projects",
+      depth: 1,
+      limit: 100,
+      pagination: false,
+      sort: "featuredRank",
+      where: { status: { equals: "published" } },
+    })
+    .catch(() => ({ docs: [] }));
+
+  const projects = result.docs
+    .map((doc) => {
+      if (!doc || typeof doc !== "object") return null;
+      const d = doc as Record<string, unknown>;
+
+      const title = typeof d.title === "string" ? d.title : "";
+      const location = typeof d.location === "string" ? d.location : "";
+      if (!title || !location) return null;
+
+      const sectorRaw = typeof d.sector === "string" ? d.sector : "";
+      const sector = sectorRaw.charAt(0).toUpperCase() + sectorRaw.slice(1);
+
+      const img =
+        d.coverImage && typeof d.coverImage === "object"
+          ? (d.coverImage as Record<string, unknown>)
+          : null;
+      const image = img && typeof img.url === "string" ? normalizeMediaUrl(img.url) : "";
+      if (!image) return null;
+
+      const summary = typeof d.summary === "string" ? d.summary : "";
+      const system = typeof d.systemSize === "string" ? d.systemSize : "";
+      const outcome = getLexicalPlainText(d.outcome);
+
+      return { title, location, sector, image, summary, system, outcome } satisfies PayloadProjectHighlight;
+    })
+    .filter((p): p is PayloadProjectHighlight => p !== null);
+
+  return projects;
+}
+
+// ─── Brands ──────────────────────────────────────────────────────────────────
+
+export interface BrandLogoData {
+  name: string;
+  logoUrl: string;
+  website?: string;
+}
+
+export async function getPayloadBrands(): Promise<BrandLogoData[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  const result = await payload
+    .find({
+      collection: "brands",
+      depth: 1,
+      limit: 50,
+      pagination: false,
+      sort: "sortOrder",
+    })
+    .catch(() => ({ docs: [] }));
+
+  const out: BrandLogoData[] = [];
+  for (const doc of result.docs) {
+    if (!doc || typeof doc !== "object") continue;
+    const d = doc as Record<string, unknown>;
+    const name = typeof d.name === "string" ? d.name : "";
+    if (!name) continue;
+    const logoObj =
+      d.logo && typeof d.logo === "object" ? (d.logo as Record<string, unknown>) : null;
+    const logoUrl = logoObj && typeof logoObj.url === "string" ? normalizeMediaUrl(logoObj.url) : "";
+    if (!logoUrl) continue;
+    const website = typeof d.website === "string" ? d.website : undefined;
+    out.push({ name, logoUrl, ...(website ? { website } : {}) });
+  }
+  return out;
+}
+
+// ─── Team Members ─────────────────────────────────────────────────────────────
+
+export interface TeamMemberData {
+  name: string;
+  role: string;
+  bio: string;
+  photoUrl: string;
+  linkedinUrl?: string;
+}
+
+export async function getPayloadTeamMembers(): Promise<TeamMemberData[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  const result = await payload
+    .find({
+      collection: "team-members",
+      depth: 1,
+      limit: 50,
+      pagination: false,
+      sort: "sortOrder",
+      where: { isPublished: { equals: true } },
+    })
+    .catch(() => ({ docs: [] }));
+
+  const out: TeamMemberData[] = [];
+  for (const doc of result.docs) {
+    if (!doc || typeof doc !== "object") continue;
+    const d = doc as Record<string, unknown>;
+    const name = typeof d.name === "string" ? d.name : "";
+    const role = typeof d.role === "string" ? d.role : "";
+    if (!name || !role) continue;
+    const photoObj =
+      d.photo && typeof d.photo === "object" ? (d.photo as Record<string, unknown>) : null;
+    const photoUrl = photoObj && typeof photoObj.url === "string" ? normalizeMediaUrl(photoObj.url) : "";
+    const bio = getLexicalPlainText(d.bio);
+    const linkedinUrl = typeof d.linkedinUrl === "string" ? d.linkedinUrl : undefined;
+    out.push({ name, role, bio, photoUrl, ...(linkedinUrl ? { linkedinUrl } : {}) });
+  }
+  return out;
+}
+
+// ─── FAQs ─────────────────────────────────────────────────────────────────────
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export async function getPayloadFAQs(audience?: string): Promise<FaqItem[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const where: any = audience
+    ? { and: [{ isFeatured: { equals: true } }, { audience: { in: [audience] } }] }
+    : { isFeatured: { equals: true } };
+  const result = await payload
+    .find({
+      collection: "faqs",
+      depth: 0,
+      limit: 20,
+      pagination: false,
+      sort: "sortOrder",
+      where,
+    })
+    .catch(() => ({ docs: [] }));
+
+  const out: FaqItem[] = [];
+  for (const doc of result.docs) {
+    if (!doc || typeof doc !== "object") continue;
+    const d = doc as Record<string, unknown>;
+    const question = typeof d.question === "string" ? d.question : "";
+    const answer = typeof d.answer === "string" ? d.answer : "";
+    if (!question || !answer) continue;
+    out.push({ question, answer });
+  }
+  return out;
 }
