@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
@@ -9,7 +10,7 @@ import { CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Solarlux Kenya. Visit us in Nairobi, call, email, or WhatsApp — we're available Monday to Saturday, 8AM to 6PM.",
+    "Get in touch with Solarlux Kenya. Visit us in Nairobi, call, email, or WhatsApp. Available Monday to Saturday, 8AM to 6PM.",
 };
 
 const contactMethods = [
@@ -46,20 +47,55 @@ const contactMethods = [
 
 export default function ContactPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
-      <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-ink-950 page-hero-spacing pb-16 md:pb-20">
+        <div className="absolute inset-0 bg-gradient-brand opacity-10" />
+
+        <div className="container-page relative z-10">
           <FadeIn>
-            <p className="text-overline text-primary mb-4">Get In Touch</p>
-            <h1 className="text-display-xl font-display font-medium max-w-2xl">
-              We&apos;re here to help you go solar
-            </h1>
-            <p className="mt-6 max-w-xl text-body-lg text-ink-muted leading-relaxed">
-              Whether you have a quick question or want a detailed quote, our
-              team is ready. Reach us by phone, WhatsApp, email, or visit our
-              Nairobi showroom.
-            </p>
+            <nav className="mb-8" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2 text-sm text-white/50">
+                <li>
+                  <Link href="/" className="hover:text-white/80 transition-colors duration-200">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </li>
+                <li className="text-white/80">Contact</li>
+              </ol>
+            </nav>
+            <p className="text-overline text-brand-yellow-500 mb-4">Get In Touch</p>
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+              <div>
+                <h1 className="text-display-lg font-display font-medium text-white max-w-2xl leading-tight">
+                  We&apos;re here to help you go solar
+                </h1>
+                <p className="mt-6 max-w-xl text-body-lg text-white/70 leading-relaxed">
+                  Whether you have a quick question or want a detailed quote, our
+                  team is ready. Reach us by phone, WhatsApp, email, or visit our
+                  Nairobi showroom.
+                </p>
+              </div>
+
+              <FadeIn delay={0.2}>
+                <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
+                  <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
+                    <Image
+                      src="https://images.unsplash.com/photo-1724041875334-0a6397111c7e?auto=format&fit=crop&w=1200&q=80"
+                      alt="Solar panels installed on a rooftop"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-ink-950/60 via-transparent pointer-events-none" />
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -82,7 +118,7 @@ export default function ContactPage() {
                       href={method.href}
                       target={method.external ? "_blank" : undefined}
                       rel={method.external ? "noopener noreferrer" : undefined}
-                      className="text-body-lg font-semibold text-ink hover:text-primary transition-colors duration-fast"
+                      className="text-body-lg font-semibold text-ink hover:text-primary transition-colors duration-200"
                     >
                       {method.value}
                     </a>
@@ -94,7 +130,7 @@ export default function ContactPage() {
                   {"secondary" in method && method.secondary && (
                     <a
                       href={formatPhoneHref(method.secondary)}
-                      className="mt-1 block text-body text-ink-muted hover:text-primary transition-colors duration-fast"
+                      className="mt-1 block text-body text-ink-muted hover:text-primary transition-colors duration-200"
                     >
                       {method.secondary}
                     </a>
@@ -153,13 +189,13 @@ export default function ContactPage() {
                     <p className="font-semibold text-ink">Phone</p>
                     <a
                       href={formatPhoneHref(CONTACT.phone1)}
-                      className="mt-1 block text-body text-ink-muted hover:text-primary transition-colors duration-fast"
+                      className="mt-1 block text-body text-ink-muted hover:text-primary transition-colors duration-200"
                     >
                       {CONTACT.phone1}
                     </a>
                     <a
                       href={formatPhoneHref(CONTACT.phone2)}
-                      className="block text-body text-ink-muted hover:text-primary transition-colors duration-fast"
+                      className="block text-body text-ink-muted hover:text-primary transition-colors duration-200"
                     >
                       {CONTACT.phone2}
                     </a>
@@ -178,7 +214,7 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Solarlux Kenya showroom location — Duruma Thiha Plaza, Nairobi"
+                  title="Solarlux Kenya showroom location, Duruma Thiha Plaza, Nairobi"
                   className="w-full h-full"
                 />
               </div>
@@ -186,7 +222,7 @@ export default function ContactPage() {
                 href="https://maps.google.com/?q=Duruma+Thiha+Plaza+Nairobi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-2 text-body-sm font-medium text-primary hover:underline transition-colors duration-fast"
+                className="mt-3 inline-flex items-center gap-2 text-body-sm font-medium text-primary hover:underline transition-colors duration-200"
               >
                 <MapPin className="h-4 w-4" aria-hidden="true" />
                 Open in Google Maps
@@ -197,9 +233,10 @@ export default function ContactPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-primary">
+      <section className="section-padding bg-ink-950">
         <div className="container-page text-center">
           <FadeIn>
+            <p className="text-overline text-accent mb-4">Free consultation</p>
             <h2 className="text-display-lg font-display font-medium text-paper">
               Ready to get your free solar quote?
             </h2>
@@ -213,6 +250,6 @@ export default function ContactPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

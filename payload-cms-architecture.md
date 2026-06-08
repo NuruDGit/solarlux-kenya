@@ -819,6 +819,7 @@ DATABASE_URI=postgres://USER:PASSWORD@HOST:5432/DB_NAME
 PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3000
 
 RESEND_API_KEY=
+RESEND_FROM_EMAIL=Solarlux Kenya <website@solarluxkenya.co.ke>
 CONTACT_EMAIL_TO=solarluxkenya@gmail.com
 ```
 

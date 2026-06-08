@@ -33,7 +33,7 @@ export function BlogSection({ posts }: BlogSectionProps) {
 
           <FadeIn delay={0.1} className="hidden sm:block">
             <Button variant="secondary" asChild>
-              <Link href="/resources">View All Articles</Link>
+              <Link href="/blog">View All Articles</Link>
             </Button>
           </FadeIn>
         </div>
@@ -84,7 +84,7 @@ export function BlogSection({ posts }: BlogSectionProps) {
 
         <FadeIn delay={0.1} className="mt-10 flex justify-start md:mt-12 sm:hidden">
           <Button variant="secondary" asChild>
-            <Link href="/resources">View All Articles</Link>
+            <Link href="/blog">View All Articles</Link>
           </Button>
         </FadeIn>
       </div>

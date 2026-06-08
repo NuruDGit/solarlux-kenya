@@ -157,7 +157,6 @@ solarlux/
 ├── tsconfig.json
 ├── tailwind.config.ts
 ├── next.config.mjs
-├── .env.example
 ├── .env.local                       # (gitignored)
 ├── .gitignore
 ├── serve.mjs                        # Dev helper for screenshots
@@ -334,7 +333,7 @@ Flexible page builder for marketing pages if marketing wants to edit without dev
 ## 5. Environment Variables
 
 ```bash
-# .env.local (copy from .env.example, do not commit)
+# .env.local (local only, do not commit)
 
 # Next.js
 NEXT_PUBLIC_SITE_URL=https://solarluxkenya.co.ke
@@ -346,6 +345,7 @@ PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3000
 
 # Contact & Quote form emails
 RESEND_API_KEY=
+RESEND_FROM_EMAIL=Solarlux Kenya <website@solarluxkenya.co.ke>
 CONTACT_EMAIL_TO=solarluxkenya@gmail.com
 
 # Analytics (optional)

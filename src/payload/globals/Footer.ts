@@ -5,6 +5,11 @@ import { trustIconOptions } from "../shared/options.ts";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
+  label: "Footer",
+  admin: {
+    group: "Settings",
+    description: "Footer link columns, trust badges, copyright text, and legal links.",
+  },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,

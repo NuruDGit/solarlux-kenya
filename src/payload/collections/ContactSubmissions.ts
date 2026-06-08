@@ -12,8 +12,10 @@ export const ContactSubmissions: CollectionConfig = {
     update: isSalesOrAdmin,
   },
   admin: {
+    group: "CRM",
     defaultColumns: ["fullName", "email", "status", "assignedTo", "updatedAt"],
     useAsTitle: "fullName",
+    description: "Messages submitted through the /contact form.",
   },
   fields: [
     { name: "fullName", type: "text", required: true },

@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -10,11 +11,6 @@ interface FadeInProps {
   y?: number;
   className?: string;
 }
-
-const variants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0 },
-};
 
 const variantsNoMotion: Variants = {
   hidden: { opacity: 0, y: 0 },
@@ -25,11 +21,15 @@ export function FadeIn({
   children,
   delay = 0,
   duration = 0.6,
-  y: _y,
+  y = 16,
   className,
 }: FadeInProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   // Use named variants so initial is always "hidden" (consistent SSR/client)
+  const variants: Variants = {
+    hidden: { opacity: 0, y },
+    visible: { opacity: 1, y: 0 },
+  };
   const v = shouldReduceMotion ? variantsNoMotion : variants;
 
   return (

@@ -31,8 +31,17 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    theme: "dark",
     meta: {
       titleSuffix: " | Solarlux CMS",
+      description: "Solarlux Kenya — Content Management System",
+      icons: [{ rel: "icon", url: "/favicon.ico" }],
+    },
+    components: {
+      graphics: {
+        Logo: "@/payload/components/AdminLogo",
+        Icon: "@/payload/components/AdminIcon",
+      },
     },
     user: Users.slug,
   },

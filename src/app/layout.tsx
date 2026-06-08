@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist } from "next/font/google";
-import { OrganizationJsonLd } from "@/components/seo/json-ld";
-import "./globals.css";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  display: "swap",
-  axes: ["opsz", "SOFT"],
-});
-
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-});
+// Root layout is intentionally a pass-through.
+// <html> and <body> are owned by each route group:
+//   - (marketing)/layout.tsx  — marketing site
+//   - (payload)/layout.tsx    — Payload admin (via @payloadcms/next/layouts RootLayout)
+// This avoids the double-html conflict when both are active under the same Next.js app.
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     "Kenya's trusted solar energy provider — 8+ years powering homes, businesses, and hotels with premium solar solutions. Get a free quote today.",
-  metadataBase: new URL("https://solarluxkenya.com"),
+  metadataBase: new URL("https://solarluxkenya.co.ke"),
   openGraph: {
     type: "website",
     locale: "en_KE",
@@ -34,6 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+  },
+  icons: {
+    icon: "/brand/solarlux-icon.svg",
   },
   robots: {
     index: true,
@@ -46,12 +39,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
-      <body className="min-h-screen bg-background font-body text-ink antialiased">
-        <OrganizationJsonLd />
-        {children}
-      </body>
-    </html>
-  );
+  return children;
 }

@@ -17,8 +17,10 @@ export const Projects: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Content",
     defaultColumns: ["title", "location", "sector", "status", "featured"],
     useAsTitle: "title",
+    description: "Installation projects shown on the Projects page. Set status to 'Published' to make live.",
   },
   versions: {
     drafts: true,

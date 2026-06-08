@@ -13,8 +13,10 @@ export const ProductCategories: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Products",
     defaultColumns: ["title", "slug", "sortOrder", "isActive"],
     useAsTitle: "title",
+    description: "Product categories shown on the Products page and navigation.",
   },
   fields: [
     { name: "title", type: "text", required: true },

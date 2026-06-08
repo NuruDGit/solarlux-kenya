@@ -1,1 +1,33 @@
-/* Payload admin overrides can be added here. */
+// ─── Solarlux Kenya — Payload Admin Overrides ───
+// Replaces Payload's default blue (#007AFF) with Solarlux brand blue (#1D5AA6)
+// Values are space-separated RGB for use with rgb(var(--color-*))
+
+:root {
+  // Brand blue scale derived from #1D5AA6
+  --color-blue-50:   239 245 251;
+  --color-blue-100:  215 232 246;
+  --color-blue-150:  191 218 240;
+  --color-blue-200:  167 204 234;
+  --color-blue-250:  143 190 228;
+  --color-blue-300:  119 177 222;
+  --color-blue-350:  94  163 216;
+  --color-blue-400:  70  149 209;
+  --color-blue-450:  48  121 188;
+  --color-blue-500:  29  90  166;  // #1D5AA6
+  --color-blue-600:  26  81  149;
+  --color-blue-700:  22  69  132;
+  --color-blue-800:  18  57  115;
+  --color-blue-900:  15  46  98;
+  --color-blue-950:  11  39  90;
+  --color-blue-1000: 8   31  73;
+}
+
+// Stronger contrast for the admin nav sidebar logo area
+.nav__header {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+// Accent yellow for focus rings on brand-relevant elements
+.btn--style-primary:focus-visible {
+  outline-color: #FDB813;
+}

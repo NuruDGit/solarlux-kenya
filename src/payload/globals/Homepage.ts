@@ -4,6 +4,11 @@ import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 
 export const Homepage: GlobalConfig = {
   slug: "homepage",
+  label: "Homepage",
+  admin: {
+    group: "Pages",
+    description: "Hero headline, featured products, testimonials, blog posts, and FAQ items shown on the homepage.",
+  },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,

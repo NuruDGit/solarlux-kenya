@@ -4,6 +4,11 @@ import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 
 export const Header: GlobalConfig = {
   slug: "header",
+  label: "Header & Navigation",
+  admin: {
+    group: "Settings",
+    description: "Navigation links, CTA button, and optional announcement bar shown at the top of every page.",
+  },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,

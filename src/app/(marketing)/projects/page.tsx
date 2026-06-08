@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, MapPin, SunMedium } from "lucide-react";
+import { MapPin, ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
+import { getPayloadProjects, type PayloadProjectHighlight } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -54,50 +55,66 @@ const projectHighlights = [
   },
 ];
 
-const deliveryPoints = [
-  "Designed around actual site conditions and load patterns",
-  "Installed with genuine equipment and clean finishing",
-  "Built for homes, businesses, and hospitality properties",
-];
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const payloadProjects = await getPayloadProjects();
+  const projects: PayloadProjectHighlight[] = payloadProjects.length > 0 ? payloadProjects : projectHighlights;
+
   return (
-    <>
+    <main>
       <section className="relative overflow-hidden bg-ink-950 page-hero-spacing pb-16 md:pb-24">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
         <div className="container-page relative z-10">
           <FadeIn>
+            <nav className="mb-8" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2 text-sm text-white/50">
+                <li>
+                  <Link href="/" className="hover:text-white/80 transition-colors duration-200">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </li>
+                <li className="text-white/80">Projects</li>
+              </ol>
+            </nav>
             <p className="mb-4 text-overline text-accent">Our work</p>
-            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
               <div>
-                <h1 className="max-w-3xl text-display-xl font-display font-medium text-paper">
+                <h1 className="max-w-2xl text-display-lg font-display font-medium text-paper">
                   Real installations built for Kenyan roofs, budgets, and power realities
                 </h1>
-                <p className="mt-6 max-w-2xl text-body-lg leading-relaxed text-paper/70">
+                <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-paper/70">
                   These projects show the kind of work Solarlux delivers across residential,
                   commercial, and hospitality environments. Each one starts with site context,
                   not a one-size-fits-all package.
                 </p>
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                  <Button variant="accent" size="lg" asChild>
+                    <Link href="/quote">Get a Free Quote</Link>
+                  </Button>
+                  <Button variant="outline-light" size="lg" asChild>
+                    <Link href="/contact">Talk to the team</Link>
+                  </Button>
+                </div>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_-30px_rgba(29,90,166,0.45)]">
-                <p className="text-body-sm text-paper/60">What clients usually need</p>
-                <ul className="mt-5 space-y-4">
-                  {deliveryPoints.map((point) => (
-                    <li key={point} className="flex items-start gap-3 text-body text-paper/80">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Button variant="accent" size="lg" asChild>
-                <Link href="/quote">Get a Free Quote</Link>
-              </Button>
-              <Button variant="outline-light" size="lg" asChild>
-                <Link href="/contact">Talk to the team</Link>
-              </Button>
+
+              <FadeIn delay={0.2}>
+                <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
+                  <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
+                    <Image
+                      src="https://images.unsplash.com/photo-1668097613572-40b7c11c8727?auto=format&fit=crop&w=1200&q=80"
+                      alt="Solar technician installing panels on a rooftop"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-ink-950/60 via-transparent pointer-events-none" />
+                  </div>
+                </div>
+              </FadeIn>
             </div>
           </FadeIn>
         </div>
@@ -121,10 +138,10 @@ export default function ProjectsPage() {
           </FadeIn>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {projectHighlights.map((project, index) => (
+            {projects.map((project, index) => (
               <FadeIn key={project.title} delay={index * 0.08}>
                 <article className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+                  <div className="relative aspect-16/10 overflow-hidden bg-surface">
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -188,10 +205,7 @@ export default function ProjectsPage() {
               </p>
               <div className="mt-6 flex flex-col gap-4 sm:flex-row">
                 <Button variant="primary" size="lg" asChild>
-                  <Link href="/quote">
-                    Start your quote
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  <Link href="/quote">Start your quote</Link>
                 </Button>
                 <Button variant="secondary" size="lg" asChild>
                   <Link href="/products">Browse products</Link>
@@ -201,6 +215,6 @@ export default function ProjectsPage() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

@@ -12,8 +12,10 @@ export const FAQs: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
-    defaultColumns: ["question", "sortOrder", "isFeatured"],
+    group: "Content",
+    defaultColumns: ["question", "audience", "sortOrder", "isFeatured"],
     useAsTitle: "question",
+    description: "Frequently asked questions. Tag by audience (General, Residential, Commercial…) and enable 'Featured' to show on the homepage.",
   },
   fields: [
     { name: "question", type: "text", required: true },

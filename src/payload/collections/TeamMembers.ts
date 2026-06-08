@@ -11,8 +11,10 @@ export const TeamMembers: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "People",
     defaultColumns: ["name", "role", "isLeadership", "sortOrder", "isPublished"],
     useAsTitle: "name",
+    description: "Team members. Mark 'Is Leadership' to show in the About page leadership section.",
   },
   fields: [
     { name: "name", type: "text", required: true },

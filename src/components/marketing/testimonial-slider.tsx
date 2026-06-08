@@ -3,7 +3,8 @@
 import * as React from "react";
 import Image from "next/image";
 import { FadeIn } from "@/components/motion/fade-in";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
+import { motion, AnimatePresence } from "motion/react";
 import type { TestimonialCardData } from "@/lib/cms";
 
 interface TestimonialSliderProps {
@@ -13,7 +14,7 @@ interface TestimonialSliderProps {
 export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
   const [current, setCurrent] = React.useState(0);
   const [direction, setDirection] = React.useState(1);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   // Auto-advance every 5 seconds
   React.useEffect(() => {

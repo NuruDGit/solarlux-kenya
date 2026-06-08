@@ -3,9 +3,9 @@
 import * as React from "react";
 import {
   motion,
-  useReducedMotion,
   type HTMLMotionProps,
 } from "motion/react";
+import { useHydratedReducedMotion } from "./use-hydrated-reduced-motion";
 
 interface StaggerProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export function Stagger({
   delayChildren = 0.1,
   ...props
 }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
 
   return (
     <motion.div

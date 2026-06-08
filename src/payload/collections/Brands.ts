@@ -11,8 +11,10 @@ export const Brands: CollectionConfig = {
     update: isEditorOrAdmin,
   },
   admin: {
+    group: "Products",
     defaultColumns: ["name", "isFeatured", "sortOrder", "updatedAt"],
     useAsTitle: "name",
+    description: "Brands/manufacturers displayed in the scrolling logo strip on every page.",
   },
   fields: [
     { name: "name", type: "text", required: true, unique: true },

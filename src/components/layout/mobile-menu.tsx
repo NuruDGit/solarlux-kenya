@@ -3,9 +3,10 @@
 import * as React from "react";
 import Link from "next/link";
 import { X, Phone, Mail, MessageCircle, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/icons/logo";
+import { useHydratedReducedMotion } from "@/components/motion/use-hydrated-reduced-motion";
 import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
 import type { HeaderData, SiteSettingsData } from "@/lib/cms";
 
@@ -17,7 +18,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useHydratedReducedMotion();
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
   // Lock scroll when open
