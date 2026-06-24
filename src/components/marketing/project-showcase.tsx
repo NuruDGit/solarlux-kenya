@@ -4,23 +4,29 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { getPayloadProjects } from "@/lib/cms";
 
-// Static fallback images — used when Payload has no published projects
+// Static fallback images — used when Payload has no published projects.
+// Arranged so similar shots (same site, same product) are never adjacent
+// within a row, and images from the same session are split across rows.
 const STATIC_ROW_1 = [
-  "/projects/project-11.03.02.jpg",
-  "/projects/project-11.03.17.jpg",
-  "/projects/project-11.03.19.jpg",
-  "/projects/project-11.03.22.jpg",
-  "/projects/project-11.03.24.jpg",
-  "/projects/project-11.03.26.jpg",
+  "/projects/project-11.02.01.jpg",   // outdoor: red-tile roof installation
+  "/projects/project-11.03.02.jpg",   // indoor:  SRNE inverter + battery
+  "/projects/project-11.03.19.jpg",   // outdoor: worker on ground-mount
+  "/projects/project-11.03.22.jpg",   // indoor:  Felicity + Syinc wall
+  "/projects/project-11.03.26.jpg",   // outdoor: carport under palm trees
+  "/projects/project-11.03.23.jpg",   // indoor:  Seven SS Stars showroom
+  "/projects/project-11.03.30.jpg",   // outdoor: HANTI flat-panel heater
+  "/projects/project-11.03.15.jpg",   // aerial:  container home (angle 1)
 ];
 
 const STATIC_ROW_2 = [
-  "/projects/project-11.03.27.jpg",
-  "/projects/project-11.03.28.jpg",
-  "/projects/project-11.03.30.jpg",
-  "/projects/project-11.03.31.jpg",
-  "/projects/project-11.03.35.jpg",
-  "/projects/project-11.03.37.jpg",
+  "/projects/project-11.03.17.jpg",   // aerial:  container home (angle 2)
+  "/projects/project-11.03.28.jpg",   // outdoor: terrace with palm trees
+  "/projects/project-11.03.37.jpg",   // indoor:  teal inverter + Felicity batteries
+  "/projects/project-11.03.31.jpg",   // outdoor: HANTI heater (different angle)
+  "/projects/project-11.03.27.jpg",   // indoor:  Felicity batteries, Maasai client
+  "/projects/project-11.03.29.jpg",   // outdoor: Seven SS Stars on rooftop
+  "/projects/project-11.03.35.jpg",   // indoor:  Felicity inverter on stone wall
+  "/projects/project-11.03.24.jpg",   // indoor:  Seven SS Stars close-up
 ];
 
 function MarqueeRow({
@@ -33,7 +39,7 @@ function MarqueeRow({
   const doubled = [...images, ...images];
 
   return (
-    <div className="relative overflow-hidden group/row">
+    <div className="relative overflow-hidden group/row" style={{ touchAction: "pan-y" }}>
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-24 bg-linear-to-r from-surface to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-24 bg-linear-to-l from-surface to-transparent" />
 
@@ -46,7 +52,7 @@ function MarqueeRow({
         {doubled.map((src, i) => (
           <div
             key={`${src}-${i}`}
-            className="relative h-48 w-72 md:h-56 md:w-80 lg:h-64 lg:w-96 shrink-0 overflow-hidden rounded-2xl"
+            className="relative h-72 w-64 md:h-80 md:w-72 lg:h-96 lg:w-80 shrink-0 overflow-hidden rounded-2xl"
           >
             <Image
               src={src}

@@ -17,7 +17,7 @@ export function Logo({
 }: LogoProps) {
   const src =
     background === "dark"
-      ? "/solarlux-logo-dark.png"
+      ? "/solarlux-logo-dark-v2.png"
       : "/solarlux-logo-light.png";
 
   return (

@@ -112,7 +112,7 @@ export function SolutionsOverview() {
             <FadeIn key={solution.title} delay={0.15 + index * 0.05}>
               <Link
                 href={solution.href}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-lg"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-primary transition-shadow duration-300 hover:shadow-xl"
               >
                 <div className="relative aspect-3/2 overflow-hidden">
                   <Image
@@ -123,28 +123,31 @@ export function SolutionsOverview() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-ink-950/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 backdrop-blur-sm">
-                    <p className="text-sm font-semibold text-primary font-display">
-                      {solution.stat}
-                    </p>
-                    <p className="text-xs text-ink-muted">{solution.statLabel}</p>
-                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col p-6 md:p-8">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-                      <solution.icon className="h-4 w-4" strokeWidth={1.8} />
-                    </div>
-                    <h3 className="text-lg font-semibold font-body tracking-tight">
-                      {solution.title}
-                    </h3>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 text-accent">
+                    <solution.icon className="h-5 w-5" strokeWidth={1.8} />
                   </div>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-muted">
+                  <h3 className="mt-4 text-xl font-display font-medium leading-tight text-white md:text-2xl">
+                    {solution.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-white/70">
                     {solution.description}
                   </p>
-                  <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-primary opacity-0 transition-[transform,opacity] duration-300 group-hover:translate-x-1 group-hover:opacity-100">
-                    Learn more <ArrowRight className="h-3.5 w-3.5" />
+
+                  <div className="mt-6 flex items-end justify-between">
+                    <div>
+                      <p className="text-2xl font-display font-semibold text-accent md:text-3xl">
+                        {solution.stat}
+                      </p>
+                      <p className="mt-1 text-xs font-medium uppercase tracking-wider text-white/50">
+                        {solution.statLabel}
+                      </p>
+                    </div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-[background-color,color] duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
                   </div>
                 </div>
               </Link>

@@ -21,15 +21,29 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
   const shouldReduceMotion = useHydratedReducedMotion();
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
-  // Lock scroll when open
+  // Lock scroll when open — iOS-safe technique
   React.useEffect(() => {
     if (open) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
       document.body.style.overflow = "hidden";
     } else {
+      const scrollY = parseFloat(document.body.style.top || "0") * -1;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
       document.body.style.overflow = "";
+      window.scrollTo(0, scrollY);
     }
     return () => {
+      const scrollY = parseFloat(document.body.style.top || "0") * -1;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
       document.body.style.overflow = "";
+      if (scrollY) window.scrollTo(0, scrollY);
     };
   }, [open]);
 
@@ -52,7 +66,7 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: shouldReduceMotion ? 0.05 : 0.2 }}
-            className="fixed inset-0 z-nav bg-ink-950/50 backdrop-blur-sm"
+            className="fixed inset-0 z-9998 bg-ink-950/50 backdrop-blur-sm"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -67,7 +81,7 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
                 ? { duration: 0.05 }
                 : { type: "spring", stiffness: 300, damping: 30 }
             }
-            className="fixed top-0 right-0 bottom-0 z-floating w-full max-w-sm bg-background shadow-xl"
+            className="fixed top-0 right-0 bottom-0 z-9999 w-full max-w-sm bg-background shadow-xl"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"

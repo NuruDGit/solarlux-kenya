@@ -15,7 +15,7 @@ interface BlogSectionProps {
 
 export function BlogSection({ posts }: BlogSectionProps) {
   return (
-    <section className="bg-surface py-16 md:py-24 lg:py-32">
+    <section className="bg-background py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <FadeIn>

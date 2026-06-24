@@ -26,7 +26,7 @@ export function HeroBento() {
   }
 
   return (
-    <section className="bg-background py-6 md:py-10">
+    <section className="bg-background py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12" staggerDelay={0.1}>
           {/* Card 1 — Video card */}
