@@ -54,10 +54,10 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
           {/* Left — Fixed image */}
           <FadeIn className="lg:col-span-5 relative rounded-2xl overflow-hidden aspect-4/5 md:aspect-3/4 lg:aspect-auto">
             <Image
-              src="/projects/project-11.03.38.jpg"
-              alt="Solarlux solar installation team at work"
+              src="/woman solar engineer in kenya.jpg"
+              alt="Solarlux solar engineer in Kenya"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 42vw"
               priority
             />
@@ -108,29 +108,18 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
                       className="flex flex-col justify-between h-full"
                     >
                       {/* Quote text */}
-                      <blockquote className="text-base md:text-lg lg:text-xl leading-relaxed text-white/90 font-display italic tracking-tight">
+                      <blockquote className="text-lg md:text-xl lg:text-2xl leading-relaxed text-white/90 font-display font-medium">
                         &ldquo;{testimonial.quote}&rdquo;
                       </blockquote>
 
                       {/* Author */}
-                      <div className="mt-8 flex items-center gap-3">
-                        <div className="relative h-12 w-12 shrink-0 rounded-full ring-2 ring-accent ring-offset-2 ring-offset-brand-blue-900">
-                          <Image
-                            src={testimonial.avatar}
-                            alt={testimonial.name}
-                            fill
-                            className="rounded-full object-cover"
-                            sizes="48px"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-base font-semibold text-white font-body">
-                            {testimonial.name}
-                          </p>
-                          <p className="text-sm text-accent font-body">
-                            {testimonial.company}
-                          </p>
-                        </div>
+                      <div className="mt-8 border-t border-white/10 pt-6">
+                        <p className="text-sm font-semibold tracking-wide text-white uppercase">
+                          {testimonial.name}
+                        </p>
+                        <p className="mt-1 text-sm text-accent/80">
+                          {testimonial.company}
+                        </p>
                       </div>
                     </motion.div>
                   </AnimatePresence>

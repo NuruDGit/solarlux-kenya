@@ -39,12 +39,6 @@ export default async function ProductsPage() {
   const payloadProducts = await getPayloadAllProducts();
   const allProducts = payloadProducts.length > 0 ? payloadProducts : PRODUCTS;
 
-  // Per-category counts derived from live data
-  const categoryCounts = new Map<string, number>();
-  for (const p of allProducts) {
-    categoryCounts.set(p.categorySlug, (categoryCounts.get(p.categorySlug) ?? 0) + 1);
-  }
-
   return (
     <main>
       {/* ── Hero ── */}
@@ -101,15 +95,8 @@ export default async function ProductsPage() {
       <section className="bg-surface py-16 md:py-24">
         <div className="container-page">
           <FadeIn>
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-overline text-primary mb-2">Browse by type</p>
-                <h2 className="text-display-md font-display font-medium">Shop by category</h2>
-              </div>
-              <p className="max-w-sm text-body text-ink-muted">
-                {CATEGORIES.length} categories · {allProducts.length} products
-              </p>
-            </div>
+            <p className="text-overline text-primary mb-2">Browse by type</p>
+            <h2 className="text-display-md font-display font-medium">Shop by category</h2>
           </FadeIn>
 
           <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -128,14 +115,9 @@ export default async function ProductsPage() {
 
                   {/* Content */}
                   <div className="flex-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="text-heading-xl font-semibold font-body text-ink group-hover:text-primary transition-colors duration-200">
-                        {cat.name}
-                      </h3>
-                      <span className="shrink-0 rounded-full bg-surface border border-border px-2.5 py-0.5 text-xs font-medium text-ink-muted">
-                        {cat.productCount}
-                      </span>
-                    </div>
+                    <h3 className="text-heading-xl font-semibold font-body text-ink group-hover:text-primary transition-colors duration-200">
+                      {cat.name}
+                    </h3>
                     <p className="mt-2 text-body text-ink-muted line-clamp-2">
                       {cat.description}
                     </p>
@@ -156,18 +138,11 @@ export default async function ProductsPage() {
       <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="container-page">
           <FadeIn>
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-overline text-primary mb-2">Complete range</p>
-                <h2 className="text-display-md font-display font-medium">All Products</h2>
-              </div>
-              <p className="max-w-sm text-body text-ink-muted">
-                Filter by category or sort by name to find what you need.
-              </p>
-            </div>
+            <p className="text-overline text-primary mb-2">Complete range</p>
+            <h2 className="text-display-md font-display font-medium">All Products</h2>
           </FadeIn>
 
-          <div className="mt-10">
+          <div className="mt-8">
             <ProductGrid products={allProducts} />
           </div>
         </div>

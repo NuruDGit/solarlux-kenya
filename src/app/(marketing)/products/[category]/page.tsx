@@ -78,9 +78,6 @@ export default async function CategoryPage({ params }: Props) {
                 <p className="mt-3 max-w-xl text-body-lg text-white/70 leading-relaxed">
                   {category.description}
                 </p>
-                <p className="mt-2 text-body-sm text-white/50">
-                  {products.length} product{products.length !== 1 ? "s" : ""} available
-                </p>
               </div>
             </div>
 

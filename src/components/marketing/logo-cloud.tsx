@@ -38,7 +38,7 @@ export async function LogoCloud() {
   const brands = payloadBrands.length > 0 ? payloadBrands : STATIC_BRANDS;
 
   return (
-    <section className="py-10 md:py-14 bg-background border-y border-border/60 overflow-hidden">
+    <section className="py-12 md:py-16 bg-background border-y border-border/60 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <p className="text-center text-sm font-medium tracking-wide uppercase text-ink-muted/70 mb-8">
@@ -48,7 +48,7 @@ export async function LogoCloud() {
       </div>
 
       {/* Marquee container */}
-      <div className="relative">
+      <div className="relative" style={{ touchAction: "pan-y" }}>
         {/* Fade masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-background to-transparent md:w-32" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-background to-transparent md:w-32" />

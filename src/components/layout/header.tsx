@@ -39,7 +39,7 @@ export function Header({ header, siteSettings }: HeaderProps) {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-60 transition-[background-color,border-color,box-shadow] duration-300",
+          "fixed top-0 left-0 right-0 z-9999 transition-[background-color,border-color,box-shadow] duration-300",
           useTransparentHeader
             ? "bg-transparent"
             : "bg-background/95 backdrop-blur-md border-b border-border shadow-xs"

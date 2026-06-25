@@ -199,8 +199,8 @@ const fallbackHero: HeroData = {
   primaryCtaLabel: "Get Free Quote",
   secondaryCtaHref: "/solutions",
   secondaryCtaLabel: "Our Solutions",
-  imageAlt: "Solar installation team",
-  imageSrc: "/projects/Rooftop solar installation team in action.png",
+  imageAlt: "Solar panels under a clear sky",
+  imageSrc: "/hero-solar-panels.png",
 };
 
 const fallbackBlogPosts: BlogPostCardData[] = [
@@ -208,7 +208,7 @@ const fallbackBlogPosts: BlogPostCardData[] = [
     title: "How to Choose the Right Solar Panel Size for Your Home",
     excerpt:
       "A practical guide to calculating your energy needs and selecting the perfect panel wattage for Kenyan households.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    image: "/media/solar-installer-panels.jpg",
     category: "Guides",
     date: "March 12, 2026",
     href: "/blog/choose-right-solar-panel-size",
@@ -217,7 +217,7 @@ const fallbackBlogPosts: BlogPostCardData[] = [
     title: "Understanding Solar Battery Storage: LiFePO4 vs Lead Acid",
     excerpt:
       "Compare battery technologies, lifespans, and costs to find the best energy storage for your solar system.",
-    image: "https://images.unsplash.com/photo-1668097613572-40b7c11c8727?auto=format&fit=crop&w=1200&q=80",
+    image: "/media/solar-panels-farm.jpg",
     category: "Technology",
     date: "February 28, 2026",
     href: "/blog/lifepo4-vs-lead-acid-batteries",
@@ -226,7 +226,7 @@ const fallbackBlogPosts: BlogPostCardData[] = [
     title: "5 Signs Your Business Should Switch to Solar Energy",
     excerpt:
       "Rising electricity bills and unreliable grid power are pushing Kenyan businesses to go solar. Here's what you need to know.",
-    image: "https://images.unsplash.com/photo-1724041875334-0a6397111c7e?auto=format&fit=crop&w=1200&q=80",
+    image: "/media/solar-rooftop-commercial.jpg",
     category: "Business",
     date: "January 15, 2026",
     href: "/blog/5-signs-your-business-should-switch-to-solar",
