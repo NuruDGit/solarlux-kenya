@@ -11,6 +11,7 @@ import {
   Building2,
   Hotel,
   ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
@@ -316,6 +317,14 @@ export default function ServicesPage() {
                           </span>
                         ))}
                       </div>
+                      <div className="mt-8">
+                        <Link
+                          href={`/solutions/${solution.slug}`}
+                          className="inline-flex items-center gap-2 text-body-sm font-semibold text-primary hover:gap-3 transition-all duration-200"
+                        >
+                          Explore solution <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </FadeIn>
@@ -349,20 +358,27 @@ export default function ServicesPage() {
               const Icon = service.icon;
               return (
                 <FadeIn key={service.slug} delay={index * 0.05}>
-                  <div className="rounded-2xl border border-border bg-card overflow-hidden h-full flex flex-col">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group rounded-2xl border border-border bg-card overflow-hidden h-full flex flex-col transition-[border-color,box-shadow] duration-300 hover:border-primary/30 hover:shadow-md"
+                  >
                     <div className="p-8 border-b border-border">
                       <div
-                        className={`flex h-12 w-12 items-center justify-center rounded-xl ${service.accentColor} mb-5`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-xl ${service.accentColor} mb-5 transition-transform duration-300 group-hover:scale-110`}
                       >
                         <Icon className="h-6 w-6" aria-hidden="true" />
                       </div>
                       <p className="text-overline text-ink-muted mb-1">{service.tagline}</p>
-                      <h3 className="text-heading-xl font-semibold font-body text-ink">
+                      <h3 className="text-heading-xl font-semibold font-body text-ink group-hover:text-primary transition-colors duration-200">
                         {service.title}
                       </h3>
                       <p className="mt-3 text-body text-ink-muted leading-relaxed">
                         {service.description}
                       </p>
+                      <div className="mt-5 inline-flex items-center gap-1.5 text-body-sm font-semibold text-primary">
+                        Learn more
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                      </div>
                     </div>
                     <div className="p-8 bg-surface flex-1">
                       <p className="text-overline text-ink-muted mb-5">What&apos;s included</p>
@@ -378,7 +394,7 @@ export default function ServicesPage() {
                         ))}
                       </ul>
                     </div>
-                  </div>
+                  </Link>
                 </FadeIn>
               );
             })}
