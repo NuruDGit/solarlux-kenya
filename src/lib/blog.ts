@@ -23,7 +23,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "A practical guide to calculating your energy needs and selecting the perfect panel wattage for Kenyan households.",
     image:
-      "https://images.pexels.com/photos/6876537/pexels-photo-6876537.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "/media/solar-installer-panels-1200x800.jpg",
     category: "Guides",
     date: "March 12, 2026",
     readTime: "6 min read",
@@ -101,7 +101,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Compare battery technologies, lifespans, and costs to find the best energy storage for your solar system.",
     image:
-      "https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "/media/solar-panels-farm-1200x798.jpg",
     category: "Technology",
     date: "February 28, 2026",
     readTime: "7 min read",
@@ -172,7 +172,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Rising electricity bills and unreliable grid power are pushing Kenyan businesses to go solar. Here's what you need to know.",
     image:
-      "https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "/media/Solar%20panel%20installation-1200x750.jpg",
     category: "Business",
     date: "January 15, 2026",
     readTime: "5 min read",

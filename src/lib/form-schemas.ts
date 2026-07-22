@@ -1,25 +1,19 @@
 import { z } from "zod";
 
 export const quoteSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  interest: z.array(z.string()).min(1, "Please select at least one option"),
-  location: z.string().min(2, "Please enter your location"),
-  message: z.string().optional(),
-  monthlyBill: z.enum(["under5k", "5k-15k", "15k-30k", "over30k", "unsure"], {
-    required_error: "Please select your monthly bill range",
-  }),
-  name: z.string().min(2, "Please enter your full name"),
-  phone: z.string().min(9, "Please enter a valid phone number"),
-  propertyType: z.enum(["home", "business", "hotel", "other"], {
-    required_error: "Please select a property type",
-  }),
+  email: z.string().trim().max(254).email("Please enter a valid email address"),
+  interest: z.array(z.string()).min(1, "Please select at least one option").max(10),
+  location: z.string().trim().min(2, "Please enter your location").max(120),
+  message: z.string().trim().max(2000, "Please keep additional details under 2,000 characters").optional(),
+  name: z.string().trim().min(2, "Please enter your full name").max(100),
+  phone: z.string().trim().min(9, "Please enter a valid phone number").max(30),
 });
 
 export const contactLeadSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  message: z.string().min(5, "Please add a short message"),
-  name: z.string().min(2, "Please enter your name"),
-  phone: z.string().min(9, "Please enter a valid phone number"),
+  email: z.string().trim().max(254).email("Please enter a valid email address"),
+  message: z.string().trim().min(5, "Please add a short message").max(2000),
+  name: z.string().trim().min(2, "Please enter your name").max(100),
+  phone: z.string().trim().min(9, "Please enter a valid phone number").max(30),
 });
 
 export type QuoteFormData = z.infer<typeof quoteSchema>;

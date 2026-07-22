@@ -8,6 +8,7 @@ import { formatPhoneHref, formatWhatsAppHref } from "@/lib/utils";
 import { CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact Us",
   description:
     "Get in touch with Solarlux Kenya. Visit us in Nairobi, call, email, or WhatsApp. Available Monday to Saturday, 8AM to 6PM.",
@@ -41,6 +42,7 @@ const contactMethods = [
     icon: Clock,
     label: "Opening Hours",
     value: CONTACT.hours,
+    valueLines: ["Monday – Saturday", "8:00 AM – 6:00 PM"],
     description: "Walk-ins welcome during business hours",
   },
 ];
@@ -84,7 +86,7 @@ export default function ContactPage() {
                 <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
                   <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
                     <Image
-                      src="https://images.unsplash.com/photo-1724041875334-0a6397111c7e?auto=format&fit=crop&w=1200&q=80"
+                      src="/media/solar-installer-panels-1200x800.jpg"
                       alt="Solar panels installed on a rooftop"
                       fill
                       className="object-cover"
@@ -122,6 +124,14 @@ export default function ContactPage() {
                     >
                       {method.value}
                     </a>
+                  ) : "valueLines" in method && method.valueLines ? (
+                    <p className="text-body-lg font-semibold text-ink">
+                      {method.valueLines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                    </p>
                   ) : (
                     <p className="text-body-lg font-semibold text-ink">
                       {method.value}
@@ -130,7 +140,7 @@ export default function ContactPage() {
                   {"secondary" in method && method.secondary && (
                     <a
                       href={formatPhoneHref(method.secondary)}
-                      className="mt-1 block text-body text-ink-muted hover:text-primary transition-colors duration-200"
+                      className="mt-1 block text-body-lg font-semibold text-ink hover:text-primary transition-colors duration-200"
                     >
                       {method.secondary}
                     </a>

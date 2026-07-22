@@ -18,7 +18,8 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 
 export const metadata: Metadata = {
-  title: "Solar Solutions & Services | Solarlux Kenya",
+  title: "Solar Solutions & Services",
+  alternates: { canonical: "/services" },
   description:
     "Solarlux Kenya delivers end-to-end solar solutions for homes, businesses, and hotels, including equipment supply, system design, professional installation, and ongoing support.",
   openGraph: {
@@ -227,7 +228,7 @@ export default function ServicesPage() {
                 <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
                   <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
                     <Image
-                      src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
+                      src="/solutions/commercial-solar.png"
                       alt="Solar panel array under a blue sky"
                       fill
                       className="object-cover"
@@ -320,7 +321,7 @@ export default function ServicesPage() {
                       <div className="mt-8">
                         <Link
                           href={`/solutions/${solution.slug}`}
-                          className="inline-flex items-center gap-2 text-body-sm font-semibold text-primary hover:gap-3 transition-all duration-200"
+                          className="inline-flex items-center gap-2 text-body-sm font-semibold text-primary transition-[gap,color] duration-200 hover:gap-3"
                         >
                           Explore solution <ArrowRight className="h-4 w-4" />
                         </Link>

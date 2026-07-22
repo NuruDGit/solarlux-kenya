@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/installation" },
   title: "Solar Installation & Maintenance",
   description:
     "Professional solar system installation by certified technicians in Kenya. Solarlux Kenya handles mounting, wiring, inverter commissioning, and ongoing maintenance for homes, businesses, and hotels.",
@@ -62,7 +63,7 @@ const maintenanceItems = [
 
 export default function InstallationPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
@@ -95,6 +96,7 @@ export default function InstallationPage() {
       {/* Feature highlights */}
       <section className="section-padding bg-background">
         <div className="container-page">
+          <h2 className="sr-only">Why choose Solarlux for installation</h2>
           <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {installationFeatures.map((feature) => (
               <StaggerItem
@@ -211,6 +213,6 @@ export default function InstallationPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

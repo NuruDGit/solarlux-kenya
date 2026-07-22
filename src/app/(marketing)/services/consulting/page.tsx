@@ -8,6 +8,7 @@ import { formatWhatsAppHref } from "@/lib/utils";
 import { CONTACT, WHATSAPP_DEFAULT_MESSAGE } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/consulting" },
   title: "Solar Installation Guidance",
   description:
     "Expert solar advisory for Kenyan homeowners and businesses. Solarlux Kenya helps you choose the right equipment, review installer quotes, and verify installation quality.",
@@ -60,7 +61,7 @@ const commonIssues = [
 
 export default function ConsultingPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
@@ -196,6 +197,6 @@ export default function ConsultingPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

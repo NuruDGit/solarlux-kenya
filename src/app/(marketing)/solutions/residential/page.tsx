@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/solutions/residential" },
   title: "Residential Solar Solutions",
   description:
     "Solar power for Kenyan homes. Cut your electricity bills by up to 80%, gain backup power during outages, and invest in a 25-year asset. Solarlux Kenya designs and installs home solar systems.",
@@ -70,7 +71,7 @@ const processSteps = [
 
 export default function ResidentialPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
@@ -278,6 +279,6 @@ export default function ResidentialPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

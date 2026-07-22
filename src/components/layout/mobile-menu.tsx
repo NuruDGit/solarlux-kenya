@@ -20,6 +20,9 @@ interface MobileMenuProps {
 export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuProps) {
   const shouldReduceMotion = useHydratedReducedMotion();
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+  const previousFocusRef = React.useRef<HTMLElement | null>(null);
 
   // Lock scroll when open — iOS-safe technique
   React.useEffect(() => {
@@ -47,13 +50,43 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
     };
   }, [open]);
 
-  // Close on escape
+  // Keep keyboard focus inside the modal drawer and restore it when closed.
   React.useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    if (!open) return;
+
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    if (open) window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousFocusRef.current?.focus();
+    };
   }, [open, onClose]);
 
   return (
@@ -62,6 +95,7 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
         <>
           {/* Backdrop */}
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -91,6 +125,7 @@ export function MobileMenu({ header, open, onClose, siteSettings }: MobileMenuPr
               <div className="flex h-16 items-center justify-between border-b border-border px-4">
                 <Logo width={120} height={36} background="light" />
                 <Button
+                  ref={closeButtonRef}
                   type="button"
                   variant="ghost"
                   size="icon"
