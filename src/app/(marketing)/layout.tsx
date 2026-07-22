@@ -1,10 +1,13 @@
 import { Fraunces, Geist } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import "../globals.css";
 import { getMarketingLayoutData } from "@/lib/cms";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
+
+const googleTagManagerId = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-PFM7NFVM";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -28,6 +31,7 @@ export default async function MarketingLayout({
 
   return (
     <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
+      <GoogleTagManager gtmId={googleTagManagerId} />
       <body className="min-h-screen bg-background font-body text-ink antialiased">
         <OrganizationJsonLd />
         <a
