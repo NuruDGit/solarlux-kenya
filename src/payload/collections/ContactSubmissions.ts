@@ -6,7 +6,7 @@ import { contactStatusOptions } from "../shared/options.ts";
 export const ContactSubmissions: CollectionConfig = {
   slug: "contact-submissions",
   access: {
-    create: () => true,
+    create: isSalesOrAdmin,
     delete: isSalesOrAdmin,
     read: isSalesOrAdmin,
     update: isSalesOrAdmin,

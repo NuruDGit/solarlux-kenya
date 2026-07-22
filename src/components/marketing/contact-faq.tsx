@@ -56,27 +56,31 @@ export function ContactFAQ() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    const response = await fetch("/api/forms/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: String(formData.get("name") ?? ""),
-        email: String(formData.get("email") ?? ""),
-        phone: String(formData.get("phone") ?? ""),
-        message: String(formData.get("message") ?? ""),
-      }),
-    });
+    try {
+      const response = await fetch("/api/forms/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(formData.get("name") ?? ""),
+          email: String(formData.get("email") ?? ""),
+          phone: String(formData.get("phone") ?? ""),
+          message: String(formData.get("message") ?? ""),
+        }),
+      });
 
-    if (!response.ok) {
-      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-      setError(payload?.error ?? "Unable to send your request right now.");
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        setError(payload?.error ?? "Unable to send your request right now.");
+        return;
+      }
+
+      form.reset();
+      setSubmitted(true);
+    } catch {
+      setError("Unable to send your request right now. Please check your connection and try again.");
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-
-    form.reset();
-    setIsSubmitting(false);
-    setSubmitted(true);
   }
 
   return (
@@ -114,7 +118,7 @@ export function ContactFAQ() {
 
                   <form onSubmit={handleSubmit} className="mt-7 space-y-4">
                     {error ? (
-                      <div className="rounded-lg border border-danger/20 bg-danger/5 px-4 py-3 text-sm text-danger">
+                      <div role="alert" className="rounded-lg border border-danger/20 bg-danger/5 px-4 py-3 text-sm text-danger">
                         {error}
                       </div>
                     ) : null}
@@ -126,6 +130,8 @@ export function ContactFAQ() {
                       <Input
                         id="cf-name"
                         name="name"
+                        autoComplete="name"
+                        maxLength={100}
                         placeholder="e.g. John Mwangi"
                         required
                         className="mt-1.5"
@@ -141,6 +147,8 @@ export function ContactFAQ() {
                           id="cf-email"
                           name="email"
                           type="email"
+                          autoComplete="email"
+                          maxLength={254}
                           placeholder="john@example.com"
                           required
                           className="mt-1.5"
@@ -154,6 +162,8 @@ export function ContactFAQ() {
                           id="cf-phone"
                           name="phone"
                           type="tel"
+                          autoComplete="tel"
+                          maxLength={30}
                           placeholder="0712 345 678"
                           required
                           className="mt-1.5"
@@ -170,6 +180,7 @@ export function ContactFAQ() {
                         name="message"
                         placeholder="Tell us about your energy needs..."
                         rows={4}
+                        maxLength={2000}
                         required
                         className="mt-1.5"
                       />

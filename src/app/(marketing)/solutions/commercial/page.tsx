@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/solutions/commercial" },
   title: "Commercial Solar Solutions",
   description:
     "Solar energy for Kenyan businesses. Reduce operating costs, protect against load shedding, and achieve fast ROI. Solarlux Kenya designs and installs commercial solar systems at any scale.",
@@ -73,7 +74,7 @@ const caseStudies = [
 
 export default function CommercialPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
@@ -234,6 +235,6 @@ export default function CommercialPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

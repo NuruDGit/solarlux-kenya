@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy",
   description:
     "How Solarlux Kenya handles personal information submitted through the website, including quote and contact enquiries.",
@@ -40,7 +41,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <>
+    <main>
       <section className="bg-surface page-hero-spacing pb-12 md:pb-20">
         <div className="container-page">
           <FadeIn>
@@ -50,8 +51,7 @@ export default function PrivacyPage() {
             </h1>
             <p className="mt-6 max-w-2xl text-body-lg leading-relaxed text-ink-muted">
               This page explains how Solarlux Kenya handles information submitted through the
-              website. It is written to support the current quote and contact flows and may be
-              refined further as operational processes expand.
+              website, how we use it, and the choices available to you.
             </p>
           </FadeIn>
         </div>
@@ -92,6 +92,6 @@ export default function PrivacyPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

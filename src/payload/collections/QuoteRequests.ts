@@ -11,7 +11,7 @@ import {
 export const QuoteRequests: CollectionConfig = {
   slug: "quote-requests",
   access: {
-    create: () => true,
+    create: isSalesOrAdmin,
     delete: isSalesOrAdmin,
     read: isSalesOrAdmin,
     update: isSalesOrAdmin,
@@ -31,13 +31,11 @@ export const QuoteRequests: CollectionConfig = {
       name: "propertyType",
       type: "select",
       options: propertyTypeOptions,
-      required: true,
     },
     {
       name: "monthlyBillRange",
       type: "select",
       options: monthlyBillRangeOptions,
-      required: true,
     },
     {
       name: "interests",

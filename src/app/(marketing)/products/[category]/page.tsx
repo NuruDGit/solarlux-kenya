@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!category) return {};
 
   return {
-    title: `${category.name} | Solarlux Kenya`,
+    title: category.name,
+    alternates: { canonical: `/products/${categorySlug}` },
     description: category.description,
     openGraph: {
       title: `${category.name} | Solarlux Kenya`,
@@ -95,6 +96,7 @@ export default async function CategoryPage({ params }: Props) {
       {/* Products */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container-page">
+          <h2 className="sr-only">Products in this category</h2>
           <ProductGrid products={products} showFilters={false} />
         </div>
       </section>

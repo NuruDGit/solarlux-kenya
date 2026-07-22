@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Play, ShieldCheck } from "lucide-react";
+import { Pause, Play, ShieldCheck } from "lucide-react";
 import { Stagger, staggerChildVariants } from "@/components/motion/stagger";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -32,8 +32,7 @@ export function HeroBento() {
           {/* Card 1 — Video card */}
           <motion.div
             variants={staggerChildVariants}
-            className="group relative rounded-2xl overflow-hidden bg-ink-900 lg:col-span-5 min-h-56 sm:min-h-72 flex flex-col justify-between cursor-pointer"
-            onClick={handlePlayToggle}
+            className="group relative rounded-2xl overflow-hidden bg-ink-900 lg:col-span-5 min-h-56 sm:min-h-72 flex flex-col justify-between"
           >
             <div className="absolute inset-0">
               <video
@@ -41,6 +40,7 @@ export function HeroBento() {
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 poster="/projects/project-11.03.21.jpg"
                 className="h-full w-full object-cover"
               >
@@ -59,9 +59,9 @@ export function HeroBento() {
               "relative z-10 p-6 md:p-8 mt-auto transition-opacity duration-500",
               isPlaying ? "opacity-0" : "opacity-100"
             )}>
-              <h3 className="text-xl font-semibold font-display text-white">
+              <h2 className="text-xl font-semibold font-display text-white">
                 Advancing Solar Solutions
-              </h3>
+              </h2>
               <p className="mt-2 text-sm text-white/70 leading-relaxed max-w-xs">
                 See how Solarlux is driving clean energy adoption across Kenya
                 with innovative solar technologies.
@@ -73,16 +73,18 @@ export function HeroBento() {
               "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-opacity duration-300",
               isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
             )}>
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm border border-white/30 transition-transform duration-300 group-hover:scale-110">
+              <button
+                type="button"
+                onClick={handlePlayToggle}
+                aria-label={isPlaying ? "Pause solar solutions video" : "Play solar solutions video"}
+                className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-white/20 backdrop-blur-sm transition-transform duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950"
+              >
                 {isPlaying ? (
-                  <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="6" y="4" width="4" height="16" rx="1" />
-                    <rect x="14" y="4" width="4" height="16" rx="1" />
-                  </svg>
+                  <Pause className="h-5 w-5 fill-white text-white" />
                 ) : (
                   <Play className="h-6 w-6 text-white fill-white ml-0.5" />
                 )}
-              </div>
+              </button>
             </div>
           </motion.div>
 

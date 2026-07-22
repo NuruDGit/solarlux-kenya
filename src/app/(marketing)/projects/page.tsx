@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { getPayloadProjects, type PayloadProjectHighlight } from "@/lib/cms";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/projects" },
   title: "Projects",
   description:
     "See recent Solarlux Kenya installations across homes, businesses, and hospitality properties, with real project context and system outcomes.",
@@ -104,7 +105,7 @@ export default async function ProjectsPage() {
                 <div className="rounded-4xl bg-ink-900/80 ring-1 ring-paper/10 p-2">
                   <div className="rounded-3xl overflow-hidden aspect-4/3 relative">
                     <Image
-                      src="https://images.unsplash.com/photo-1668097613572-40b7c11c8727?auto=format&fit=crop&w=1200&q=80"
+                      src="/projects/project-11.03.28.jpg"
                       alt="Solar technician installing panels on a rooftop"
                       fill
                       className="object-cover"
@@ -131,8 +132,8 @@ export default async function ProjectsPage() {
                 </h2>
               </div>
               <p className="max-w-md text-body text-ink-muted">
-                This is a project gallery page for now, with recent examples grouped by use case.
-                Dedicated case-study pages can be layered in later without changing the route.
+                Explore recent residential, commercial, and hospitality installations, each
+                showing the system focus and practical outcome.
               </p>
             </div>
           </FadeIn>
@@ -200,7 +201,7 @@ export default async function ProjectsPage() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="max-w-[64ch] text-body-lg leading-relaxed text-ink-muted">
-                If you already know the kind of property or system you want, the fastest route is a
+                If you already know the kind of property or system you want, the fastest way is a
                 quote request. If not, contact the team and we&apos;ll help you scope the right system.
               </p>
               <div className="mt-6 flex flex-col gap-4 sm:flex-row">

@@ -18,7 +18,8 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger } from "@/components/motion/stagger";
 
 export const metadata: Metadata = {
-  title: "Solar Products | Solarlux Kenya",
+  title: "Solar Products",
+  alternates: { canonical: "/products" },
   description:
     "Browse our complete range of solar panels, batteries, inverters, water heaters, pumps, and accessories. Quality solar equipment with nationwide delivery across Kenya.",
   openGraph: {
@@ -106,7 +107,7 @@ export default async function ProductsPage() {
                 <Link
                   key={cat.slug}
                   href={`/products/${cat.slug}`}
-                  className="group flex flex-col gap-5 rounded-3xl border border-border bg-card p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/30"
+                  className="group flex flex-col gap-5 rounded-3xl border border-border bg-card p-8 shadow-sm transition-[box-shadow,border-color] duration-300 hover:border-primary/30 hover:shadow-md"
                 >
                   {/* Icon */}
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
@@ -152,7 +153,7 @@ export default async function ProductsPage() {
       <section className="relative overflow-hidden bg-ink-950 py-16 md:py-24">
         <div className="absolute inset-0">
           <Image
-            src="https://images.pexels.com/photos/371900/pexels-photo-371900.jpeg?auto=compress&cs=tinysrgb&w=1440"
+            src="/products/solar_20installation.png"
             alt="Solar panels under a clear blue sky"
             fill
             className="object-cover opacity-20"

@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/solutions/hospitality" },
   title: "Solar Solutions for Hotels & Hospitality",
   description:
     "Solar energy for Kenyan hotels, lodges, and guesthouses. Power your operations sustainably, cut costs, and attract eco-conscious guests. Solarlux Kenya has installed solar across Kenya's hospitality sector.",
@@ -73,7 +74,7 @@ const projects = [
 
 export default function HospitalityPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="relative page-hero-spacing pb-16 md:pb-24 bg-ink-950 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-brand opacity-10" />
@@ -222,7 +223,7 @@ export default function HospitalityPage() {
       <section className="section-padding bg-surface">
         <div className="container-page">
           <FadeIn>
-            <div className="rounded-2xl bg-ink-950 p-8 md:p-12 grid lg:grid-cols-2 gap-8 items-center">
+            <div className="rounded-2xl bg-ink-950 p-6 md:p-12 grid lg:grid-cols-2 gap-8 items-center">
               <div>
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent mb-6">
                   <Star className="h-7 w-7" aria-hidden="true" />
@@ -240,13 +241,13 @@ export default function HospitalityPage() {
                   <Link href="/quote">Get a Hotel Quote</Link>
                 </Button>
                 <Button variant="outline-light" size="lg" asChild>
-                  <Link href="/contact">Speak to a Hospitality Specialist</Link>
+                  <Link href="/contact">Talk to a Specialist</Link>
                 </Button>
               </div>
             </div>
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

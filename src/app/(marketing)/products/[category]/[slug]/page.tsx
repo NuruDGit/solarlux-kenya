@@ -42,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {};
 
   return {
-    title: `${product.name} | Solarlux Kenya`,
+    title: product.name,
+    alternates: { canonical: `/products/${product.categorySlug}/${product.slug}` },
     description: product.description,
     openGraph: {
       title: `${product.name} | Solarlux Kenya`,

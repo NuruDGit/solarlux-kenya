@@ -237,24 +237,21 @@ const fallbackTestimonials: TestimonialCardData[] = [
   {
     name: "James Mwangi",
     company: "Homeowner, Kamakis",
-    avatar:
-      "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=120&h=120&fit=crop&crop=face",
+    avatar: "",
     quote:
       "Solarlux designed and installed our home solar system in just 3 days. Our electricity bill dropped by 80%. The team was professional and the system works flawlessly.",
   },
   {
     name: "Sarah Wanjiru",
     company: "Hotel Manager, Watamu",
-    avatar:
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=120&h=120&fit=crop&crop=face",
+    avatar: "",
     quote:
       "We switched to solar for our boutique hotel and the savings have been incredible. Solarlux handled everything from design to installation. Couldn't be happier.",
   },
   {
     name: "David Kimani",
     company: "Business Owner, Nairobi",
-    avatar:
-      "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=120&h=120&fit=crop&crop=face",
+    avatar: "",
     quote:
       "The team at Solarlux are true experts. They assessed our energy needs, recommended the right system, and delivered on time. Highly recommended for any business.",
   },
@@ -286,12 +283,19 @@ function getMediaUrl(value: unknown): string | null {
 
 function normalizeMediaUrl(url: string): string {
   const mediaPrefix = "/api/media/file/";
+  let pathname = url;
 
-  if (!url.startsWith(mediaPrefix)) {
+  try {
+    pathname = new URL(url).pathname;
+  } catch {
+    // Relative media URLs are already pathnames.
+  }
+
+  if (!pathname.startsWith(mediaPrefix)) {
     return url;
   }
 
-  const fileName = decodeURIComponent(url.slice(mediaPrefix.length));
+  const fileName = decodeURIComponent(pathname.slice(mediaPrefix.length));
 
   if (fileName.includes("/") || fileName.includes("\\")) {
     return url;

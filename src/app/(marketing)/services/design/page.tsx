@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/design" },
   title: "Solar Project Design",
   description:
     "Custom solar system design for homes, businesses, and hotels in Kenya. Solarlux engineers assess your site, measure your energy needs, and design the right system for your budget.",
@@ -57,7 +58,7 @@ const designIncludes = [
 
 export default function DesignPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
@@ -175,6 +176,6 @@ export default function DesignPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }
