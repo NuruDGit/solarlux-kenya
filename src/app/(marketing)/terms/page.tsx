@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms of Service",
   description:
     "The terms that govern use of the Solarlux Kenya website, quote requests, and informational content.",
@@ -44,7 +45,7 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <>
+    <main>
       <section className="bg-ink-950 page-hero-spacing pb-12 md:pb-20">
         <div className="container-page">
           <FadeIn>
@@ -87,6 +88,6 @@ export default function TermsPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

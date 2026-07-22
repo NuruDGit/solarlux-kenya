@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { STATS } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About Us",
   description:
     "Over 8 years powering Kenyan homes, businesses, and hotels with premium solar energy solutions. Learn about our mission, values, and the team behind Solarlux Kenya.",

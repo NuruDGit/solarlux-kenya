@@ -9,7 +9,8 @@ import { BLOG_POSTS } from "@/lib/blog";
 import { getPayloadBlogListing } from "@/lib/cms";
 
 export const metadata: Metadata = {
-  title: "Solar Blog & Insights | Solarlux Kenya",
+  title: "Solar Blog & Insights",
+  alternates: { canonical: "/blog" },
   description:
     "Expert solar guides, product comparisons, installation tips, and industry news for Kenyan homeowners, businesses, and hospitality operators.",
   openGraph: {
@@ -44,7 +45,7 @@ export default async function BlogPage() {
         {/* Subtle background image with heavy overlay */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src="/media/solar-panels-farm-1200x798.jpg"
             alt=""
             fill
             priority
@@ -77,7 +78,7 @@ export default async function BlogPage() {
 
             <h1 className="text-display-xl font-display font-medium text-white max-w-3xl leading-tight">
               Practical solar knowledge —{" "}
-              <span className="text-brand-yellow-400">built for Kenya</span>
+              <span className="text-accent">built for Kenya</span>
             </h1>
             <p className="mt-6 max-w-2xl text-body-lg text-white/60 leading-relaxed">
               Expert advice on choosing, sizing, installing, and maintaining solar systems. From

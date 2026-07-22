@@ -18,6 +18,16 @@ const nextConfig = {
         port: "3000",
         pathname: "/api/media/file/**",
       },
+      {
+        protocol: "https",
+        hostname: "solarluxkenya.co.ke",
+        pathname: "/api/media/file/**",
+      },
+      {
+        protocol: "http",
+        hostname: "solarluxkenya.co.ke",
+        pathname: "/api/media/file/**",
+      },
     ],
   },
   experimental: {

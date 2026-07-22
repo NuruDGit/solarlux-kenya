@@ -7,6 +7,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/supply" },
   title: "Solar Equipment Supply",
   description:
     "Genuine solar panels, batteries, inverters, water heaters and accessories from certified manufacturers. Solarlux Kenya stocks only authentic, quality-tested solar products.",
@@ -62,7 +63,7 @@ const whyBuyFromUs = [
 
 export default function SupplyPage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="page-hero-spacing pb-16 md:pb-20 bg-surface">
         <div className="container-page">
@@ -186,6 +187,6 @@ export default function SupplyPage() {
           </FadeIn>
         </div>
       </section>
-    </>
+    </main>
   );
 }

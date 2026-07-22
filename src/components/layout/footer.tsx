@@ -80,7 +80,7 @@ export function Footer({ footer, productCategories, siteSettings }: FooterProps)
                     size="icon"
                     layered={false}
                     sunrise={false}
-                    className="h-10 w-10 text-white/80 hover:border-accent hover:text-accent focus-visible:ring-accent/60 focus-visible:ring-offset-ink-950"
+                    className="h-11 w-11 text-white/80 hover:border-accent hover:text-accent focus-visible:ring-accent/60 focus-visible:ring-offset-ink-950"
                     asChild
                   >
                     <a
@@ -98,7 +98,7 @@ export function Footer({ footer, productCategories, siteSettings }: FooterProps)
           </div>
 
           <div>
-            <h4 className="text-base font-display font-medium text-white">Company</h4>
+            <h2 className="text-base font-display font-medium text-white">Company</h2>
             <ul className="mt-4 space-y-2.5">
               {(companyColumn?.links ?? []).map((link) => (
                 <li key={link.href}>
@@ -114,7 +114,7 @@ export function Footer({ footer, productCategories, siteSettings }: FooterProps)
           </div>
 
           <div>
-            <h4 className="text-base font-display font-medium text-white">Services</h4>
+            <h2 className="text-base font-display font-medium text-white">Services</h2>
             <ul className="mt-4 space-y-2.5">
               {(servicesColumn?.links ?? []).map((link) => (
                 <li key={link.href}>
@@ -130,7 +130,7 @@ export function Footer({ footer, productCategories, siteSettings }: FooterProps)
           </div>
 
           <div>
-            <h4 className="text-base font-display font-medium text-white">Products</h4>
+            <h2 className="text-base font-display font-medium text-white">Products</h2>
             <ul className="mt-4 space-y-2.5">
               {productCategories.slice(0, 6).map((cat) => (
                 <li key={cat.slug}>

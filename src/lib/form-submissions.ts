@@ -133,9 +133,7 @@ export async function submitQuoteRequest(data: QuoteFormData) {
       interests: data.interest,
       location: data.location,
       message: data.message,
-      monthlyBillRange: data.monthlyBill,
       phone: data.phone,
-      propertyType: data.propertyType,
       source: "website-quote-page",
     },
   });
@@ -148,8 +146,6 @@ export async function submitQuoteRequest(data: QuoteFormData) {
         ["Phone", data.phone],
         ["Email", data.email],
         ["Location", data.location],
-        ["Property type", formatLabel(data.propertyType)],
-        ["Monthly bill", formatLabel(data.monthlyBill)],
         ["Interests", data.interest],
         ["Message", data.message],
       ],

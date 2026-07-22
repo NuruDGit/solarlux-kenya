@@ -30,8 +30,16 @@ export default async function MarketingLayout({
     <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
       <body className="min-h-screen bg-background font-body text-ink antialiased">
         <OrganizationJsonLd />
+        <a
+          href="#main-content"
+          className="sr-only fixed left-4 top-4 z-10000 rounded-md bg-background px-4 py-3 font-semibold text-ink shadow-md focus:not-sr-only focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          Skip to main content
+        </a>
         <Header header={data.header} siteSettings={data.siteSettings} />
-        {children}
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
         <Footer
           footer={data.footer}
           productCategories={data.productCategories}

@@ -76,14 +76,14 @@ function getLayeredSurfaceClasses(variant: ButtonProps["variant"]) {
 
 function getLayerImageClasses(variant: ButtonProps["variant"]) {
   if (variant === "accent") {
-    return "opacity-42 saturate-105 contrast-110 drop-shadow-[0_0_10px_rgba(15,47,88,0.16)]";
+    return "opacity-20 saturate-105 contrast-110 drop-shadow-[0_0_10px_rgba(15,47,88,0.16)]";
   }
 
   if (variant === "dark") {
     return "opacity-4 saturate-100 contrast-110 drop-shadow-[0_0_12px_rgba(91,164,230,0.14)]";
   }
 
-  return "opacity-38 saturate-105 contrast-110 drop-shadow-[0_0_12px_rgba(255,255,255,0.14)]";
+  return "opacity-15 saturate-105 contrast-110 drop-shadow-[0_0_12px_rgba(255,255,255,0.14)]";
 }
 
 function getSunriseClasses(variant: ButtonProps["variant"]) {
@@ -134,11 +134,10 @@ function ButtonLayer({ variant }: { variant: ButtonProps["variant"] }) {
       className="pointer-events-none absolute left-2 top-1/2 z-0 h-16 w-16 -translate-y-1/2 transition-[transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/button:translate-x-[155%] group-hover/button:scale-[2.8] group-active/button:translate-x-[140%] group-active/button:scale-[2.5] motion-reduce:transition-none"
     >
       <Image
-        src="/brand/solarlux-icon.svg"
+        src="/brand/solarlux-icon.png"
         alt=""
         fill
         sizes="64px"
-        unoptimized
         className={cn(
           "animate-[spin_14s_linear_infinite] object-contain motion-reduce:animate-none transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/button:opacity-70 group-active/button:opacity-65",
           imageClasses
@@ -161,7 +160,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <>
         {showLayer ? <ButtonLayer variant={resolvedVariant} /> : null}
         {showSunrise ? <SunriseLayer variant={resolvedVariant} /> : null}
-        <span className={cn("relative z-10 inline-flex items-center justify-center gap-2 font-semibold tracking-tight transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", labelClasses, sunriseTextClasses)}>
+        <span className={cn("relative z-10 inline-flex items-center justify-center gap-2 font-semibold transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", labelClasses, sunriseTextClasses)}>
           {children}
         </span>
       </>
@@ -186,7 +185,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <>
             {showLayer ? <ButtonLayer variant={resolvedVariant} /> : null}
             {showSunrise ? <SunriseLayer variant={resolvedVariant} /> : null}
-            <span className={cn("relative z-10 inline-flex items-center justify-center gap-2 font-semibold tracking-tight transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", labelClasses, sunriseTextClasses)}>
+            <span className={cn("relative z-10 inline-flex items-center justify-center gap-2 font-semibold transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", labelClasses, sunriseTextClasses)}>
               {(child.props as { children?: React.ReactNode }).children}
             </span>
           </>

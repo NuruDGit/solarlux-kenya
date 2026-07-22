@@ -5,6 +5,17 @@ import { submitContactLead } from "@/lib/form-submissions";
 
 export async function POST(request: Request) {
   try {
+    const contentLength = Number(request.headers.get("content-length") ?? 0);
+    const origin = request.headers.get("origin");
+
+    if (contentLength > 20_000) {
+      return NextResponse.json({ error: "Request is too large." }, { status: 413 });
+    }
+
+    if (origin && new URL(origin).origin !== new URL(request.url).origin) {
+      return NextResponse.json({ error: "Request origin is not allowed." }, { status: 403 });
+    }
+
     const json = await request.json();
     const data = contactLeadSchema.parse(json);
 

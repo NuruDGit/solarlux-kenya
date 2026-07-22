@@ -20,11 +20,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = (await getPayloadBlogPostBySlug(slug)) ?? getBlogPost(slug);
   if (!post) return {};
   return {
-    title: `${post.title} | Solarlux Kenya Blog`,
+    title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
