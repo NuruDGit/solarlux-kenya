@@ -28,6 +28,11 @@ const nextConfig = {
         hostname: "solarluxkenya.co.ke",
         pathname: "/api/media/file/**",
       },
+      {
+        protocol: "https",
+        hostname: "media.solarluxkenya.co.ke",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {
