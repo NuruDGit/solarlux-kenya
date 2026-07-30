@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { s3Storage } from "@payloadcms/storage-s3";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -25,6 +26,21 @@ import { SiteSettings } from "./payload/globals/SiteSettings.ts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+const r2StorageEnabled = process.env.R2_STORAGE_ENABLED === "true";
+
+const r2Config = {
+  accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
+  bucket: process.env.R2_BUCKET || "",
+  endpoint: process.env.R2_ENDPOINT || "",
+  publicUrl: (process.env.R2_PUBLIC_URL || "").replace(/\/$/, ""),
+  secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
+};
+
+if (r2StorageEnabled && Object.values(r2Config).some((value) => !value)) {
+  throw new Error(
+    "R2 storage is enabled but one or more required R2 environment variables are missing.",
+  );
+}
 
 export default buildConfig({
   admin: {
@@ -69,6 +85,32 @@ export default buildConfig({
   graphQL: {
     disablePlaygroundInProduction: true,
   },
+  plugins: [
+    s3Storage({
+      enabled: r2StorageEnabled,
+      bucket: r2Config.bucket,
+      clientUploads: true,
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => {
+            const key = prefix ? `${prefix}/${filename}` : filename;
+            return `${r2Config.publicUrl}/${key}`;
+          },
+          prefix: "media",
+        },
+      },
+      config: {
+        credentials: {
+          accessKeyId: r2Config.accessKeyId,
+          secretAccessKey: r2Config.secretAccessKey,
+        },
+        endpoint: r2Config.endpoint,
+        forcePathStyle: true,
+        region: "auto",
+      },
+    }),
+  ],
   secret: process.env.PAYLOAD_SECRET || "",
   serverURL:
     process.env.PAYLOAD_PUBLIC_SERVER_URL ||

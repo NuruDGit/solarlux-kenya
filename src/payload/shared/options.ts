@@ -126,6 +126,7 @@ export const currencyOptions = [
 export const badgeOptions = [
   { label: "Best Seller", value: "Best Seller" },
   { label: "Popular", value: "Popular" },
+  { label: "Most Popular", value: "Most Popular" },
   { label: "Best Value", value: "Best Value" },
   { label: "New", value: "New" },
 ];
