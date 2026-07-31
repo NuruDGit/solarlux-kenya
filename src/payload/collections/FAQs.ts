@@ -2,6 +2,10 @@ import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 import { faqAudienceOptions } from "../shared/options.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshHome,
+} from "../hooks/revalidate.ts";
 
 export const FAQs: CollectionConfig = {
   slug: "faqs",
@@ -17,6 +21,7 @@ export const FAQs: CollectionConfig = {
     useAsTitle: "question",
     description: "Frequently asked questions. Tag by audience (General, Residential, Commercial…) and enable 'Featured' to show on the homepage.",
   },
+  hooks: createCollectionRevalidationHooks(refreshHome),
   fields: [
     { name: "question", type: "text", required: true },
     { name: "answer", type: "textarea", required: true },

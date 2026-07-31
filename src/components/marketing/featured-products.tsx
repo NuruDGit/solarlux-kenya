@@ -5,43 +5,16 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getPayloadFeaturedProducts, type FeaturedProductCard } from "@/lib/cms";
-
-const STATIC_FEATURED: FeaturedProductCard[] = [
-  {
-    name: "JA Solar 600W Panel",
-    category: "Solar Panels",
-    image: "/products/JA_SOLAR_600W.png",
-    href: "/products/solar-panels/ja-solar-600w",
-    badge: "Best Seller",
-  },
-  {
-    name: "Deye 5kWh Battery",
-    category: "Batteries",
-    image: "/products/5kWh_Deye_Lithium_Ion_Battery.png",
-    href: "/products/batteries/deye-5kwh",
-    badge: null,
-  },
-  {
-    name: "MUST 7.2KW Inverter",
-    category: "Inverters",
-    image: "/products/inverters.jpg",
-    href: "/products/inverters/must-7-2kw",
-    badge: null,
-  },
-  {
-    name: "Renergy iPower 10.24kWh",
-    category: "Batteries",
-    image: "/products/10.24kwh-200ah-renergy.jpg",
-    href: "/products/batteries/renergy-10kwh",
-    badge: null,
-  },
-];
+import { getPayloadFeaturedProducts } from "@/lib/cms";
 
 export async function FeaturedProducts() {
   const payloadProducts = await getPayloadFeaturedProducts();
-  const products =
-    payloadProducts.length >= STATIC_FEATURED.length ? payloadProducts : STATIC_FEATURED;
+
+  if (payloadProducts.length === 0) {
+    return null;
+  }
+
+  const products = payloadProducts;
 
   return (
     <section className="bg-background py-16 md:py-24 lg:py-32">

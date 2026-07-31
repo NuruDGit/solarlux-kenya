@@ -3,6 +3,10 @@ import path from "path";
 import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshEntireSite,
+} from "../hooks/revalidate.ts";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -17,6 +21,7 @@ export const Media: CollectionConfig = {
     defaultColumns: ["filename", "alt", "mediaType", "updatedAt"],
     description: "Upload images, PDFs, and logos used across the site.",
   },
+  hooks: createCollectionRevalidationHooks(refreshEntireSite),
   fields: [
     {
       name: "alt",

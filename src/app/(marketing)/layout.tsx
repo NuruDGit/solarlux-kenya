@@ -9,6 +9,10 @@ import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
 
 const googleTagManagerId = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-PFM7NFVM";
 
+// Payload hooks refresh affected paths immediately. This interval is a safety
+// net so content still self-heals if a transient revalidation call ever fails.
+export const revalidate = 300;
+
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
@@ -33,7 +37,7 @@ export default async function MarketingLayout({
     <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
       <GoogleTagManager gtmId={googleTagManagerId} />
       <body className="min-h-screen bg-background font-body text-ink antialiased">
-        <OrganizationJsonLd />
+        <OrganizationJsonLd siteSettings={data.siteSettings} />
         <a
           href="#main-content"
           className="sr-only fixed left-4 top-4 z-10000 rounded-md bg-background px-4 py-3 font-semibold text-ink shadow-md focus:not-sr-only focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"

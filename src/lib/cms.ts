@@ -6,7 +6,7 @@ import { getPayload } from "payload";
 
 import config from "@payload-config";
 
-import { PRODUCTS, type Product } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import {
   CONTACT,
   NAV_LINKS,
@@ -48,6 +48,7 @@ export interface SiteSettingsData {
     label: string;
   }>;
   defaultWhatsAppMessage: string;
+  organizationSchemaType?: "Organization" | "LocalBusiness";
 }
 
 export interface HeaderData {
@@ -75,11 +76,36 @@ export interface ProductCategoryLink {
   slug: string;
 }
 
+export interface SeoData {
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+export interface ProductCategoryData extends ProductCategoryLink {
+  description: string;
+  icon: string;
+  image: string;
+  updatedAt?: string;
+  seo?: SeoData;
+}
+
 export interface MarketingLayoutData {
   footer: FooterData;
   header: HeaderData;
   productCategories: ProductCategoryLink[];
   siteSettings: SiteSettingsData;
+}
+
+export interface AboutPageData {
+  heroTitle: string;
+  heroBody: string;
+  mission: string;
+  vision: string;
+  values: Array<{ title: string; description: string }>;
+  teamSectionTitle: string;
+  teamSectionBody: string;
 }
 
 export interface HeroData {
@@ -101,6 +127,7 @@ export interface BlogPostCardData {
   category: string;
   date: string;
   href: string;
+  updatedAt?: string;
 }
 
 export interface TestimonialCardData {
@@ -138,6 +165,7 @@ const fallbackSiteSettings: SiteSettingsData = {
   })),
   stats: STATS.map((item) => ({ ...item })),
   defaultWhatsAppMessage: WHATSAPP_DEFAULT_MESSAGE,
+  organizationSchemaType: "LocalBusiness",
 };
 
 const fallbackHeader: HeaderData = {
@@ -257,6 +285,40 @@ const fallbackTestimonials: TestimonialCardData[] = [
   },
 ];
 
+const fallbackAboutPage: AboutPageData = {
+  heroTitle: "8+ years powering Kenya's sustainable future",
+  heroBody:
+    "Solarlux Kenya was founded with a simple belief: every Kenyan home, business, and hotel deserves access to clean, reliable, and affordable solar energy.",
+  mission:
+    "To inspire, guide, and provide memorable green energy solutions that enrich lives and foster a deeper understanding of sustainability.",
+  vision:
+    "A world where green energy transforms lives, brings people together, fosters innovation, and promotes sustainable exploration.",
+  values: [
+    {
+      title: "Customer-Centric",
+      description: "Customer satisfaction is our top priority. Every installation is designed to exceed expectations.",
+    },
+    {
+      title: "Authenticity",
+      description: "We supply and install only genuine, certified solar products.",
+    },
+    {
+      title: "Integrity",
+      description: "We operate to the highest standards of ethics and transparency.",
+    },
+    {
+      title: "Reliability",
+      description: "When we commit to a project, we deliver on time and on budget.",
+    },
+    {
+      title: "Trust",
+      description: "We earn recommendations through results, support, and long-term relationships.",
+    },
+  ],
+  teamSectionTitle: "The people behind Solarlux Kenya",
+  teamSectionBody: "Meet the specialists who guide every project from consultation to long-term support.",
+};
+
 let payloadPromise: ReturnType<typeof getPayload> | null = null;
 
 async function tryGetPayload() {
@@ -279,6 +341,31 @@ function getMediaUrl(value: unknown): string | null {
   }
 
   return null;
+}
+
+function getSeoData(value: unknown): SeoData | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+
+  const seo = value as Record<string, unknown>;
+  const metaTitle = typeof seo.metaTitle === "string" ? seo.metaTitle.trim() : "";
+  const metaDescription =
+    typeof seo.metaDescription === "string" ? seo.metaDescription.trim() : "";
+  const canonicalUrl =
+    typeof seo.canonicalUrl === "string" ? seo.canonicalUrl.trim() : "";
+  const ogImage = getMediaUrl(seo.ogImage);
+
+  if (!metaTitle && !metaDescription && !canonicalUrl && !ogImage) {
+    return undefined;
+  }
+
+  return {
+    ...(metaTitle ? { metaTitle } : {}),
+    ...(metaDescription ? { metaDescription } : {}),
+    ...(canonicalUrl ? { canonicalUrl } : {}),
+    ...(ogImage ? { ogImage } : {}),
+  };
 }
 
 function normalizeMediaUrl(url: string): string {
@@ -445,6 +532,62 @@ export async function getMarketingLayoutData(): Promise<MarketingLayoutData> {
   };
 }
 
+export async function getAboutPageData(): Promise<AboutPageData> {
+  const payload = await tryGetPayload();
+  if (!payload) return fallbackAboutPage;
+
+  const about = await payload
+    .findGlobal({ slug: "about-page" })
+    .catch(() => null);
+
+  if (!about || typeof about !== "object") return fallbackAboutPage;
+
+  const data = about as Record<string, unknown>;
+  const values = Array.isArray(data.values)
+    ? data.values
+        .map((value) => {
+          if (!value || typeof value !== "object") return null;
+          const item = value as Record<string, unknown>;
+          const title = typeof item.title === "string" ? item.title : "";
+          const description =
+            typeof item.description === "string" ? item.description : "";
+          return title && description ? { title, description } : null;
+        })
+        .filter(
+          (value): value is { title: string; description: string } =>
+            value !== null,
+        )
+    : [];
+
+  return {
+    heroTitle:
+      typeof data.heroTitle === "string" && data.heroTitle
+        ? data.heroTitle
+        : fallbackAboutPage.heroTitle,
+    heroBody:
+      typeof data.heroBody === "string" && data.heroBody
+        ? data.heroBody
+        : fallbackAboutPage.heroBody,
+    mission:
+      typeof data.mission === "string" && data.mission
+        ? data.mission
+        : fallbackAboutPage.mission,
+    vision:
+      typeof data.vision === "string" && data.vision
+        ? data.vision
+        : fallbackAboutPage.vision,
+    values: values.length ? values : fallbackAboutPage.values,
+    teamSectionTitle:
+      typeof data.teamSectionTitle === "string" && data.teamSectionTitle
+        ? data.teamSectionTitle
+        : fallbackAboutPage.teamSectionTitle,
+    teamSectionBody:
+      typeof data.teamSectionBody === "string" && data.teamSectionBody
+        ? data.teamSectionBody
+        : fallbackAboutPage.teamSectionBody,
+  };
+}
+
 export async function getHomePageData(): Promise<HomePageData> {
   const payload = await tryGetPayload();
 
@@ -468,7 +611,7 @@ export async function getHomePageData(): Promise<HomePageData> {
         where: {
           and: [
             { featured: { equals: true } },
-            { status: { equals: "published" } },
+            { _status: { equals: "published" } },
           ],
         },
       })
@@ -558,8 +701,11 @@ export async function getHomePageData(): Promise<HomePageData> {
         date: date || "",
         excerpt,
         href: `/blog/${slug}`,
-        image: image || fallbackBlogPosts[0]?.image || "",
+        image: image || "",
         title,
+        ...("updatedAt" in post && typeof post.updatedAt === "string"
+          ? { updatedAt: post.updatedAt }
+          : {}),
       } satisfies BlogPostCardData;
     })
     .filter((post): post is BlogPostCardData => Boolean(post));
@@ -591,9 +737,9 @@ export async function getHomePageData(): Promise<HomePageData> {
     .filter((item): item is TestimonialCardData => Boolean(item));
 
   return {
-    blogPosts: blogCards.length ? blogCards : fallbackBlogPosts,
+    blogPosts: blogCards,
     hero: heroData,
-    testimonials: testimonialCards.length ? testimonialCards : fallbackTestimonials,
+    testimonials: testimonialCards,
   };
 }
 
@@ -609,6 +755,8 @@ export interface PayloadBlogPostFull {
   readTime: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   lexicalContent: any;
+  updatedAt?: string;
+  seo?: SeoData;
   isPayload: true;
 }
 
@@ -623,7 +771,7 @@ export async function getPayloadBlogListing(): Promise<BlogPostCardData[]> {
       limit: 50,
       pagination: false,
       sort: "-publishedAt",
-      where: { status: { equals: "published" } },
+      where: { _status: { equals: "published" } },
     })
     .catch(() => ({ docs: [] }));
 
@@ -642,8 +790,11 @@ export async function getPayloadBlogListing(): Promise<BlogPostCardData[]> {
         date: date || "",
         excerpt,
         href: `/blog/${slug}`,
-        image: image || fallbackBlogPosts[0]?.image || "",
+        image: image || "",
         title,
+        ...("updatedAt" in post && typeof post.updatedAt === "string"
+          ? { updatedAt: post.updatedAt }
+          : {}),
       } satisfies BlogPostCardData;
     })
     .filter((p): p is BlogPostCardData => Boolean(p));
@@ -663,7 +814,7 @@ export async function getPayloadBlogPostBySlug(slug: string): Promise<PayloadBlo
       where: {
         and: [
           { slug: { equals: slug } },
-          { status: { equals: "published" } },
+          { _status: { equals: "published" } },
         ],
       },
     })
@@ -694,6 +845,8 @@ export async function getPayloadBlogPostBySlug(slug: string): Promise<PayloadBlo
     date,
     readTime,
     lexicalContent,
+    updatedAt: "updatedAt" in post && typeof post.updatedAt === "string" ? post.updatedAt : undefined,
+    seo: "seo" in post ? getSeoData(post.seo) : undefined,
     isPayload: true,
   };
 }
@@ -722,6 +875,74 @@ function getLexicalPlainText(content: unknown): string {
 
 // ─── Products ────────────────────────────────────────────────────────────────
 
+function normalizePayloadCategory(doc: unknown): ProductCategoryData | null {
+  if (!doc || typeof doc !== "object") return null;
+  const data = doc as Record<string, unknown>;
+
+  const name = typeof data.title === "string" ? data.title : "";
+  const slug = typeof data.slug === "string" ? data.slug : "";
+  const description =
+    typeof data.shortDescription === "string" ? data.shortDescription : "";
+
+  if (!name || !slug || !description) return null;
+
+  return {
+    name,
+    slug,
+    description,
+    icon: typeof data.icon === "string" ? data.icon : "Package",
+    image:
+      getMediaUrl(data.cardImage) ??
+      getMediaUrl(data.heroImage) ??
+      "",
+    updatedAt: typeof data.updatedAt === "string" ? data.updatedAt : undefined,
+    seo: getSeoData(data.seo),
+  };
+}
+
+export async function getPayloadProductCategories(): Promise<ProductCategoryData[]> {
+  const payload = await tryGetPayload();
+  if (!payload) return [];
+
+  const result = await payload
+    .find({
+      collection: "product-categories",
+      depth: 1,
+      limit: 100,
+      pagination: false,
+      sort: "sortOrder",
+      where: { isActive: { equals: true } },
+    })
+    .catch(() => ({ docs: [] }));
+
+  return result.docs
+    .map(normalizePayloadCategory)
+    .filter((category): category is ProductCategoryData => category !== null);
+}
+
+export async function getPayloadProductCategoryBySlug(
+  slug: string,
+): Promise<ProductCategoryData | null> {
+  const payload = await tryGetPayload();
+  if (!payload) return null;
+
+  const result = await payload
+    .find({
+      collection: "product-categories",
+      depth: 1,
+      limit: 1,
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          { isActive: { equals: true } },
+        ],
+      },
+    })
+    .catch(() => ({ docs: [] }));
+
+  return normalizePayloadCategory(result.docs[0] ?? null);
+}
+
 export interface FeaturedProductCard {
   name: string;
   category: string;
@@ -743,13 +964,44 @@ function normalizePayloadProduct(doc: unknown): Product | null {
   const category = cat && typeof cat.title === "string" ? cat.title : "";
   const categorySlug = cat && typeof cat.slug === "string" ? cat.slug : "";
 
+  if (!category || !categorySlug || cat?.isActive === false) return null;
+
   const img =
     d.primaryImage && typeof d.primaryImage === "object"
       ? (d.primaryImage as Record<string, unknown>)
       : null;
-  const fallbackProduct = PRODUCTS.find((product) => product.slug === slug);
   const image =
-    img && typeof img.url === "string" ? normalizeMediaUrl(img.url) : fallbackProduct?.image ?? "";
+    img && typeof img.url === "string" ? normalizeMediaUrl(img.url) : "";
+
+  if (!image) return null;
+
+  const brandData =
+    d.brand && typeof d.brand === "object"
+      ? (d.brand as Record<string, unknown>)
+      : null;
+  const brand =
+    brandData && typeof brandData.name === "string" ? brandData.name : undefined;
+
+  const gallery = Array.isArray(d.gallery)
+    ? d.gallery
+        .map((entry) => {
+          if (!entry || typeof entry !== "object") return null;
+          const item = entry as Record<string, unknown>;
+          const galleryImage = getMediaUrl(item.image);
+          if (!galleryImage) return null;
+          const caption = typeof item.caption === "string" ? item.caption : undefined;
+          return { image: galleryImage, ...(caption ? { caption } : {}) };
+        })
+        .filter(
+          (entry): entry is { image: string; caption?: string } => entry !== null,
+        )
+    : [];
+
+  const applications = Array.isArray(d.applications)
+    ? d.applications.filter((value): value is string => typeof value === "string")
+    : [];
+
+  const datasheetUrl = getMediaUrl(d.datasheet) ?? undefined;
 
   const specs: { label: string; value: string }[] = Array.isArray(d.specifications)
     ? (d.specifications as unknown[]).filter(
@@ -773,12 +1025,22 @@ function normalizePayloadProduct(doc: unknown): Product | null {
     image,
     badge: typeof d.badge === "string" ? d.badge : null,
     description: typeof d.shortDescription === "string" ? d.shortDescription : "",
+    lexicalDescription: d.description,
+    ...(brand ? { brand } : {}),
+    ...(gallery.length ? { gallery } : {}),
+    ...(applications.length ? { applications } : {}),
+    ...(datasheetUrl ? { datasheetUrl } : {}),
+    ...(typeof d.priceLabel === "string" && d.priceLabel
+      ? { priceLabel: d.priceLabel }
+      : {}),
     specs,
     features,
     warranty: typeof d.warranty === "string" ? d.warranty : "",
     inStock: typeof d.inStock === "boolean" ? d.inStock : true,
     priceFrom: typeof d.priceFrom === "number" ? d.priceFrom : undefined,
     priceCurrency: typeof d.priceCurrency === "string" ? d.priceCurrency : undefined,
+    updatedAt: typeof d.updatedAt === "string" ? d.updatedAt : undefined,
+    seo: getSeoData(d.seo),
   };
 }
 
@@ -854,6 +1116,7 @@ export async function getPayloadFeaturedProducts(): Promise<FeaturedProductCard[
 // ─── Projects ────────────────────────────────────────────────────────────────
 
 export interface PayloadProjectHighlight {
+  slug: string;
   title: string;
   location: string;
   sector: string;
@@ -861,9 +1124,30 @@ export interface PayloadProjectHighlight {
   summary: string;
   system: string;
   outcome: string;
+  updatedAt?: string;
 }
 
-export async function getPayloadProjects(): Promise<PayloadProjectHighlight[]> {
+export interface PayloadProjectFull extends PayloadProjectHighlight {
+  county?: string;
+  clientName?: string;
+  estimatedSavings?: string;
+  completedDate?: string;
+  gallery: Array<{ image: string; caption?: string }>;
+  productsUsed: string[];
+  testimonial?: { quote: string; author: string };
+  // Payload's serialized Lexical documents.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  challenge?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  solution?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  outcomeContent?: any;
+  seo?: SeoData;
+}
+
+export async function getPayloadProjects(
+  featuredOnly = false,
+): Promise<PayloadProjectHighlight[]> {
   const payload = await tryGetPayload();
   if (!payload) return [];
   const result = await payload
@@ -873,7 +1157,14 @@ export async function getPayloadProjects(): Promise<PayloadProjectHighlight[]> {
       limit: 100,
       pagination: false,
       sort: "featuredRank",
-      where: { status: { equals: "published" } },
+      where: featuredOnly
+        ? {
+            and: [
+              { _status: { equals: "published" } },
+              { featured: { equals: true } },
+            ],
+          }
+        : { _status: { equals: "published" } },
     })
     .catch(() => ({ docs: [] }));
 
@@ -883,8 +1174,9 @@ export async function getPayloadProjects(): Promise<PayloadProjectHighlight[]> {
       const d = doc as Record<string, unknown>;
 
       const title = typeof d.title === "string" ? d.title : "";
+      const slug = typeof d.slug === "string" ? d.slug : "";
       const location = typeof d.location === "string" ? d.location : "";
-      if (!title || !location) return null;
+      if (!title || !slug || !location) return null;
 
       const sectorRaw = typeof d.sector === "string" ? d.sector : "";
       const sector = sectorRaw.charAt(0).toUpperCase() + sectorRaw.slice(1);
@@ -900,11 +1192,125 @@ export async function getPayloadProjects(): Promise<PayloadProjectHighlight[]> {
       const system = typeof d.systemSize === "string" ? d.systemSize : "";
       const outcome = getLexicalPlainText(d.outcome);
 
-      return { title, location, sector, image, summary, system, outcome } satisfies PayloadProjectHighlight;
+      return {
+        slug,
+        title,
+        location,
+        sector,
+        image,
+        summary,
+        system,
+        outcome,
+        ...(typeof d.updatedAt === "string" ? { updatedAt: d.updatedAt } : {}),
+      } satisfies PayloadProjectHighlight;
     })
     .filter((p): p is PayloadProjectHighlight => p !== null);
 
   return projects;
+}
+
+export async function getPayloadProjectBySlug(
+  slug: string,
+): Promise<PayloadProjectFull | null> {
+  const payload = await tryGetPayload();
+  if (!payload) return null;
+
+  const result = await payload
+    .find({
+      collection: "projects",
+      depth: 1,
+      limit: 1,
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          { _status: { equals: "published" } },
+        ],
+      },
+    })
+    .catch(() => ({ docs: [] }));
+
+  const doc = result.docs[0];
+  if (!doc || typeof doc !== "object") return null;
+  const d = doc as Record<string, unknown>;
+  const title = typeof d.title === "string" ? d.title : "";
+  const location = typeof d.location === "string" ? d.location : "";
+  const image = getMediaUrl(d.coverImage) ?? "";
+  if (!title || !location || !image) return null;
+
+  const sectorRaw = typeof d.sector === "string" ? d.sector : "";
+  const gallery = Array.isArray(d.gallery)
+    ? d.gallery
+        .map((entry) => {
+          if (!entry || typeof entry !== "object") return null;
+          const item = entry as Record<string, unknown>;
+          const galleryImage = getMediaUrl(item.image);
+          if (!galleryImage) return null;
+          const caption = typeof item.caption === "string" ? item.caption : undefined;
+          return { image: galleryImage, ...(caption ? { caption } : {}) };
+        })
+        .filter(
+          (entry): entry is { image: string; caption?: string } => entry !== null,
+        )
+    : [];
+
+  const productsUsed = Array.isArray(d.productsUsed)
+    ? d.productsUsed
+        .map((product) => {
+          if (!product || typeof product !== "object") return "";
+          const item = product as Record<string, unknown>;
+          return typeof item.name === "string" ? item.name : "";
+        })
+        .filter(Boolean)
+    : [];
+
+  const testimonialData =
+    d.testimonial && typeof d.testimonial === "object"
+      ? (d.testimonial as Record<string, unknown>)
+      : null;
+  const testimonialQuote =
+    testimonialData && typeof testimonialData.quote === "string"
+      ? testimonialData.quote
+      : "";
+  const testimonialAuthor =
+    testimonialData && typeof testimonialData.authorName === "string"
+      ? testimonialData.authorName
+      : "";
+
+  return {
+    slug,
+    title,
+    location,
+    sector: sectorRaw.charAt(0).toUpperCase() + sectorRaw.slice(1),
+    image,
+    summary: typeof d.summary === "string" ? d.summary : "",
+    system: typeof d.systemSize === "string" ? d.systemSize : "",
+    outcome: getLexicalPlainText(d.outcome),
+    gallery,
+    challenge: d.challenge,
+    solution: d.solution,
+    outcomeContent: d.outcome,
+    productsUsed,
+    ...(testimonialQuote
+      ? {
+          testimonial: {
+            quote: testimonialQuote,
+            author: testimonialAuthor || "Solarlux client",
+          },
+        }
+      : {}),
+    ...(typeof d.county === "string" && d.county ? { county: d.county } : {}),
+    ...(d.clientVisibility === "public" && typeof d.clientName === "string" && d.clientName
+      ? { clientName: d.clientName }
+      : {}),
+    ...(typeof d.estimatedSavings === "string" && d.estimatedSavings
+      ? { estimatedSavings: d.estimatedSavings }
+      : {}),
+    ...(typeof d.completedDate === "string" && d.completedDate
+      ? { completedDate: d.completedDate }
+      : {}),
+    ...(typeof d.updatedAt === "string" ? { updatedAt: d.updatedAt } : {}),
+    seo: getSeoData(d.seo),
+  };
 }
 
 // ─── Brands ──────────────────────────────────────────────────────────────────

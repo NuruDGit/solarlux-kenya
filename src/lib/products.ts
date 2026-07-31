@@ -8,12 +8,27 @@ export interface Product {
   image: string;
   badge: string | null;
   description: string;
+  // Payload's serialized Lexical document, rendered by the product detail page.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lexicalDescription?: any;
+  brand?: string;
+  gallery?: Array<{ image: string; caption?: string }>;
+  applications?: string[];
+  datasheetUrl?: string;
+  priceLabel?: string;
   specs: { label: string; value: string }[];
   features: string[];
   warranty: string;
   inStock: boolean;
   priceFrom?: number;
   priceCurrency?: string;
+  updatedAt?: string;
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    ogImage?: string;
+    canonicalUrl?: string;
+  };
 }
 
 export interface ProductCategory {

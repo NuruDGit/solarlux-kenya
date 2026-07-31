@@ -3,15 +3,16 @@
 import { useState } from "react";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { ProductCard } from "./product-card";
-import { CATEGORIES, type Product } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
 interface Props {
+  categories?: Array<{ name: string; slug: string }>;
   products: Product[];
   showFilters?: boolean;
 }
 
-export function ProductGrid({ products, showFilters = true }: Props) {
+export function ProductGrid({ categories = [], products, showFilters = true }: Props) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"default" | "name-asc" | "name-desc">(
     "default"
@@ -40,7 +41,7 @@ export function ProductGrid({ products, showFilters = true }: Props) {
               role="group"
               aria-label="Filter by product category"
             >
-              {[{ slug: "all", name: "All" }, ...CATEGORIES].map((cat) => {
+              {[{ slug: "all", name: "All" }, ...categories].map((cat) => {
                 const isActive = activeCategory === cat.slug;
                 return (
                   <button

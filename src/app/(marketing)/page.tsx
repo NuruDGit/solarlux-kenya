@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { getHomePageData, getMarketingLayoutData } from "@/lib/cms";
+import {
+  getHomePageData,
+  getMarketingLayoutData,
+  getPayloadFAQs,
+} from "@/lib/cms";
 import { Hero } from "@/components/marketing/hero";
 import { HeroBento } from "@/components/marketing/hero-bento";
 import { ValueProps } from "@/components/marketing/value-props";
@@ -17,9 +21,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [homePageData, marketingLayoutData] = await Promise.all([
+  const [homePageData, marketingLayoutData, faqItems] = await Promise.all([
     getHomePageData(),
     getMarketingLayoutData(),
+    getPayloadFAQs("general"),
   ]);
 
   return (
@@ -33,7 +38,7 @@ export default async function HomePage() {
       <FeaturedProducts />
       <ProjectShowcase />
       <TestimonialSlider testimonials={homePageData.testimonials} />
-      <ContactFAQ />
+      <ContactFAQ faqItems={faqItems} />
       <BlogSection posts={homePageData.blogPosts} />
     </main>
   );

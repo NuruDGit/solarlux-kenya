@@ -1,6 +1,10 @@
 import type { GlobalConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import {
+  createGlobalRevalidationHook,
+  refreshEntireSite,
+} from "../hooks/revalidate.ts";
 
 export const Header: GlobalConfig = {
   slug: "header",
@@ -12,6 +16,9 @@ export const Header: GlobalConfig = {
   access: {
     read: publicRead,
     update: isEditorOrAdmin,
+  },
+  hooks: {
+    afterChange: [createGlobalRevalidationHook(refreshEntireSite)],
   },
   fields: [
     { name: "announcementBarEnabled", type: "checkbox", defaultValue: false },

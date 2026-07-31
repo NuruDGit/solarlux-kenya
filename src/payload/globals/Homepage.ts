@@ -1,17 +1,24 @@
 import type { GlobalConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import {
+  createGlobalRevalidationHook,
+  refreshHome,
+} from "../hooks/revalidate.ts";
 
 export const Homepage: GlobalConfig = {
   slug: "homepage",
   label: "Homepage",
   admin: {
     group: "Pages",
-    description: "Hero headline, featured products, testimonials, blog posts, and FAQ items shown on the homepage.",
+    description: "Homepage hero content. Featured products, projects, testimonials, articles, brands, and FAQs are managed from their own collections.",
   },
   access: {
     read: publicRead,
     update: isEditorOrAdmin,
+  },
+  hooks: {
+    afterChange: [createGlobalRevalidationHook(refreshHome)],
   },
   fields: [
     {
@@ -26,58 +33,6 @@ export const Homepage: GlobalConfig = {
         { name: "secondaryCtaLabel", type: "text" },
         { name: "secondaryCtaHref", type: "text" },
         { name: "heroImage", type: "upload", relationTo: "media" },
-      ],
-    },
-    {
-      name: "featuredBrands",
-      type: "relationship",
-      relationTo: "brands",
-      hasMany: true,
-    },
-    {
-      name: "featuredProductCategoryIds",
-      type: "relationship",
-      relationTo: "product-categories",
-      hasMany: true,
-    },
-    {
-      name: "featuredProducts",
-      type: "relationship",
-      relationTo: "products",
-      hasMany: true,
-    },
-    {
-      name: "featuredProjects",
-      type: "relationship",
-      relationTo: "projects",
-      hasMany: true,
-    },
-    {
-      name: "featuredTestimonials",
-      type: "relationship",
-      relationTo: "testimonials",
-      hasMany: true,
-    },
-    {
-      name: "featuredBlogPosts",
-      type: "relationship",
-      relationTo: "blog-posts",
-      hasMany: true,
-    },
-    {
-      name: "faqItems",
-      type: "relationship",
-      relationTo: "faqs",
-      hasMany: true,
-    },
-    {
-      name: "ctaSection",
-      type: "group",
-      fields: [
-        { name: "headline", type: "text", required: true },
-        { name: "body", type: "textarea", required: true },
-        { name: "buttonLabel", type: "text", required: true },
-        { name: "buttonHref", type: "text", required: true },
       ],
     },
   ],

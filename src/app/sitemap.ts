@@ -1,45 +1,77 @@
 import type { MetadataRoute } from "next";
-import { PRODUCTS, CATEGORIES } from "@/lib/products";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://solarluxkenya.co.ke";
+import {
+  getPayloadAllProducts,
+  getPayloadBlogListing,
+  getPayloadProductCategories,
+  getPayloadProjects,
+} from "@/lib/cms";
+import { getSiteUrl } from "@/lib/site-url";
+
+export const revalidate = 300;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getSiteUrl();
+  const [categories, products, blogPosts, projects] = await Promise.all([
+    getPayloadProductCategories(),
+    getPayloadAllProducts(),
+    getPayloadBlogListing(),
+    getPayloadProjects(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${baseUrl}/projects`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/blog/choose-right-solar-panel-size`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/blog/lifepo4-vs-lead-acid-batteries`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/blog/5-signs-your-business-should-switch-to-solar`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${baseUrl}/services/supply`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/services/design`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/services/installation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/services/consulting`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/solutions/residential`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/solutions/commercial`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/solutions/hospitality`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/products`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-    { url: `${baseUrl}/quote`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: baseUrl, changeFrequency: "weekly", priority: 1 },
+    { url: `${baseUrl}/about`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${baseUrl}/projects`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/blog`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/services`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${baseUrl}/services/supply`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/services/design`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/services/installation`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/services/consulting`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/solutions/residential`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/solutions/commercial`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/solutions/hospitality`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/products`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${baseUrl}/contact`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/privacy`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${baseUrl}/terms`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${baseUrl}/quote`, changeFrequency: "monthly", priority: 0.8 },
   ];
 
-  const categoryPages: MetadataRoute.Sitemap = CATEGORIES.map((cat) => ({
-    url: `${baseUrl}/products/${cat.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
+    url: `${baseUrl}/products/${category.slug}`,
+    lastModified: category.updatedAt ? new Date(category.updatedAt) : undefined,
+    changeFrequency: "weekly",
     priority: 0.8,
   }));
 
-  const productPages: MetadataRoute.Sitemap = PRODUCTS.map((product) => ({
+  const productPages: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${baseUrl}/products/${product.categorySlug}/${product.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
+    lastModified: product.updatedAt ? new Date(product.updatedAt) : undefined,
+    changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}${post.href}`,
+    lastModified: post.updatedAt ? new Date(post.updatedAt) : undefined,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: project.updatedAt ? new Date(project.updatedAt) : undefined,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...categoryPages,
+    ...productPages,
+    ...blogPages,
+    ...projectPages,
+  ];
 }

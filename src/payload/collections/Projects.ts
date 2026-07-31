@@ -1,39 +1,50 @@
 import type { CollectionConfig } from "payload";
 
-import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import { isEditorOrAdmin, publishedRead } from "../access/index.ts";
 import { seoField } from "../fields/seo.ts";
+import { createSlugField } from "../fields/slug.ts";
 import {
   clientVisibilityOptions,
   publishStatusOptions,
   sectorOptions,
 } from "../shared/options.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshProjects,
+} from "../hooks/revalidate.ts";
+import { syncPublishStatus } from "../hooks/sync-publish-status.ts";
 
 export const Projects: CollectionConfig = {
   slug: "projects",
   access: {
     create: isEditorOrAdmin,
     delete: isEditorOrAdmin,
-    read: publicRead,
+    read: publishedRead,
     update: isEditorOrAdmin,
   },
   admin: {
     group: "Content",
     defaultColumns: ["title", "location", "sector", "status", "featured"],
     useAsTitle: "title",
-    description: "Installation projects shown on the Projects page. Set status to 'Published' to make live.",
+    description: "Installation projects shown on the Projects page. Use Save Draft while writing, then Publish to make a project live automatically.",
   },
   versions: {
     drafts: true,
   },
+  hooks: {
+    ...createCollectionRevalidationHooks(refreshProjects),
+    beforeChange: [syncPublishStatus()],
+  },
   fields: [
     { name: "title", type: "text", required: true },
-    { name: "slug", type: "text", required: true, unique: true },
+    createSlugField("title"),
     {
       name: "status",
       type: "select",
       defaultValue: "draft",
       options: publishStatusOptions,
       required: true,
+      admin: { hidden: true },
     },
     { name: "location", type: "text", required: true },
     { name: "county", type: "text" },

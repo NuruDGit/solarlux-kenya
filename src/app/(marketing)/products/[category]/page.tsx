@@ -3,48 +3,48 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import {
-  CATEGORIES,
-  getProductsByCategory,
-  getCategoryBySlug,
-} from "@/lib/products";
-import { getPayloadProductsByCategory } from "@/lib/cms";
+  getPayloadProductCategoryBySlug,
+  getPayloadProductsByCategory,
+} from "@/lib/cms";
 import { ProductGrid } from "@/components/products/product-grid";
+import { CategoryIcon } from "@/components/products/category-icon";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
+import { getCanonicalUrl } from "@/lib/site-url";
 
 interface Props {
   params: Promise<{ category: string }>;
 }
 
 
-export async function generateStaticParams() {
-  return CATEGORIES.map((cat) => ({ category: cat.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category: categorySlug } = await params;
-  const category = getCategoryBySlug(categorySlug);
+  const category = await getPayloadProductCategoryBySlug(categorySlug);
   if (!category) return {};
 
   return {
-    title: category.name,
-    alternates: { canonical: `/products/${categorySlug}` },
-    description: category.description,
+    title: category.seo?.metaTitle || category.name,
+    alternates: {
+      canonical: getCanonicalUrl(
+        category.seo?.canonicalUrl,
+        `/products/${categorySlug}`,
+      ),
+    },
+    description: category.seo?.metaDescription || category.description,
     openGraph: {
-      title: `${category.name} | Solarlux Kenya`,
-      description: category.description,
+      title: category.seo?.metaTitle || `${category.name} | Solarlux Kenya`,
+      description: category.seo?.metaDescription || category.description,
+      images: category.seo?.ogImage ? [{ url: category.seo.ogImage }] : undefined,
     },
   };
 }
 
 export default async function CategoryPage({ params }: Props) {
   const { category: categorySlug } = await params;
-  const category = getCategoryBySlug(categorySlug);
+  const category = await getPayloadProductCategoryBySlug(categorySlug);
   if (!category) notFound();
 
-  const payloadProducts = await getPayloadProductsByCategory(categorySlug);
-  const products = payloadProducts.length > 0 ? payloadProducts : getProductsByCategory(categorySlug);
-  const Icon = category.icon;
+  const products = await getPayloadProductsByCategory(categorySlug);
 
   return (
     <main>
@@ -69,7 +69,7 @@ export default async function CategoryPage({ params }: Props) {
 
             <div className="flex items-start gap-5">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm text-brand-yellow-500 border border-white/20">
-                <Icon className="h-7 w-7" aria-hidden="true" />
+                <CategoryIcon name={category.icon} className="h-7 w-7" />
               </div>
               <div>
                 <p className="text-overline text-brand-yellow-500 mb-2">Category</p>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type React from "react";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -7,138 +7,42 @@ import { ArrowRight, ArrowLeft, ChevronRight, Clock, Tag } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import { BLOG_POSTS, getBlogPost, getRelatedPosts } from "@/lib/blog";
 import { getPayloadBlogPostBySlug, getPayloadBlogListing } from "@/lib/cms";
+import { getCanonicalUrl } from "@/lib/site-url";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = (await getPayloadBlogPostBySlug(slug)) ?? getBlogPost(slug);
+  const post = await getPayloadBlogPostBySlug(slug);
   if (!post) return {};
   return {
-    title: post.title,
-    description: post.excerpt,
-    alternates: { canonical: `/blog/${slug}` },
+    title: post.seo?.metaTitle || post.title,
+    description: post.seo?.metaDescription || post.excerpt,
+    alternates: {
+      canonical: getCanonicalUrl(post.seo?.canonicalUrl, `/blog/${slug}`),
+    },
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [{ url: post.image }],
+      title: post.seo?.metaTitle || post.title,
+      description: post.seo?.metaDescription || post.excerpt,
+      images: [{ url: post.seo?.ogImage || post.image }],
     },
   };
-}
-
-function renderLexicalNodes(data: unknown): React.ReactNode {
-  if (!data || typeof data !== "object") return null;
-  const doc = data as { root?: { children?: unknown[] } };
-  const nodes = doc.root?.children;
-  if (!Array.isArray(nodes)) return null;
-
-  const getText = (children: unknown): string => {
-    if (!Array.isArray(children)) return "";
-    return children
-      .map((c) => {
-        if (typeof c === "object" && c && "text" in c && typeof (c as { text: unknown }).text === "string") {
-          return (c as { text: string }).text;
-        }
-        return "";
-      })
-      .join("");
-  };
-
-  return nodes.map((node, i) => {
-    if (!node || typeof node !== "object") return null;
-    const n = node as Record<string, unknown>;
-
-    if (n.type === "paragraph") {
-      const text = getText(n.children as unknown[]);
-      if (!text.trim()) return null;
-      return (
-        <p key={i} className="mb-6 text-body-lg text-ink-muted leading-relaxed">
-          {text}
-        </p>
-      );
-    }
-
-    if (n.type === "heading") {
-      const text = getText(n.children as unknown[]);
-      if (!text) return null;
-      if (n.tag === "h3") {
-        return (
-          <h3 key={i} className="mt-8 mb-3 text-heading-xl font-semibold text-ink">
-            {text}
-          </h3>
-        );
-      }
-      return (
-        <h2 key={i} className="mt-12 mb-4 text-display-md font-display font-medium text-ink leading-tight">
-          {text}
-        </h2>
-      );
-    }
-
-    if (n.type === "list") {
-      const items = Array.isArray(n.children) ? n.children : [];
-      return (
-        <ul key={i} className="mb-6 space-y-3">
-          {items.map((item, j) => {
-            const li = item as Record<string, unknown>;
-            const text = getText(li.children as unknown[]);
-            return (
-              <li key={j} className="flex items-start gap-3 text-body text-ink-muted">
-                <span className="mt-1.5 shrink-0 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
-                {text}
-              </li>
-            );
-          })}
-        </ul>
-      );
-    }
-
-    if (n.type === "block") {
-      // Callout block — extract first paragraph text if present
-      const blockData = n.value as Record<string, unknown> | undefined;
-      const text = blockData ? getText([blockData]) : "";
-      if (!text) return null;
-      return (
-        <div key={i} className="my-8 rounded-2xl bg-brand-blue-50 border border-primary/15 px-6 py-5">
-          <p className="text-body text-primary leading-relaxed font-medium">{text}</p>
-        </div>
-      );
-    }
-
-    return null;
-  });
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
 
-  // Payload takes priority; fall back to static
-  const payloadPost = await getPayloadBlogPostBySlug(slug);
-  const staticPost = getBlogPost(slug);
-  if (!payloadPost && !staticPost) notFound();
-
-  const post = (payloadPost ?? staticPost)!;
+  const post = await getPayloadBlogPostBySlug(slug);
+  if (!post) notFound();
 
   // Related posts: Payload listing first, then static
   const payloadListing = await getPayloadBlogListing();
-  const related: { href: string; title: string; image: string; category: string; date: string }[] =
-    payloadListing.length > 0
-      ? payloadListing.filter((p) => p.href !== `/blog/${slug}`).slice(0, 3)
-      : getRelatedPosts(slug, 3).map((r) => ({
-          href: `/blog/${r.slug}`,
-          title: r.title,
-          image: r.image,
-          category: r.category,
-          date: r.date,
-        }));
+  const related = payloadListing
+    .filter((item) => item.href !== `/blog/${slug}`)
+    .slice(0, 3);
 
   return (
     <main>
@@ -206,70 +110,8 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="mx-auto max-w-2xl xl:max-w-none xl:grid xl:grid-cols-[1fr_320px] xl:gap-16">
 
             {/* Main content */}
-            <article className="prose-solarlux">
-              {"lexicalContent" in post
-                ? renderLexicalNodes(post.lexicalContent)
-                : "body" in post &&
-                  post.body.map((section, i) => {
-                    if (section.type === "h2") {
-                      return (
-                        <h2
-                          key={i}
-                          className="mt-12 mb-4 text-display-md font-display font-medium text-ink leading-tight"
-                        >
-                          {section.text}
-                        </h2>
-                      );
-                    }
-                    if (section.type === "h3") {
-                      return (
-                        <h3
-                          key={i}
-                          className="mt-8 mb-3 text-heading-xl font-semibold text-ink"
-                        >
-                          {section.text}
-                        </h3>
-                      );
-                    }
-                    if (section.type === "paragraph") {
-                      return (
-                        <p
-                          key={i}
-                          className="mb-6 text-body-lg text-ink-muted leading-relaxed"
-                        >
-                          {section.text}
-                        </p>
-                      );
-                    }
-                    if (section.type === "list") {
-                      return (
-                        <ul key={i} className="mb-6 space-y-3">
-                          {section.items.map((item, j) => (
-                            <li key={j} className="flex items-start gap-3 text-body text-ink-muted">
-                              <span
-                                className="mt-1.5 shrink-0 h-1.5 w-1.5 rounded-full bg-primary"
-                                aria-hidden="true"
-                              />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      );
-                    }
-                    if (section.type === "callout") {
-                      return (
-                        <div
-                          key={i}
-                          className="my-8 rounded-2xl bg-brand-blue-50 border border-primary/15 px-6 py-5"
-                        >
-                          <p className="text-body text-primary leading-relaxed font-medium">
-                            {section.text}
-                          </p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
+            <article className="rich-text">
+              <RichText data={post.lexicalContent} disableContainer />
 
               {/* Back link */}
               <div className="mt-12 pt-8 border-t border-border">

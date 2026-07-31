@@ -1,37 +1,40 @@
-import { SITE, CONTACT } from "@/lib/constants";
+import { SITE } from "@/lib/constants";
+import type { SiteSettingsData } from "@/lib/cms";
 
 interface OrganizationProps {
-  type?: "Organization" | "LocalBusiness";
+  siteSettings: SiteSettingsData;
 }
 
-export function OrganizationJsonLd({ type = "LocalBusiness" }: OrganizationProps) {
+export function OrganizationJsonLd({ siteSettings }: OrganizationProps) {
   const data = {
     "@context": "https://schema.org",
-    "@type": type,
-    name: SITE.name,
-    url: SITE.url,
-    description: SITE.description,
-    telephone: CONTACT.phone1,
-    email: CONTACT.email,
+    "@type": siteSettings.organizationSchemaType || "LocalBusiness",
+    name: siteSettings.siteName,
+    url: siteSettings.siteUrl,
+    description: siteSettings.defaultMetaDescription,
+    telephone: siteSettings.primaryPhone,
+    email: siteSettings.primaryEmail,
     address: {
       "@type": "PostalAddress",
-      streetAddress: CONTACT.address,
-      addressLocality: "Nairobi",
+      streetAddress: [siteSettings.addressLine1, siteSettings.addressLine2]
+        .filter(Boolean)
+        .join(", "),
+      addressLocality: siteSettings.city,
       addressCountry: "KE",
     },
-    openingHours: "Mo-Sa 08:00-18:00",
+    openingHours: siteSettings.openingHours,
     priceRange: "$$",
     areaServed: {
       "@type": "Country",
       name: "Kenya",
     },
-    sameAs: [],
+    sameAs: siteSettings.socialLinks.map(({ url }) => url),
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
@@ -60,7 +63,7 @@ export function BreadcrumbJsonLd({ items }: BreadcrumbProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
@@ -73,6 +76,8 @@ interface ProductJsonLdProps {
   inStock: boolean;
   slug: string;
   categorySlug: string;
+  priceCurrency?: string;
+  priceFrom?: number;
 }
 
 export function ProductJsonLd({
@@ -83,6 +88,8 @@ export function ProductJsonLd({
   inStock,
   slug,
   categorySlug,
+  priceCurrency,
+  priceFrom,
 }: ProductJsonLdProps) {
   const data = {
     "@context": "https://schema.org",
@@ -105,13 +112,19 @@ export function ProductJsonLd({
         "@type": "Organization",
         name: SITE.name,
       },
+      ...(priceFrom
+        ? {
+            price: priceFrom,
+            priceCurrency: priceCurrency || "KES",
+          }
+        : {}),
     },
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }

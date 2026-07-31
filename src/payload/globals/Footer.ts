@@ -2,6 +2,10 @@ import type { GlobalConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 import { trustIconOptions } from "../shared/options.ts";
+import {
+  createGlobalRevalidationHook,
+  refreshEntireSite,
+} from "../hooks/revalidate.ts";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
@@ -13,6 +17,9 @@ export const Footer: GlobalConfig = {
   access: {
     read: publicRead,
     update: isEditorOrAdmin,
+  },
+  hooks: {
+    afterChange: [createGlobalRevalidationHook(refreshEntireSite)],
   },
   fields: [
     {
