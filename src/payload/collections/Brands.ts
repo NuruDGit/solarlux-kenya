@@ -1,6 +1,11 @@
 import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import { createSlugField } from "../fields/slug.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshHome,
+} from "../hooks/revalidate.ts";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -12,17 +17,31 @@ export const Brands: CollectionConfig = {
   },
   admin: {
     group: "Products",
-    defaultColumns: ["name", "isFeatured", "sortOrder", "updatedAt"],
+    defaultColumns: ["name", "sortOrder", "updatedAt"],
     useAsTitle: "name",
-    description: "Brands/manufacturers displayed in the scrolling logo strip on every page.",
+    description: "Brands/manufacturers displayed in the homepage logo strip.",
   },
+  hooks: createCollectionRevalidationHooks(refreshHome),
   fields: [
     { name: "name", type: "text", required: true, unique: true },
-    { name: "slug", type: "text", required: true, unique: true },
-    { name: "logo", type: "upload", relationTo: "media" },
-    { name: "website", type: "text" },
-    { name: "shortDescription", type: "textarea" },
-    { name: "isFeatured", type: "checkbox", defaultValue: false },
+    createSlugField("name"),
+    { name: "logo", type: "upload", relationTo: "media", required: true },
+    {
+      name: "website",
+      type: "text",
+      admin: { description: "Optional full website URL, beginning with https://" },
+      validate: (value: null | string | undefined) => {
+        if (!value) return true;
+        try {
+          const url = new URL(value);
+          return url.protocol === "https:" || url.protocol === "http:"
+            ? true
+            : "Use a full website URL beginning with https://";
+        } catch {
+          return "Use a full website URL beginning with https://";
+        }
+      },
+    },
     { name: "sortOrder", type: "number", defaultValue: 0 },
   ],
 };

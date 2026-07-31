@@ -29,6 +29,10 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
     return () => clearInterval(timer);
   }, [testimonials.length]);
 
+  if (testimonials.length === 0) {
+    return null;
+  }
+
   const testimonial = testimonials[current];
 
   // Slide-left animation variants

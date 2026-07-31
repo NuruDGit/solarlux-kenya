@@ -78,7 +78,7 @@ export default function ResidentialPage() {
         <div className="container-page relative z-10">
           <FadeIn>
             <Link
-              href="/solutions"
+              href="/services"
               className="inline-flex items-center gap-1 text-body-sm text-accent mb-6 hover:underline"
             >
               ← All Solutions

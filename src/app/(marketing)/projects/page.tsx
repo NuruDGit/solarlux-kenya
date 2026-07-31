@@ -13,53 +13,8 @@ export const metadata: Metadata = {
     "See recent Solarlux Kenya installations across homes, businesses, and hospitality properties, with real project context and system outcomes.",
 };
 
-const projectHighlights = [
-  {
-    title: "Rooftop solar for a family home",
-    location: "Kamakis, Nairobi County",
-    sector: "Residential",
-    image: "/projects/project-11.03.28.jpg",
-    summary:
-      "A clean rooftop installation built to reduce monthly electricity costs and keep essential loads running during unreliable grid periods.",
-    system: "Hybrid rooftop system with battery backup",
-    outcome: "Lower bills, cleaner backup, quieter evenings",
-  },
-  {
-    title: "Daytime energy relief for a trading business",
-    location: "Industrial Area, Nairobi",
-    sector: "Commercial",
-    image: "/projects/project-11.03.30.jpg",
-    summary:
-      "A business-focused solar setup sized around daytime demand, helping the client reduce utility pressure without interrupting operations.",
-    system: "Commercial daytime solar array",
-    outcome: "Reduced daytime grid dependence",
-  },
-  {
-    title: "Hospitality power support near the coast",
-    location: "Watamu, Kilifi County",
-    sector: "Hospitality",
-    image: "/projects/project-11.03.37.jpg",
-    summary:
-      "A guest-facing property upgrade designed for quieter operation, lower running costs, and better resilience during high-demand periods.",
-    system: "Solar plus storage for hotel operations",
-    outcome: "Better guest comfort and lower fuel reliance",
-  },
-  {
-    title: "Scaled residential upgrade for growing demand",
-    location: "Nakuru",
-    sector: "Residential",
-    image: "/projects/project-11.03.24.jpg",
-    summary:
-      "A larger home installation planned for a family adding appliances and looking for a more stable long-term power setup.",
-    system: "Expanded rooftop array with inverter upgrade",
-    outcome: "Headroom for future household growth",
-  },
-];
-
-
 export default async function ProjectsPage() {
-  const payloadProjects = await getPayloadProjects();
-  const projects: PayloadProjectHighlight[] = payloadProjects.length > 0 ? payloadProjects : projectHighlights;
+  const projects: PayloadProjectHighlight[] = await getPayloadProjects();
 
   return (
     <main>
@@ -163,7 +118,12 @@ export default async function ProjectsPage() {
                       </span>
                     </div>
                     <h3 className="mt-4 text-heading-xl font-semibold font-body text-ink">
-                      {project.title}
+                      <Link
+                        href={`/projects/${project.slug}`}
+                        className="hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        {project.title}
+                      </Link>
                     </h3>
                     <p className="mt-3 max-w-[62ch] text-body leading-relaxed text-ink-muted">
                       {project.summary}
@@ -182,6 +142,12 @@ export default async function ProjectsPage() {
                         </dd>
                       </div>
                     </dl>
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-primary hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    >
+                      View project details
+                    </Link>
                   </div>
                 </article>
               </FadeIn>

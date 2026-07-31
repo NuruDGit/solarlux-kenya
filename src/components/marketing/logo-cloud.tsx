@@ -2,40 +2,54 @@ import Image from "next/image";
 import { FadeIn } from "@/components/motion/fade-in";
 import { getPayloadBrands, type BrandLogoData } from "@/lib/cms";
 
-const STATIC_BRANDS: BrandLogoData[] = [
-  { name: "JA Solar", logoUrl: "/brands/JA_Solar_Logo.svg.png" },
-  { name: "Longi", logoUrl: "/brands/longi_logos.png" },
-  { name: "MUST", logoUrl: "/brands/must_logos.png" },
-  { name: "Seven SS Stars", logoUrl: "/brands/seven-ss-star-logo.png" },
-  { name: "SRNE", logoUrl: "/brands/srne_logos.png" },
-  { name: "Renergy", logoUrl: "/brands/R-energy_logo.svg" },
-];
-
 function LogoSet({ brands, ariaHidden = false }: { brands: BrandLogoData[]; ariaHidden?: boolean }) {
   return (
     <>
       {brands.map((brand) => (
-        <div
-          key={brand.name}
-          aria-hidden={ariaHidden || undefined}
-          className="shrink-0 opacity-90 transition-[filter,opacity] duration-500 md:grayscale md:opacity-50 md:hover:grayscale-0 md:hover:opacity-100"
-        >
-          <Image
-            src={brand.logoUrl}
-            alt={ariaHidden ? "" : brand.name}
-            width={140}
-            height={48}
-            className="h-8 w-auto object-contain md:h-10"
-          />
-        </div>
+        brand.website ? (
+          <a
+            key={brand.name}
+            href={brand.website}
+            target="_blank"
+            rel="noreferrer"
+            aria-hidden={ariaHidden || undefined}
+            tabIndex={ariaHidden ? -1 : undefined}
+            className="shrink-0 opacity-90 transition-[filter,opacity] duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:grayscale md:opacity-50 md:hover:grayscale-0 md:hover:opacity-100"
+          >
+            <Image
+              src={brand.logoUrl}
+              alt={ariaHidden ? "" : brand.name}
+              width={140}
+              height={48}
+              className="h-8 w-auto object-contain md:h-10"
+            />
+          </a>
+        ) : (
+          <div
+            key={brand.name}
+            aria-hidden={ariaHidden || undefined}
+            className="shrink-0 opacity-90 transition-[filter,opacity] duration-500 md:grayscale md:opacity-50"
+          >
+            <Image
+              src={brand.logoUrl}
+              alt={ariaHidden ? "" : brand.name}
+              width={140}
+              height={48}
+              className="h-8 w-auto object-contain md:h-10"
+            />
+          </div>
+        )
       ))}
     </>
   );
 }
 
 export async function LogoCloud() {
-  const payloadBrands = await getPayloadBrands();
-  const brands = payloadBrands.length > 0 ? payloadBrands : STATIC_BRANDS;
+  const brands = await getPayloadBrands();
+
+  if (brands.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-12 md:py-16 bg-background border-y border-border/60 overflow-hidden">

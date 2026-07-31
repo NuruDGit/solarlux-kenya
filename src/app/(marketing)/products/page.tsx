@@ -10,9 +10,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { PRODUCTS, CATEGORIES } from "@/lib/products";
-import { getPayloadAllProducts } from "@/lib/cms";
+import {
+  getPayloadAllProducts,
+  getPayloadProductCategories,
+} from "@/lib/cms";
 import { ProductGrid } from "@/components/products/product-grid";
+import { CategoryIcon } from "@/components/products/category-icon";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger } from "@/components/motion/stagger";
@@ -37,8 +40,10 @@ const trustItems = [
 ];
 
 export default async function ProductsPage() {
-  const payloadProducts = await getPayloadAllProducts();
-  const allProducts = payloadProducts.length > 0 ? payloadProducts : PRODUCTS;
+  const [allProducts, categories] = await Promise.all([
+    getPayloadAllProducts(),
+    getPayloadProductCategories(),
+  ]);
 
   return (
     <main>
@@ -101,8 +106,7 @@ export default async function ProductsPage() {
           </FadeIn>
 
           <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
+            {categories.map((cat) => {
               return (
                 <Link
                   key={cat.slug}
@@ -111,7 +115,7 @@ export default async function ProductsPage() {
                 >
                   {/* Icon */}
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
-                    <Icon className="h-7 w-7" aria-hidden="true" />
+                    <CategoryIcon name={cat.icon} className="h-7 w-7" />
                   </div>
 
                   {/* Content */}
@@ -144,7 +148,10 @@ export default async function ProductsPage() {
           </FadeIn>
 
           <div className="mt-8">
-            <ProductGrid products={allProducts} />
+            <ProductGrid
+              categories={categories.map(({ name, slug }) => ({ name, slug }))}
+              products={allProducts}
+            />
           </div>
         </div>
       </section>

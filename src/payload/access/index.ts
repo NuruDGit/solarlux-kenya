@@ -1,4 +1,4 @@
-import type { Access } from "payload";
+import type { Access, Where } from "payload";
 
 type Role = "super-admin" | "admin" | "editor" | "sales";
 
@@ -17,6 +17,16 @@ const hasRole = (user: unknown, roles: Role[]) => {
 };
 
 export const publicRead: Access = () => true;
+
+export const publishedRead: Access = ({ req }) => {
+  if (req.user) return true;
+
+  const publishedWhere: Where = {
+    _status: { equals: "published" },
+  };
+
+  return publishedWhere;
+};
 
 export const canAccessAdmin = ({ req }: { req: { user: unknown } }) =>
   hasRole(req.user, ["super-admin", "admin", "editor", "sales"]);

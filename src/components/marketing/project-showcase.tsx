@@ -4,31 +4,6 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { getPayloadProjects } from "@/lib/cms";
 
-// Static fallback images — used when Payload has no published projects.
-// Arranged so similar shots (same site, same product) are never adjacent
-// within a row, and images from the same session are split across rows.
-const STATIC_ROW_1 = [
-  "/projects/project-11.02.01.jpg",   // outdoor: red-tile roof installation
-  "/projects/project-11.03.02.jpg",   // indoor:  SRNE inverter + battery
-  "/projects/project-11.03.19.jpg",   // outdoor: worker on ground-mount
-  "/projects/project-11.03.22.jpg",   // indoor:  Felicity + Syinc wall
-  "/projects/project-11.03.26.jpg",   // outdoor: carport under palm trees
-  "/projects/project-11.03.23.jpg",   // indoor:  Seven SS Stars showroom
-  "/projects/project-11.03.30.jpg",   // outdoor: HANTI flat-panel heater
-  "/projects/project-11.03.15.jpg",   // aerial:  container home (angle 1)
-];
-
-const STATIC_ROW_2 = [
-  "/projects/project-11.03.17.jpg",   // aerial:  container home (angle 2)
-  "/projects/project-11.03.28.jpg",   // outdoor: terrace with palm trees
-  "/projects/project-11.03.37.jpg",   // indoor:  teal inverter + Felicity batteries
-  "/projects/project-11.03.31.jpg",   // outdoor: HANTI heater (different angle)
-  "/projects/project-11.03.27.jpg",   // indoor:  Felicity batteries, Maasai client
-  "/projects/project-11.03.29.jpg",   // outdoor: Seven SS Stars on rooftop
-  "/projects/project-11.03.35.jpg",   // indoor:  Felicity inverter on stone wall
-  "/projects/project-11.03.24.jpg",   // indoor:  Seven SS Stars close-up
-];
-
 function MarqueeRow({
   images,
   reverse = false,
@@ -69,7 +44,11 @@ function MarqueeRow({
 }
 
 export async function ProjectShowcase() {
-  const payloadProjects = await getPayloadProjects();
+  const payloadProjects = await getPayloadProjects(true);
+
+  if (payloadProjects.length === 0) {
+    return null;
+  }
 
   let row1: string[];
   let row2: string[];
@@ -84,8 +63,8 @@ export async function ProjectShowcase() {
     if (row1.length < 3) row1 = [...row1, ...row2].slice(0, 6);
     if (row2.length < 3) row2 = [...row2, ...row1].slice(0, 6);
   } else {
-    row1 = STATIC_ROW_1;
-    row2 = STATIC_ROW_2;
+    row1 = payloadProjects.map((project) => project.image);
+    row2 = row1;
   }
 
   return (

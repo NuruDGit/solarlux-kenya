@@ -5,7 +5,6 @@ import { ArrowRight, ChevronRight, Tag } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import { BLOG_POSTS } from "@/lib/blog";
 import { getPayloadBlogListing } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -23,21 +22,33 @@ export const metadata: Metadata = {
 const categories = ["All", "Guides", "Technology", "Business", "Industry"];
 
 export default async function BlogPage() {
-  const payloadPosts = await getPayloadBlogListing();
-  const posts =
-    payloadPosts.length > 0
-      ? payloadPosts
-      : BLOG_POSTS.map((p) => ({
-          title: p.title,
-          excerpt: p.excerpt,
-          image: p.image,
-          category: p.category,
-          date: p.date,
-          href: `/blog/${p.slug}`,
-        }));
+  const posts = await getPayloadBlogListing();
 
   const featuredPost = posts[0];
   const remainingPosts = posts.slice(1);
+
+  if (!featuredPost) {
+    return (
+      <main>
+        <section className="bg-ink-950 page-hero-spacing pb-20 md:pb-28">
+          <div className="container-page">
+            <p className="text-overline text-accent">Solar Insights &amp; Guides</p>
+            <h1 className="mt-4 max-w-3xl text-display-xl font-display font-medium text-white">
+              Practical solar knowledge, built for Kenya
+            </h1>
+          </div>
+        </section>
+        <section className="bg-background py-16 md:py-24 lg:py-32">
+          <div className="container-page text-center">
+            <h2 className="text-display-md font-display font-medium">Articles are on the way</h2>
+            <p className="mx-auto mt-4 max-w-xl text-body-lg text-ink-muted">
+              Our team is preparing practical solar guides and project insights. Please check back soon.
+            </p>
+          </div>
+        </section>
+      </main>
+    );
+  }
   return (
     <main>
       {/* Hero — dark editorial masthead */}

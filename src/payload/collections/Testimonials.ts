@@ -1,6 +1,10 @@
 import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshHome,
+} from "../hooks/revalidate.ts";
 
 export const Testimonials: CollectionConfig = {
   slug: "testimonials",
@@ -16,6 +20,7 @@ export const Testimonials: CollectionConfig = {
     useAsTitle: "authorName",
     description: "Client testimonials shown in the homepage slider. Enable 'Featured' to include in the slider.",
   },
+  hooks: createCollectionRevalidationHooks(refreshHome),
   fields: [
     { name: "quote", type: "textarea", required: true },
     { name: "authorName", type: "text", required: true },
@@ -35,7 +40,7 @@ export const Testimonials: CollectionConfig = {
       type: "relationship",
       relationTo: "projects",
     },
-    { name: "featured", type: "checkbox", defaultValue: false },
+    { name: "featured", type: "checkbox", defaultValue: true },
     { name: "featuredRank", type: "number", defaultValue: 0 },
     { name: "approvedForMarketing", type: "checkbox", defaultValue: true },
   ],

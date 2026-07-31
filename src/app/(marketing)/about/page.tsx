@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
+import { getAboutPageData, getPayloadTeamMembers } from "@/lib/cms";
 import { STATS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -13,34 +14,6 @@ export const metadata: Metadata = {
   description:
     "Over 8 years powering Kenyan homes, businesses, and hotels with premium solar energy solutions. Learn about our mission, values, and the team behind Solarlux Kenya.",
 };
-
-const values = [
-  {
-    title: "Customer-Centric",
-    description:
-      "Customer satisfaction is our top priority. Every installation is designed to exceed expectations, not just meet them.",
-  },
-  {
-    title: "Authenticity",
-    description:
-      "We supply and install only genuine, certified solar products. No shortcuts, no counterfeits.",
-  },
-  {
-    title: "Integrity",
-    description:
-      "We operate to the highest standards of ethics and transparency — in our pricing, our advice, and our work.",
-  },
-  {
-    title: "Reliability",
-    description:
-      "When we commit to a project, we deliver. On time, on budget, with real-time support throughout.",
-  },
-  {
-    title: "Trust",
-    description:
-      "We aim to be the solar partner Kenyans recommend to their neighbours. Earned through results, not promises.",
-  },
-];
 
 const whyChooseUs = [
   "Competitive prices without compromising quality",
@@ -52,7 +25,12 @@ const whyChooseUs = [
   "Exclusive partnerships with top global solar manufacturers",
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [about, teamMembers] = await Promise.all([
+    getAboutPageData(),
+    getPayloadTeamMembers(),
+  ]);
+
   return (
     <main>
       {/* ── Hero — Split layout: text left, double-bezel image right ── */}
@@ -90,15 +68,10 @@ export default function AboutPage() {
                 Our Story
               </span>
               <h1 className="text-display-xl font-display font-medium text-paper max-w-xl">
-                8+ years powering Kenya&apos;s{" "}
-                <em className="not-italic text-accent">sustainable future</em>
+                {about.heroTitle}
               </h1>
               <p className="mt-6 max-w-lg text-body-lg text-paper/65 leading-relaxed">
-                Solarlux Kenya was founded with a simple belief: every Kenyan
-                home, business, and hotel deserves access to clean, reliable, and
-                affordable solar energy. Over eight years, we&apos;ve turned that
-                belief into hundreds of successful installations across the
-                country.
+                {about.heroBody}
               </p>
 
               {/* Stats inline — replaces separate strip below */}
@@ -148,16 +121,7 @@ export default function AboutPage() {
                 More than a product — a solar experience
               </h2>
               <p className="mt-5 text-body text-ink-muted leading-relaxed">
-                To inspire, guide, and provide memorable green energy solutions
-                that enrich lives and foster a deeper understanding of
-                sustainability. We deliver customized, end-to-end solar
-                solutions that empower customers to dream big and embrace a
-                greener future.
-              </p>
-              <p className="mt-4 text-body text-ink-muted leading-relaxed">
-                Solar system installation is a long-term investment. Our mission
-                is to create extraordinary green energy experiences — not just
-                install panels and walk away.
+                {about.mission}
               </p>
             </FadeIn>
 
@@ -187,11 +151,7 @@ export default function AboutPage() {
                 A Kenya powered by the sun
               </h2>
               <p className="mt-5 text-body text-ink-muted leading-relaxed">
-                A world where green energy transforms lives, brings people
-                together, fosters innovation, and promotes sustainable
-                exploration. Solar is not just an energy source — it is a
-                catalyst for economic growth and a better quality of life for
-                every Kenyan.
+                {about.vision}
               </p>
             </FadeIn>
 
@@ -231,10 +191,10 @@ export default function AboutPage() {
                   01
                 </span>
                 <h3 className="text-display-md font-display font-medium text-paper">
-                  {values[0].title}
+                  {about.values[0].title}
                 </h3>
                 <p className="mt-3 text-body text-paper/65 leading-relaxed max-w-lg">
-                  {values[0].description}
+                  {about.values[0].description}
                 </p>
               </div>
               <div className="mt-8 flex items-center gap-2">
@@ -243,8 +203,8 @@ export default function AboutPage() {
               </div>
             </StaggerItem>
 
-            {/* Values 2–4: standard cards */}
-            {values.slice(1, 4).map((value, i) => (
+            {/* Remaining values: standard cards */}
+            {about.values.slice(1).map((value, i) => (
               <StaggerItem
                 key={value.title}
                 className="rounded-2xl border border-border bg-card p-8 flex flex-col gap-3"
@@ -261,23 +221,71 @@ export default function AboutPage() {
                 </p>
               </StaggerItem>
             ))}
-
-            {/* Last value — dark accent card */}
-            <StaggerItem className="rounded-2xl bg-ink-950 p-8 flex flex-col gap-3">
-              <span className="text-[11px] uppercase tracking-[0.12em] font-semibold text-accent/60">
-                05
-              </span>
-              <div className="h-px w-8 bg-accent/30 rounded-full" />
-              <h3 className="text-heading-xl font-semibold font-body text-paper">
-                {values[4].title}
-              </h3>
-              <p className="text-body text-paper/60 leading-relaxed">
-                {values[4].description}
-              </p>
-            </StaggerItem>
           </Stagger>
         </div>
       </section>
+
+      {teamMembers.length > 0 ? (
+        <section className="section-padding bg-background">
+          <div className="container-page">
+            <FadeIn>
+              <p className="text-overline text-primary mb-4">Our Team</p>
+              <h2 className="text-display-lg font-display font-medium max-w-2xl text-balance">
+                {about.teamSectionTitle}
+              </h2>
+              <p className="mt-5 text-body-lg text-ink-muted leading-relaxed max-w-2xl">
+                {about.teamSectionBody}
+              </p>
+            </FadeIn>
+
+            <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {teamMembers.map((member) => (
+                <StaggerItem
+                  key={member.name}
+                  className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+                >
+                  <div className="relative aspect-4/3 bg-surface">
+                    {member.photoUrl ? (
+                      <Image
+                        src={member.photoUrl}
+                        alt={`${member.name}, ${member.role}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-display-lg font-display text-primary/40">
+                        {member.name
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((part) => part.charAt(0))
+                          .join("")}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-heading-xl font-semibold">{member.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-primary">{member.role}</p>
+                    {member.bio ? (
+                      <p className="mt-4 text-body text-ink-muted leading-relaxed">{member.bio}</p>
+                    ) : null}
+                    {member.linkedinUrl ? (
+                      <Link
+                        href={member.linkedinUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-primary hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        LinkedIn profile
+                      </Link>
+                    ) : null}
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </section>
+      ) : null}
 
       {/* ── Why Choose Us — Sticky image + numbered list ── */}
       <section className="section-padding bg-background">

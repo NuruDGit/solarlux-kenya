@@ -2,7 +2,12 @@ import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 import { seoField } from "../fields/seo.ts";
+import { createSlugField } from "../fields/slug.ts";
 import { iconOptions } from "../shared/options.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshProducts,
+} from "../hooks/revalidate.ts";
 
 export const ProductCategories: CollectionConfig = {
   slug: "product-categories",
@@ -18,9 +23,10 @@ export const ProductCategories: CollectionConfig = {
     useAsTitle: "title",
     description: "Product categories shown on the Products page and navigation.",
   },
+  hooks: createCollectionRevalidationHooks(refreshProducts),
   fields: [
     { name: "title", type: "text", required: true },
-    { name: "slug", type: "text", required: true, unique: true },
+    createSlugField("title"),
     { name: "shortDescription", type: "textarea", required: true },
     { name: "heroImage", type: "upload", relationTo: "media" },
     { name: "cardImage", type: "upload", relationTo: "media" },

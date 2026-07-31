@@ -131,7 +131,7 @@ export function HeroBento() {
               </div>
               <div className="mt-6">
                 <Button variant="dark" size="md" asChild>
-                  <Link href="/solutions">
+                  <Link href="/services">
                     Explore Solutions
                   </Link>
                 </Button>

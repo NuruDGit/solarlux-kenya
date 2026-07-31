@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,13 +10,12 @@ import {
   Truck,
 } from "lucide-react";
 import {
-  PRODUCTS,
-  getProductBySlug,
-  getCategoryBySlug,
-  getProductsByCategory,
-} from "@/lib/products";
-import { getPayloadProductBySlug, getPayloadProductsByCategory } from "@/lib/cms";
+  getPayloadProductBySlug,
+  getPayloadProductCategoryBySlug,
+  getPayloadProductsByCategory,
+} from "@/lib/cms";
 import { CONTACT } from "@/lib/constants";
+import { getCanonicalUrl } from "@/lib/site-url";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FadeIn } from "@/components/motion/fade-in";
@@ -29,39 +29,45 @@ interface Props {
   params: Promise<{ category: string; slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return PRODUCTS.map((p) => ({
-    category: p.categorySlug,
-    slug: p.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = (await getPayloadProductBySlug(slug)) ?? getProductBySlug(slug);
+  const product = await getPayloadProductBySlug(slug);
   if (!product) return {};
 
   return {
-    title: product.name,
-    alternates: { canonical: `/products/${product.categorySlug}/${product.slug}` },
-    description: product.description,
+    title: product.seo?.metaTitle || product.name,
+    alternates: {
+      canonical:
+        getCanonicalUrl(
+          product.seo?.canonicalUrl,
+          `/products/${product.categorySlug}/${product.slug}`,
+        ),
+    },
+    description: product.seo?.metaDescription || product.description,
     openGraph: {
-      title: `${product.name} | Solarlux Kenya`,
-      description: product.description,
-      images: [{ url: product.image, width: 800, height: 600 }],
+      title: product.seo?.metaTitle || `${product.name} | Solarlux Kenya`,
+      description: product.seo?.metaDescription || product.description,
+      images: [
+        {
+          url: product.seo?.ogImage || product.image,
+          width: 800,
+          height: 600,
+        },
+      ],
     },
   };
 }
 
 export default async function ProductDetailPage({ params }: Props) {
   const { category: categorySlug, slug } = await params;
-  const product = (await getPayloadProductBySlug(slug)) ?? getProductBySlug(slug);
+  const product = await getPayloadProductBySlug(slug);
   if (!product || product.categorySlug !== categorySlug) notFound();
 
-  const category = getCategoryBySlug(categorySlug);
+  const category = await getPayloadProductCategoryBySlug(categorySlug);
+  if (!category) notFound();
 
   const payloadRelated = await getPayloadProductsByCategory(categorySlug);
-  const related = (payloadRelated.length > 0 ? payloadRelated : getProductsByCategory(categorySlug))
+  const related = payloadRelated
     .filter((p) => p.slug !== slug)
     .slice(0, 4);
 
@@ -79,6 +85,8 @@ export default async function ProductDetailPage({ params }: Props) {
         inStock={product.inStock}
         slug={product.slug}
         categorySlug={product.categorySlug}
+        priceCurrency={product.priceCurrency}
+        priceFrom={product.priceFrom}
       />
       <BreadcrumbJsonLd
         items={[
@@ -145,7 +153,7 @@ export default async function ProductDetailPage({ params }: Props) {
             <FadeIn delay={0.1}>
               <div>
                 <p className="text-overline text-primary mb-2">
-                  {product.category}
+                  {product.brand ? `${product.brand} · ` : ""}{product.category}
                 </p>
                 <h1 className="text-display-lg font-display font-medium">
                   {product.name}
@@ -155,13 +163,21 @@ export default async function ProductDetailPage({ params }: Props) {
                 </p>
 
                 {/* Price */}
-                {product.priceFrom && (
+                {(product.priceFrom || product.priceLabel) && (
                   <div className="mt-6 rounded-2xl border border-border bg-surface p-5">
-                    <p className="text-body-sm text-ink-muted">Starting from</p>
-                    <p className="mt-1 text-display-md font-display font-medium text-primary">
-                      {product.priceCurrency ?? "KES"}{" "}
-                      {product.priceFrom.toLocaleString("en-KE")}
-                    </p>
+                    {product.priceLabel ? (
+                      <p className="text-display-md font-display font-medium text-primary">
+                        {product.priceLabel}
+                      </p>
+                    ) : product.priceFrom ? (
+                      <>
+                        <p className="text-body-sm text-ink-muted">Starting from</p>
+                        <p className="mt-1 text-display-md font-display font-medium text-primary">
+                          {product.priceCurrency ?? "KES"}{" "}
+                          {product.priceFrom.toLocaleString("en-KE")}
+                        </p>
+                      </>
+                    ) : null}
                     <p className="mt-1 text-body-sm text-ink-muted">
                       Contact us for bulk pricing and installation quotes.
                     </p>
@@ -196,6 +212,13 @@ export default async function ProductDetailPage({ params }: Props) {
                       Call Now
                     </a>
                   </Button>
+                  {product.datasheetUrl ? (
+                    <Button variant="secondary" size="lg" asChild>
+                      <a href={product.datasheetUrl} target="_blank" rel="noreferrer">
+                        View Datasheet
+                      </a>
+                    </Button>
+                  ) : null}
                 </div>
 
                 {/* Specs Table */}
@@ -243,6 +266,63 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {product.lexicalDescription || product.gallery?.length || product.applications?.length ? (
+        <section className="py-16 md:py-24 bg-surface">
+          <div className="container-page">
+            {product.lexicalDescription ? (
+              <div className="mx-auto max-w-3xl">
+                <p className="text-overline text-primary mb-4">Product Details</p>
+                <div className="rich-text">
+                  <RichText data={product.lexicalDescription} disableContainer />
+                </div>
+              </div>
+            ) : null}
+
+            {product.applications?.length ? (
+              <div className="mx-auto mt-12 max-w-3xl border-t border-border pt-10">
+                <h2 className="text-heading-xl font-semibold">Recommended applications</h2>
+                <ul className="mt-5 flex flex-wrap gap-3">
+                  {product.applications.map((application) => (
+                    <li
+                      key={application}
+                      className="rounded-full border border-border bg-card px-4 py-2 text-body-sm text-ink"
+                    >
+                      {application}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {product.gallery?.length ? (
+              <div className="mt-14">
+                <h2 className="text-display-md font-display font-medium">Product gallery</h2>
+                <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {product.gallery.map((item, index) => (
+                    <figure key={`${item.image}-${index}`}>
+                      <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border bg-card">
+                        <Image
+                          src={item.image}
+                          alt={item.caption || `${product.name} gallery image ${index + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                      {item.caption ? (
+                        <figcaption className="mt-3 text-body-sm text-ink-muted">
+                          {item.caption}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       {/* Related Products */}
       {related.length > 0 && (

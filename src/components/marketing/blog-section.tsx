@@ -14,6 +14,10 @@ interface BlogSectionProps {
 }
 
 export function BlogSection({ posts }: BlogSectionProps) {
+  if (posts.length === 0) {
+    return null;
+  }
+
   return (
     <section className="bg-background py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

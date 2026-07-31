@@ -59,7 +59,7 @@ export function SolutionsOverview() {
 
           <FadeIn delay={0.1} className="hidden lg:block">
             <AnimatedLayerButton variant="accent" size="md" asChild>
-              <Link href="/solutions">Explore All Solutions</Link>
+              <Link href="/services">Explore All Solutions</Link>
             </AnimatedLayerButton>
           </FadeIn>
         </div>
@@ -157,7 +157,7 @@ export function SolutionsOverview() {
 
         <FadeIn delay={0.2} className="mt-10 flex justify-start md:mt-12 lg:hidden">
           <AnimatedLayerButton variant="accent" size="md" asChild>
-            <Link href="/solutions">Explore All Solutions</Link>
+            <Link href="/services">Explore All Solutions</Link>
           </AnimatedLayerButton>
         </FadeIn>
       </div>

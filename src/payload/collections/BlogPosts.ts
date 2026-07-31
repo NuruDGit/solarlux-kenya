@@ -1,7 +1,13 @@
 import type { CollectionConfig } from "payload";
 
-import { isEditorOrAdmin, publicRead } from "../access/index.ts";
+import { isEditorOrAdmin, publishedRead } from "../access/index.ts";
 import { seoField } from "../fields/seo.ts";
+import { createSlugField } from "../fields/slug.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshBlog,
+} from "../hooks/revalidate.ts";
+import { syncPublishStatus } from "../hooks/sync-publish-status.ts";
 import { blogCategoryOptions, publishStatusOptions } from "../shared/options.ts";
 
 export const BlogPosts: CollectionConfig = {
@@ -9,27 +15,32 @@ export const BlogPosts: CollectionConfig = {
   access: {
     create: isEditorOrAdmin,
     delete: isEditorOrAdmin,
-    read: publicRead,
+    read: publishedRead,
     update: isEditorOrAdmin,
   },
   admin: {
     group: "Content",
     defaultColumns: ["title", "category", "status", "publishedAt", "featured"],
     useAsTitle: "title",
-    description: "Blog articles. Set status to 'Published' and fill 'Published At' to make them live on /blog.",
+    description: "Blog articles. Use Save Draft while writing, then Publish to make an article live automatically on the website.",
   },
   versions: {
     drafts: true,
   },
+  hooks: {
+    ...createCollectionRevalidationHooks(refreshBlog),
+    beforeChange: [syncPublishStatus({ setPublishedAt: true })],
+  },
   fields: [
     { name: "title", type: "text", required: true },
-    { name: "slug", type: "text", required: true, unique: true },
+    createSlugField("title"),
     {
       name: "status",
       type: "select",
       defaultValue: "draft",
       options: publishStatusOptions,
       required: true,
+      admin: { hidden: true },
     },
     { name: "excerpt", type: "textarea", required: true },
     {

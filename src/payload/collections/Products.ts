@@ -2,11 +2,16 @@ import type { CollectionConfig } from "payload";
 
 import { isEditorOrAdmin, publicRead } from "../access/index.ts";
 import { seoField } from "../fields/seo.ts";
+import { createSlugField } from "../fields/slug.ts";
 import {
   badgeOptions,
   currencyOptions,
   productApplicationOptions,
 } from "../shared/options.ts";
+import {
+  createCollectionRevalidationHooks,
+  refreshProducts,
+} from "../hooks/revalidate.ts";
 
 export const Products: CollectionConfig = {
   slug: "products",
@@ -22,9 +27,10 @@ export const Products: CollectionConfig = {
     useAsTitle: "name",
     description: "Add solar products. Set 'Featured on Home' to show on the homepage snippet.",
   },
+  hooks: createCollectionRevalidationHooks(refreshProducts),
   fields: [
     { name: "name", type: "text", required: true },
-    { name: "slug", type: "text", required: true, unique: true },
+    createSlugField("name"),
     {
       name: "category",
       type: "relationship",
@@ -102,12 +108,6 @@ export const Products: CollectionConfig = {
       name: "datasheet",
       type: "upload",
       relationTo: "media",
-    },
-    {
-      name: "relatedProducts",
-      type: "relationship",
-      relationTo: "products",
-      hasMany: true,
     },
     seoField,
   ],
